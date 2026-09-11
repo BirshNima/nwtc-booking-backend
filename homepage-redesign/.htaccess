@@ -1,0 +1,39 @@
+# Northwest Town Car Service — static site on SiteGround (Apache)
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Canonical host: force https + www.
+  # SiteGround proxies SSL, so %{HTTPS} is unreliable inside .htaccess —
+  # test X-Forwarded-Proto instead. This only fires when the request is
+  # not already https, or the host is missing "www", so it cannot loop.
+  RewriteCond %{HTTP:X-Forwarded-Proto} =http [OR]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.northwesttowncarservice.com%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# Default document
+DirectoryIndex index.html
+
+# Custom 404 (optional — add 404.html to enable)
+# ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml
+</IfModule>

@@ -1,0 +1,255 @@
+<title>NWTC Analytics</title>
+<meta name="description" content="How Northwest Town Car Service measures the path from ad impression to collected fare: the GA4 setup, the event taxonomy, the lead-to-fare funnel with where each number comes from, the KPIs, and the offline-conversion import that teaches Google Ads to bid on revenue.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5;--surface:#FBF8F1;--surface-2:#EDE7D8;--ink:#16261F;--muted:#5B6A5F;
+    --brass:#9A6E28;--brass-ink:#7C5A1E;--sage:#3E7A52;--amber:#A9741F;--risk:#A8443A;
+    --line:rgba(22,38,31,0.14);--line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 10px 30px -16px rgba(22,38,31,0.2);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1E19;--surface:#16281F;--surface-2:#1F3529;--ink:#F1ECE0;--muted:#A9B3A6;
+      --brass:#C09A56;--brass-ink:#D4AC66;--sage:#8FB08C;--amber:#D9B36A;--risk:#D98A7C;
+      --line:rgba(241,236,224,0.16);--line-soft:rgba(241,236,224,0.08);
+      --shadow:0 1px 2px rgba(0,0,0,0.3),0 12px 34px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1E19;--surface:#16281F;--surface-2:#1F3529;--ink:#F1ECE0;--muted:#A9B3A6;
+    --brass:#C09A56;--brass-ink:#D4AC66;--sage:#8FB08C;--amber:#D9B36A;--risk:#D98A7C;
+    --line:rgba(241,236,224,0.16);--line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 12px 34px -16px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,-apple-system,sans-serif;line-height:1.68;font-size:16.5px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.16;letter-spacing:-0.012em;text-wrap:balance;margin:0;}
+  p{margin:0 0 1rem;} strong{font-weight:600;}
+  a{color:var(--brass-ink);}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.86em;}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 110px;}
+  @media (min-width:1060px){
+    .page{display:grid;grid-template-columns:200px minmax(0,1fr);gap:52px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}
+  }
+  .toc{display:none;font-size:14px;}
+  @media (min-width:1060px){.toc{display:block;}}
+  .toc .toc-title{font-family:'Fraunces',serif;font-size:15px;margin-bottom:14px;padding-left:14px;}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{counter-increment:toc;}
+  .toc a{display:block;padding:6px 12px 6px 14px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;}
+  .toc a:hover{color:var(--ink);border-left-color:var(--brass);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);font-variant-numeric:tabular-nums;}
+
+  main{min-width:0;padding-top:40px;}
+  header.hero{padding:24px 0 34px;border-bottom:2px solid var(--ink);margin-bottom:44px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.6vw,2.9rem);margin:14px 0 0;font-weight:600;max-width:16ch;}
+  header.hero .stand{font-size:1.1rem;color:var(--muted);margin:16px 0 0;max-width:62ch;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);}
+
+  .toggle{position:fixed;top:14px;right:14px;z-index:40;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:6px 13px;font:inherit;font-size:12.5px;cursor:pointer;box-shadow:var(--shadow);}
+  .toggle:hover{border-color:var(--brass);}
+  .toggle:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+  section{margin:0 0 60px;scroll-margin-top:20px;}
+  section > h2{font-size:clamp(1.5rem,2.7vw,2rem);padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:baseline;}
+  section > h2 .n{font-family:ui-monospace,monospace;font-size:0.58em;color:var(--brass);font-weight:400;}
+  section > h3{font-size:1.2rem;margin:32px 0 12px;}
+  section p,section ul,section ol{max-width:70ch;}
+  section ul,section ol{padding-left:1.2rem;}
+  section li{margin:0 0 .4rem;}
+  .lead{font-size:1.1rem;}
+
+  .note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:16px 18px;margin:20px 0;font-size:0.97rem;box-shadow:var(--shadow);}
+  .note p:last-child{margin-bottom:0;}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+
+  .table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;font-size:0.88rem;background:var(--surface);min-width:640px;}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-family:'Work Sans',sans-serif;font-weight:700;font-size:0.74rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);}
+  tbody tr:last-child td{border-bottom:none;}
+  td code{font-size:0.82em;}
+  td .src{font-family:ui-monospace,monospace;font-size:11px;color:var(--brass-ink);}
+
+  /* funnel bars */
+  .funnel{margin:24px 0;display:flex;flex-direction:column;gap:7px;}
+  .fn-row{display:grid;grid-template-columns:1fr;gap:3px;}
+  .fn-bar{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;box-shadow:var(--shadow);}
+  .fn-bar .stage{font-weight:600;font-size:0.92rem;}
+  .fn-bar .where{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--muted);}
+  .fn-w1{width:100%;} .fn-w2{width:82%;} .fn-w3{width:60%;} .fn-w4{width:42%;}
+  .fn-w5{width:30%;} .fn-w6{width:20%;} .fn-w7{width:14%;} .fn-w8{width:11%;}
+  .fn-bar.rev{border-color:color-mix(in srgb,var(--sage) 45%,transparent);background:color-mix(in srgb,var(--sage) 9%,var(--surface));}
+
+  ol.checklist{counter-reset:c;list-style:none;padding:0;margin:14px 0 0;}
+  ol.checklist li{counter-increment:c;position:relative;padding-left:34px;margin:0 0 10px;max-width:70ch;}
+  ol.checklist li::before{content:counter(c);position:absolute;left:0;top:0;font-family:ui-monospace,monospace;font-size:0.72rem;color:var(--brass);border:1px solid var(--line);border-radius:6px;width:22px;height:22px;display:grid;place-items:center;}
+
+  .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;font-family:ui-monospace,monospace;}
+</style>
+<button class="toggle" id="tg" type="button" aria-label="Switch theme">Dark</button>
+
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="toc-title">Step 6</div>
+    <ol>
+      <li><a href="#principle">The principle</a></li>
+      <li><a href="#ga4">GA4 setup</a></li>
+      <li><a href="#events">Event taxonomy</a></li>
+      <li><a href="#funnel">Lead-to-fare funnel</a></li>
+      <li><a href="#kpis">KPIs</a></li>
+      <li><a href="#offline">Offline conversions</a></li>
+      <li><a href="#deploy">Deploy &amp; verify</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service &middot; Revenue Core</span>
+      <h1>Analytics</h1>
+      <p class="stand">Measure the whole path — impression, click, funnel, quote, booking, deposit, collected fare — and feed the money events back to Google Ads so it bids on revenue, not form-fills. One small tracker on every page; the rest is GA4 config and a weekly export.</p>
+      <div class="hero-meta">
+        <span>Step 6 of 10</span>
+        <span>Files: analytics/</span>
+        <span>Needs: GA4 + (later) Google Ads</span>
+        <span>2026-09-03</span>
+      </div>
+    </header>
+
+    <section id="principle">
+      <h2><span class="n">01</span> The principle</h2>
+      <p class="lead">Rankings and clicks are not the goal — paying customers are. Every number here ladders up to one question: <strong>which sources, pages, and campaigns produce collected fares, and at what cost?</strong></p>
+      <ul>
+        <li><strong>One tracker, everywhere.</strong> <code>analytics/events.js</code> loads on every page and the funnel. It captures attribution (first- and last-touch UTM + click ids) to <code>localStorage</code> and fires named events through the page's GA4 tag.</li>
+        <li><strong>The funnel payload carries attribution.</strong> <code>NWTCAnalytics.getAttribution()</code> feeds <code>source / medium / campaign / gclid</code> into the Lead — so the CRM, not just GA4, knows where a booking came from.</li>
+        <li><strong>Money events go back to Ads.</strong> <code>offline-conversions.js</code> turns "deposit paid" and "fare collected" into upload rows keyed on the click id. This is the step that makes paid search optimize correctly (and it is the gate on spending — see the growth plan).</li>
+        <li><strong>No broad spend before this works.</strong> Confirm the chain end-to-end with a live test first.</li>
+      </ul>
+    </section>
+
+    <section id="ga4">
+      <h2><span class="n">02</span> GA4 setup</h2>
+      <ol class="checklist">
+        <li>Create a GA4 property + a Web data stream for <code>northwesttowncarservice.com</code>. Copy the <strong>Measurement ID</strong> (<code>G-XXXXXXX</code>).</li>
+        <li>Add the standard gtag.js snippet to every page's <code>&lt;head&gt;</code>, then load <code>analytics/events.js</code> and call <code>NWTCAnalytics.init({ measurementId: 'G-XXXXXXX' })</code>.</li>
+        <li>Mark these as <strong>key events</strong>: <code>generate_lead</code>, <code>reservation_submitted</code>, <code>quote_requested</code>, <code>corporate_lead</code>, <code>call_click</code>.</li>
+        <li>Register <strong>custom dimensions</strong> (event-scoped) for: <code>nwtc_source</code>, <code>nwtc_medium</code>, <code>nwtc_campaign</code>, <code>nwtc_click_id</code>, <code>service</code>, <code>service_area</code>, <code>quote_method</code>, <code>quote_value</code>.</li>
+        <li>Link <strong>Google Search Console</strong> to the property (organic query + landing-page data).</li>
+        <li>Turn on <strong>Enhanced measurement</strong> but keep outbound-click and form tracking off — the explicit events below are cleaner.</li>
+        <li>Later, when Ads exists: link Ads ↔ GA4, import the GA4 key events as conversions <em>or</em> use the offline import (§6) — not both for the same action.</li>
+      </ol>
+    </section>
+
+    <section id="events">
+      <h2><span class="n">03</span> Event taxonomy</h2>
+      <p>Names are stable — they become GA4 key events and Ads conversion actions. Fire them with <code>NWTCAnalytics.track(name, params)</code>; the tracker attaches attribution automatically.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Event</th><th>Fires when</th><th>Key params</th></tr></thead>
+          <tbody>
+            <tr><td><code>cta_book_click</code> / <code>cta_quote_click</code></td><td>A "Book a ride" / "Get a quote" button is clicked on any page</td><td><code>page_type</code>, <code>service</code>, <code>service_area</code></td></tr>
+            <tr><td><code>call_click</code></td><td><code>tel:</code> link tapped (sticky header, page body)</td><td><code>page_type</code></td></tr>
+            <tr><td><code>funnel_start</code></td><td>First interaction with step 1 of the funnel</td><td>—</td></tr>
+            <tr><td><code>funnel_step</code></td><td>Each step becomes visible</td><td><code>step_index</code>, <code>step_name</code></td></tr>
+            <tr><td><code>quote_shown</code></td><td>An instant price renders on the review step</td><td><code>service</code>, <code>quote_method</code>, <code>quote_value</code></td></tr>
+            <tr><td><code>generate_lead</code></td><td>Funnel submitted (any kind) — the GA4-recommended lead event</td><td><code>lead_kind</code>, <code>value</code>, <code>currency</code></td></tr>
+            <tr><td><code>reservation_submitted</code></td><td>Submit, instant-price path</td><td><code>value</code>, <code>service</code>, <code>service_area</code></td></tr>
+            <tr><td><code>quote_requested</code></td><td>Submit, custom-quote path</td><td><code>service</code></td></tr>
+            <tr><td><code>corporate_lead</code></td><td>Submit, corporate path</td><td><code>company_size</code></td></tr>
+            <tr><td><code>deposit_paid</code></td><td>Stripe webhook (server-side, via Measurement Protocol or the CRM)</td><td><code>value</code>, <code>reference</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <span class="lbl">Standalone funnel artifact</span>
+        <p>The published funnel demo has no gtag. <code>track()</code> then no-ops safely and records to <code>NWTCAnalytics._log</code> so you can still see the sequence in the console. Nothing breaks; nothing is sent.</p>
+      </div>
+    </section>
+
+    <section id="funnel">
+      <h2><span class="n">04</span> The lead-to-fare funnel</h2>
+      <p>The one report the owner reads. Each stage names where its number comes from — no single tool has the whole picture.</p>
+      <div class="funnel">
+        <div class="fn-row"><div class="fn-bar fn-w1"><span class="stage">Impressions</span><span class="where">Search Console · Ads · GBP insights</span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w2"><span class="stage">Clicks / sessions</span><span class="where">GA4 sessions · GSC clicks</span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w3"><span class="stage">Funnel starts</span><span class="where">GA4 · <code>funnel_start</code></span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w4"><span class="stage">Quotes shown</span><span class="where">GA4 · <code>quote_shown</code></span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w5"><span class="stage">Leads submitted</span><span class="where">GA4 <code>generate_lead</code> · CRM Leads</span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w6"><span class="stage">Reservations + accepted quotes</span><span class="where">CRM · Lead Status Booked</span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w7 rev"><span class="stage">Deposits paid</span><span class="where">Stripe · CRM Payments</span></div></div>
+        <div class="fn-row"><div class="fn-bar fn-w8 rev"><span class="stage">Fares collected</span><span class="where">Stripe · CRM Bookings</span></div></div>
+      </div>
+      <p>Segment every stage by <code>nwtc_source</code> / <code>nwtc_campaign</code> and by <code>service</code> / <code>service_area</code>. That answers "which city pages get traffic but produce no leads" and "which campaign brings fares, not just clicks."</p>
+    </section>
+
+    <section id="kpis">
+      <h2><span class="n">05</span> KPIs</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Metric</th><th>Definition</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>Funnel start rate</td><td><code>funnel_start</code> ÷ sessions on book/service pages</td><td class="src">GA4</td></tr>
+            <tr><td>Quote → lead rate</td><td><code>generate_lead</code> ÷ <code>quote_shown</code></td><td class="src">GA4</td></tr>
+            <tr><td>Lead → booking rate</td><td>Leads with Status Booked ÷ all Leads</td><td class="src">CRM</td></tr>
+            <tr><td>Booking → paid rate</td><td>Bookings with a paid deposit ÷ Bookings</td><td class="src">CRM · Stripe</td></tr>
+            <tr><td>Revenue per lead</td><td>Fares collected ÷ Leads, by source</td><td class="src">CRM · Stripe</td></tr>
+            <tr><td>Cost per booking</td><td>Ad spend ÷ bookings attributed to paid</td><td class="src">Ads · CRM</td></tr>
+            <tr><td>Blended CAC</td><td>All marketing cost ÷ new customers</td><td class="src">all</td></tr>
+            <tr><td>Repeat rate</td><td>Customers with ≥ 2 completed trips ÷ all customers</td><td class="src">CRM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Rankings are a diagnostic, not a KPI — track them in the SEO tool, not this report.</p>
+    </section>
+
+    <section id="offline">
+      <h2><span class="n">06</span> Offline conversions</h2>
+      <p><code>analytics/offline-conversions.js</code> → <code>buildConversionRows(records)</code>. Run it weekly against a CRM query of Bookings whose deposit or fare changed.</p>
+      <ul>
+        <li>Two conversion actions in Google Ads, both <strong>count once</strong>: <code>Deposit paid</code> (value = deposit) and <code>Fare collected</code> (value = fare, mark this <strong>primary</strong> for bidding).</li>
+        <li>Rows are keyed on the click id the funnel captured (<code>gclid</code> / <code>wbraid</code> / <code>gbraid</code>, or <code>msclkid</code> for Microsoft) and stored on the Lead.</li>
+        <li>Clicks older than <strong>90 days</strong> are skipped — Ads rejects them.</li>
+        <li>Upload via the Ads UI ("Conversions from clicks", <code>toGoogleAdsCsv()</code> matches the template) or the Ads API <code>ConversionUploadService</code>.</li>
+        <li>Set Smart Bidding to target <code>Fare collected</code> once ~15–30 conversions/month exist. Below that, stay on manual or maximize-clicks with tight budgets.</li>
+      </ul>
+      <div class="note">
+        <span class="lbl">Why not just import the GA4 lead event</span>
+        <p>A <code>generate_lead</code> counts a wedding enquiry that never books the same as a paid airport run. Feeding Ads the actual deposit and fare — with their dollar values — lets it learn which clicks are worth more and bid accordingly.</p>
+      </div>
+    </section>
+
+    <section id="deploy">
+      <h2><span class="n">07</span> Deploy &amp; verify</h2>
+      <ol class="checklist">
+        <li>GA4 property + stream; snippet + <code>events.js</code> + <code>init()</code> on every page and the funnel.</li>
+        <li>Add the <code>track()</code> calls: CTA buttons, <code>tel:</code> links, funnel step changes, <code>quote_shown</code>, and the three submit events (the funnel already imports the module — wire the calls in <code>submitBooking()</code> and <code>goTo()</code>).</li>
+        <li>Custom dimensions registered; key events marked.</li>
+        <li>Use GA4 <strong>DebugView</strong> + <code>init({ debug:true })</code>: click through the funnel, confirm every event and its params, including <code>nwtc_source</code>.</li>
+        <li>Submit a real lead with <code>?gclid=TEST123&amp;utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=airport</code>. Confirm the CRM Lead shows source=google, campaign=airport, gclid=TEST123.</li>
+        <li>Mark that booking's deposit paid in the CRM; run <code>buildConversionRows()</code>; confirm one <code>Deposit paid</code> row with the right value and time format.</li>
+        <li>Only when the whole chain is proven: turn on ad spend (growth plan, Phase E).</li>
+      </ol>
+    </section>
+
+    <p class="foot">Analytics · step 6 of the revenue core · 2026-09-03 · closes the loop opened by seo/ (traffic) and growth/ (spend), and feeds the monthly autopilot report. events.js is the only thing that ships to the browser; everything else is config + a weekly job.</p>
+  </main>
+</div>
+
+<script>
+  (function(){
+    var b=document.getElementById('tg'),r=document.documentElement;
+    function cur(){var t=r.getAttribute('data-theme');return t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+    function s(){b.textContent=cur()==='dark'?'Light':'Dark';}
+    b.addEventListener('click',function(){r.setAttribute('data-theme',cur()==='dark'?'light':'dark');s();});
+    s();
+  })();
+</script>

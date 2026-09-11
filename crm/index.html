@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NWTC CRM Schema</title>
+<meta name="description" content="The CRM for Northwest Town Car Service: 11 tables with every field and type, the views that make it operable, the automations to configure, and the contract that turns a website booking into CRM records without duplicates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5; --surface:#FBF8F1; --surface-2:#EFEADC;
+    --ink:#16261F; --muted:#5B6A5F;
+    --brass:#9A6E28; --brass-ink:#7C5A1E;
+    --sage:#3E7A52; --amber:#A9741F; --risk:#A8443A;
+    --line:rgba(22,38,31,0.14); --line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 8px 24px -12px rgba(22,38,31,0.18);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.01em;margin:0;text-wrap:balance;}
+  a{color:var(--brass-ink);}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.85em;}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+  p{margin:0 0 1rem;} strong{font-weight:600;}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 120px;}
+  @media (min-width:1060px){.page{display:grid;grid-template-columns:220px minmax(0,1fr);gap:52px;padding-right:36px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}}
+  .toc{display:none;font-size:13.5px;}
+  @media (min-width:1060px){.toc{display:block;}}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{counter-increment:toc;}
+  .toc a{display:block;padding:5px 0 5px 14px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;}
+  .toc a:hover{color:var(--ink);border-left-color:var(--brass);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);}
+  .toc .tt{font-family:'Fraunces',serif;font-size:15px;color:var(--ink);margin:0 0 12px 14px;}
+
+  main{min-width:0;padding-top:40px;}
+  header.hero{padding:28px 0 40px;border-bottom:1px solid var(--line);margin-bottom:44px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.2vw,2.9rem);margin:12px 0 0;max-width:19ch;}
+  header.hero p{font-size:1.12rem;color:var(--muted);margin:16px 0 0;max-width:60ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-size:12.5px;color:var(--muted);font-family:ui-monospace,monospace;}
+
+  .theme-toggle{position:fixed;top:16px;right:16px;z-index:40;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;box-shadow:var(--shadow);}
+  .theme-toggle:hover{border-color:var(--brass);}
+
+  section{margin:0 0 56px;scroll-margin-top:20px;}
+  section>h2{font-size:clamp(1.45rem,2.6vw,1.9rem);padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:baseline;}
+  section>h2 .n{font-family:ui-monospace,monospace;font-size:0.55em;color:var(--brass);}
+  section>h3{font-size:1.15rem;margin:32px 0 6px;}
+  section p,section ul,section ol{max-width:70ch;}
+  section ul,section ol{padding-left:1.2rem;} section li{margin:0 0 .35rem;}
+
+  .tablecard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin:16px 0;box-shadow:var(--shadow);overflow:hidden;}
+  .tablecard > .th{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 14px 10px;}
+  .tablecard > .th h4{font-family:'Fraunces',serif;font-size:1.1rem;}
+  .tablecard > .th .role{font-size:12px;color:var(--muted);font-family:ui-monospace,monospace;}
+  .table-wrap{overflow-x:auto;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  th,td{text-align:left;padding:8px 14px;border-top:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);border-top:none;}
+  td:first-child{font-weight:600;white-space:nowrap;}
+  td .ft{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--sage);white-space:nowrap;}
+
+  .note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:14px 16px;margin:18px 0;font-size:0.95rem;box-shadow:var(--shadow);}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+  .note p:last-child{margin-bottom:0;}
+
+  .pill{display:inline-block;font-family:ui-monospace,monospace;font-size:11px;padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--muted);}
+
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:ui-monospace,monospace;font-size:12.5px;margin:14px 0;color:var(--muted);}
+  .flow b{color:var(--ink);font-weight:600;}
+  .flow .ar{color:var(--brass);}
+
+  ol.check{counter-reset:c;list-style:none;padding:0;}
+  ol.check li{counter-increment:c;position:relative;padding:8px 0 8px 34px;border-top:1px solid var(--line-soft);max-width:72ch;}
+  ol.check li:first-child{border-top:none;}
+  ol.check li::before{content:counter(c);position:absolute;left:0;top:7px;width:22px;height:22px;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;font-family:ui-monospace,monospace;font-size:12px;color:var(--brass);}
+
+  pre{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:14px;overflow-x:auto;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.5;margin:14px 0;}
+  .foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="tt">CRM schema</div>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#tables">The 11 tables</a></li>
+      <li><a href="#links">Relationships</a></li>
+      <li><a href="#views">Views that run the day</a></li>
+      <li><a href="#automations">Automations</a></li>
+      <li><a href="#intake">Website → CRM intake</a></li>
+      <li><a href="#setup">Stand it up</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service</span>
+      <h1>CRM schema &amp; intake</h1>
+      <p>Step 3 of the revenue core. Every enquiry — website, phone, or referral — lands as one record, deduplicated, tagged with where it came from, and moved through a status pipeline the owner can see at a glance. This is the exact base to build, and the contract that fills it.</p>
+      <div class="meta"><span>v1 · 2026-09-02</span><span>Target: Airtable (free) — HubSpot notes inline</span><span>Feeds from: booking-funnel</span></div>
+    </header>
+
+    <section id="overview">
+      <h2><span class="n">01</span> Overview</h2>
+      <p>The funnel and pricing engine are done. Right now a website submission is logged to the browser and surfaced only through an email button. This step gives it a home.</p>
+
+      <h3>Pick a platform</h3>
+      <ul>
+        <li><strong>Airtable (recommended for now)</strong> — you control the schema exactly as below, the views are trivial to build, and its Automations cover most of Section 5. Free tier is enough to start. This doc is written for it.</li>
+        <li><strong>HubSpot free</strong> — more polished CRM UI and email tooling, but you bend to its object model: Leads → <em>Contacts</em>, Bookings/Quotes → <em>Deals</em> with custom properties, Corporate Accounts → <em>Companies</em>. Fewer custom automations on the free tier. Notes inline where it differs.</li>
+        <li><strong>The limo platform's built-in CRM</strong> (if you go with Moovs / Limo Anywhere) — one less tool, but weak on marketing segmentation and follow-up. You'd still want this schema's <em>Leads</em> and <em>Corporate</em> pipeline somewhere.</li>
+      </ul>
+
+      <h3>How it connects</h3>
+      <div class="flow"><b>booking-funnel</b> <span class="ar">→</span> POST payload <span class="ar">→</span> <b>intake.js</b> (dedupe + status) <span class="ar">→</span> upserts <span class="ar">→</span> <b>CRM</b> <span class="ar">→</span> automations fire</div>
+      <p>The transform lives in <code>crm/intake.js</code> so the dedupe and status rules stay in one tested place no matter which platform or glue tool (Make, Zapier, a serverless function) applies the writes.</p>
+    </section>
+
+    <section id="tables">
+      <h2><span class="n">02</span> The 11 tables</h2>
+      <p>Field types are Airtable's. <span class="ft">rollup</span> / <span class="ft">count</span> / <span class="ft">formula</span> fields are computed — don't write to them from intake.</p>
+
+      <div class="tablecard">
+        <div class="th"><h4>Leads</h4><span class="role">every inbound · the pipeline</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Reference</td><td><span class="ft">Single line text</span></td><td>From the funnel (<code>NWTC-…</code>). The idempotency key — intake upserts on this.</td></tr>
+            <tr><td>Created</td><td><span class="ft">Date &amp; time</span></td><td>Submission time (from payload, not the row's created time).</td></tr>
+            <tr><td>Name / Phone / Email</td><td><span class="ft">Text / Phone / Email</span></td><td>Phone stored as digits only for matching.</td></tr>
+            <tr><td>Service</td><td><span class="ft">Single select</span></td><td>Airport pickup · Airport drop-off · Hourly · Point-to-point · Round trip · Wedding / event · Cruise terminal · Corporate account</td></tr>
+            <tr><td>Service Area</td><td><span class="ft">Single select</span></td><td>The 14 flat-rate zones + "Other WA area".</td></tr>
+            <tr><td>Route</td><td><span class="ft">Single line text</span></td><td>"SEA → Bellevue" or "Kent — 4 hrs". Human-readable.</td></tr>
+            <tr><td>Pickup / Drop-off / Date / Time</td><td><span class="ft">Text / Date</span></td><td></td></tr>
+            <tr><td>Passengers / Vehicle / Flight #</td><td><span class="ft">Number / Select / Text</span></td><td></td></tr>
+            <tr><td>Quote Method</td><td><span class="ft">Single select</span></td><td><code>flat</code> · <code>hourly</code> · <code>manual-quote</code> · <code>corporate</code></td></tr>
+            <tr><td>Quoted Amount</td><td><span class="ft">Currency</span></td><td>Null for manual-quote until dispatch prices it.</td></tr>
+            <tr><td>Quote Expires</td><td><span class="ft">Date &amp; time</span></td><td>Created + 72 h for priced quotes.</td></tr>
+            <tr><td>Status</td><td><span class="ft">Single select</span></td><td><strong>New → Contacted → Quote Sent → Follow-up → Booked → Paid → Completed</strong>, with <strong>Cancelled</strong> / <strong>Lost</strong> as exits. Colour-code: New brass, Booked/Paid green, Lost/Cancelled grey.</td></tr>
+            <tr><td>Lost Reason</td><td><span class="ft">Single select</span></td><td>No reply · Price · Booked elsewhere · Not serviceable · Duplicate</td></tr>
+            <tr><td>Source / Medium / Campaign / Term</td><td><span class="ft">Single select / text</span></td><td>From the funnel URL (utm_*, gclid). "website / organic" default.</td></tr>
+            <tr><td>GCLID</td><td><span class="ft">Single line text</span></td><td>Google Ads click id, when present. Required for offline conversion import back to Google Ads (ads plan §8).</td></tr>
+            <tr><td>Landing Page</td><td><span class="ft">Single line text</span></td><td></td></tr>
+            <tr><td>Next Follow-up</td><td><span class="ft">Date &amp; time</span></td><td>Set to Created + 3 h when Status = Quote Sent; advanced by the follow-up automation.</td></tr>
+            <tr><td>Notes / Consent</td><td><span class="ft">Long text / Checkbox</span></td><td>Consent = agreed to text + email contact.</td></tr>
+            <tr><td>Customer</td><td><span class="ft">Link → Customers</span></td><td>Resolved by intake from the phone match.</td></tr>
+            <tr><td>Booking / Quote</td><td><span class="ft">Link → Bookings / Quotes</span></td><td></td></tr>
+            <tr><td>Corporate Account</td><td><span class="ft">Link → Corporate Accounts</span></td><td>Corporate leads only.</td></tr>
+            <tr><td>Raw Payload</td><td><span class="ft">Long text</span></td><td>Full JSON, for debugging and replay.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Customers</h4><span class="role">the dedupe target · one row per person</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Name / Phone / Email</td><td><span class="ft">Text / Phone / Email</span></td><td><strong>Phone (digits) is the dedupe key</strong>; email is the fallback. Consider a unique-ish constraint via an automation that merges collisions.</td></tr>
+            <tr><td>Home Area</td><td><span class="ft">Single select</span></td><td></td></tr>
+            <tr><td>Segment</td><td><span class="ft">Single select</span></td><td>Airport regular · Corporate · Wedding / event · One-time · Lapsed. Recomputed nightly.</td></tr>
+            <tr><td>Marketing Opt-in</td><td><span class="ft">Checkbox</span></td><td>Honours the funnel consent box. Gates all campaign sends.</td></tr>
+            <tr><td>First Trip / Last Trip</td><td><span class="ft">Rollup</span></td><td>MIN / MAX of linked completed Bookings' dates.</td></tr>
+            <tr><td>Trip Count</td><td><span class="ft">Count</span></td><td>Linked Bookings with Status = Completed.</td></tr>
+            <tr><td>Lifetime Value</td><td><span class="ft">Rollup</span></td><td>SUM of completed Bookings' Price.</td></tr>
+            <tr><td>Last Contact</td><td><span class="ft">Date &amp; time</span></td><td>Touched by intake and by any send.</td></tr>
+            <tr><td>Corporate Account / Leads / Bookings / Reviews</td><td><span class="ft">Link</span></td><td></td></tr>
+            <tr><td>Notes</td><td><span class="ft">Long text</span></td><td>Preferences, gate codes, "always requests J. as driver".</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Quotes</h4><span class="role">what was offered</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Reference</td><td><span class="ft">Single line text</span></td><td>Shares the Lead's reference.</td></tr>
+            <tr><td>Method / Total</td><td><span class="ft">Select / Currency</span></td><td></td></tr>
+            <tr><td>Line Items</td><td><span class="ft">Long text</span></td><td>JSON from the pricing engine — base, add-ons, discount, gratuity.</td></tr>
+            <tr><td>Status</td><td><span class="ft">Single select</span></td><td>Draft (manual, unpriced) · Sent · Accepted · Expired · Declined</td></tr>
+            <tr><td>Sent At / Valid Until</td><td><span class="ft">Date &amp; time</span></td><td></td></tr>
+            <tr><td>Approved By</td><td><span class="ft">Single line text</span></td><td>For manual quotes that went through the dispatch gate.</td></tr>
+            <tr><td>Lead</td><td><span class="ft">Link → Leads</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Bookings</h4><span class="role">confirmed rides</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Reference</td><td><span class="ft">Single line text</span></td><td></td></tr>
+            <tr><td>Customer</td><td><span class="ft">Link → Customers</span></td><td></td></tr>
+            <tr><td>Service / Pickup / Drop-off / Stops / Child Seats</td><td><span class="ft">Select / text / number</span></td><td></td></tr>
+            <tr><td>Date / Time / Return Date / Return Time</td><td><span class="ft">Date &amp; time</span></td><td></td></tr>
+            <tr><td>Passengers / Bags / Vehicle Class / Flight #</td><td><span class="ft">Number / Select / Text</span></td><td></td></tr>
+            <tr><td>Price</td><td><span class="ft">Currency</span></td><td>The quoted total at booking.</td></tr>
+            <tr><td>Deposit Paid</td><td><span class="ft">Currency</span></td><td>Set by the payment step (Phase 2).</td></tr>
+            <tr><td>Balance</td><td><span class="ft">Formula</span></td><td><code>Price − Deposit Paid</code></td></tr>
+            <tr><td>Status</td><td><span class="ft">Single select</span></td><td>Reserved · Confirmed · Assigned · Completed · No-show · Cancelled</td></tr>
+            <tr><td>Special Requests / Pricing Breakdown</td><td><span class="ft">Long text</span></td><td>Breakdown = JSON, for the receipt and disputes.</td></tr>
+            <tr><td>Table Version</td><td><span class="ft">Single line text</span></td><td>Which pricing-table version quoted it.</td></tr>
+            <tr><td>Trip / Payments</td><td><span class="ft">Link</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Trips</h4><span class="role">the operational record</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Booking / Driver / Vehicle</td><td><span class="ft">Link</span></td><td></td></tr>
+            <tr><td>Actual Pickup / Actual Drop-off</td><td><span class="ft">Date &amp; time</span></td><td></td></tr>
+            <tr><td>Wait Minutes / Tolls / Parking</td><td><span class="ft">Number / Currency</span></td><td>Feed post-trip adjustments and the receipt.</td></tr>
+            <tr><td>Status</td><td><span class="ft">Single select</span></td><td>Assigned · En route · Completed · No-show</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Corporate Accounts</h4><span class="role">a separate sales pipeline</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Company</td><td><span class="ft">Single line text</span></td><td>Dedupe key for corporate intake.</td></tr>
+            <tr><td>Billing Contact / Contact Phone / Email / Role</td><td><span class="ft">Text</span></td><td></td></tr>
+            <tr><td>Stage</td><td><span class="ft">Single select</span></td><td><strong>Prospect → Contacted → Qualified → Proposal → Negotiation → Account Created → Active → Inactive</strong></td></tr>
+            <tr><td>Discount Tier</td><td><span class="ft">Single select</span></td><td><code>standard</code> · <code>corporate</code> · <code>preferred</code> · <code>volume</code> · <code>contract</code> — <strong>must match the pricing engine's tier keys exactly</strong>. The engine reads this to price the account's trips.</td></tr>
+            <tr><td>Contract Rate</td><td><span class="ft">Currency</span></td><td>Only for tier = contract.</td></tr>
+            <tr><td>Fixed Gratuity %</td><td><span class="ft">Percent</span></td><td>Optional — overrides the customer's choice on this account's trips.</td></tr>
+            <tr><td>Payment Terms / Rate Agreement</td><td><span class="ft">Text / Attachment</span></td><td>e.g. "Net 15". The signed PDF.</td></tr>
+            <tr><td>Monthly Volume / Primary Use</td><td><span class="ft">Select</span></td><td></td></tr>
+            <tr><td>Authorized Bookers</td><td><span class="ft">Long text / Link</span></td><td>Who may book on the account.</td></tr>
+            <tr><td>Customers / Bookings</td><td><span class="ft">Link</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Payments</h4><span class="role">money in and out</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Booking</td><td><span class="ft">Link → Bookings</span></td><td></td></tr>
+            <tr><td>Amount / Type</td><td><span class="ft">Currency / Single select</span></td><td>Deposit · Balance · Gratuity · Refund</td></tr>
+            <tr><td>Method / Processor Ref</td><td><span class="ft">Text</span></td><td>Stripe payment-intent id.</td></tr>
+            <tr><td>Status</td><td><span class="ft">Single select</span></td><td>Pending · Succeeded · Failed · Refunded</td></tr>
+            <tr><td>Created</td><td><span class="ft">Created time</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Reviews</h4><span class="role">reputation loop</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Customer / Trip</td><td><span class="ft">Link</span></td><td></td></tr>
+            <tr><td>Rating</td><td><span class="ft">Number (1–5)</span></td><td></td></tr>
+            <tr><td>Text / Platform</td><td><span class="ft">Long text / Select</span></td><td>Google · Yelp · Direct</td></tr>
+            <tr><td>Status</td><td><span class="ft">Single select</span></td><td>Requested · Received · Responded</td></tr>
+            <tr><td>Routed To</td><td><span class="ft">Single select</span></td><td>Google (4–5★) · Owner follow-up (1–3★)</td></tr>
+            <tr><td>Requested At</td><td><span class="ft">Date &amp; time</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Drivers</h4><span class="role">reference</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead><tbody>
+          <tr><td>Name / Phone</td><td><span class="ft">Text / Phone</span></td><td></td></tr>
+          <tr><td>License Expiry / Permit Expiry</td><td><span class="ft">Date</span></td><td>Drive a "compliance due" view off these.</td></tr>
+          <tr><td>Vehicles Qualified</td><td><span class="ft">Link → Vehicles</span></td><td></td></tr>
+          <tr><td>Active</td><td><span class="ft">Checkbox</span></td><td></td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Vehicles</h4><span class="role">reference</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead><tbody>
+          <tr><td>Class</td><td><span class="ft">Single select</span></td><td>Executive Sedan · Premium SUV · Sprinter Van (match the pricing engine labels).</td></tr>
+          <tr><td>Capacity / Luggage / Plate</td><td><span class="ft">Number / Text</span></td><td></td></tr>
+          <tr><td>Registration Expiry / Inspection Expiry</td><td><span class="ft">Date</span></td><td></td></tr>
+          <tr><td>Active</td><td><span class="ft">Checkbox</span></td><td></td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="tablecard">
+        <div class="th"><h4>Activity Log</h4><span class="role">append-only audit</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead><tbody>
+          <tr><td>Timestamp / Actor</td><td><span class="ft">Date &amp; time / Text</span></td><td>Actor = "system" or a person.</td></tr>
+          <tr><td>Record Type / Record Ref</td><td><span class="ft">Text</span></td><td>e.g. Lead · NWTC-260902-4821</td></tr>
+          <tr><td>Event / Detail</td><td><span class="ft">Text / Long text</span></td><td>intake:reservation · status:Quote Sent→Booked · send:reminder-24h</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <section id="links">
+      <h2><span class="n">03</span> Relationships</h2>
+      <pre>Corporate Account ─┬─&lt; Customers ─┬─&lt; Leads ──1─ Quote
+                   │              ├─&lt; Bookings ─┬─1─ Trip ──&gt; Driver, Vehicle
+                   └────&lt; Bookings              ├─&lt; Payments
+                                                └──── Reviews &gt;── Customer, Trip
+
+  ─&lt;  one-to-many        ──1─  one-to-one        every write ──&gt; Activity Log</pre>
+      <p>A person is a <strong>Customer</strong> once; each enquiry they make is a <strong>Lead</strong>; a Lead that converts gets a <strong>Booking</strong>. Corporate trips link to both the Customer (the booker) and the Corporate Account (for billing and rate).</p>
+    </section>
+
+    <section id="views">
+      <h2><span class="n">04</span> Views that run the day</h2>
+      <p>The schema is inert without these. Build them as saved views on each table.</p>
+
+      <h3>Leads</h3>
+      <ul>
+        <li><strong>Inbox</strong> — Status = New, sorted by Created ↓. The first thing checked each morning.</li>
+        <li><strong>Needs a quote</strong> — Quote Method = manual-quote AND Status in (New, Contacted). The dispatch work queue.</li>
+        <li><strong>Follow-up due</strong> — Next Follow-up ≤ now AND Status in (Quote Sent, Follow-up).</li>
+        <li><strong>Stale quotes</strong> — Status = Quote Sent AND Quote Expires &lt; now.</li>
+        <li><strong>This week</strong> — Created within 7 days (for the weekly count).</li>
+        <li><strong>Lost</strong> — Status = Lost, grouped by Lost Reason (find patterns).</li>
+      </ul>
+
+      <h3>Bookings</h3>
+      <ul>
+        <li><strong>Today</strong> / <strong>Tomorrow</strong> — Date = today / tomorrow, sorted by Time.</li>
+        <li><strong>Unassigned</strong> — Status in (Reserved, Confirmed) AND Trip is empty. Escalate anything inside 12 h.</li>
+        <li><strong>Unpaid</strong> — Deposit Paid = 0 AND Status ≠ Cancelled.</li>
+        <li><strong>Completed this month</strong> — for revenue.</li>
+      </ul>
+
+      <h3>Corporate Accounts</h3>
+      <ul>
+        <li><strong>Pipeline</strong> — Kanban grouped by Stage.</li>
+        <li><strong>Stalled</strong> — Stage not in (Active, Inactive) AND Last Modified &gt; 5 business days ago.</li>
+      </ul>
+
+      <h3>Customers</h3>
+      <ul>
+        <li><strong>Lapsed</strong> — Last Trip &gt; 120 days ago AND Segment ≠ Corporate. Feeds win-back.</li>
+        <li><strong>VIPs</strong> — Trip Count ≥ 5, sorted by Lifetime Value ↓.</li>
+      </ul>
+    </section>
+
+    <section id="automations">
+      <h2><span class="n">05</span> Automations</h2>
+      <p>Build these in Airtable Automations, or in Make if you need branching Airtable can't do. Every one also appends an Activity Log row.</p>
+
+      <ol>
+        <li><strong>Lead created</strong> → send the acknowledgement (email + SMS); if Quote Method is flat/hourly, the intake already set Status = Quote Sent and created the Quote — send that quote; if manual-quote, notify the owner it needs pricing; if corporate, the Corporate Account row already exists — notify the owner.</li>
+        <li><strong>Lead Status → Booked</strong> → create the Booking from the Lead's fields (if intake didn't already), set the Quote to Accepted, and <strong>stop the follow-up sequence</strong>.</li>
+        <li><strong>Quote Sent, no status change</strong> → the follow-up sequence at Created + 0 h / +1 d / +3 d / +7 d; advance Next Follow-up each step; at day 7 with no reply, Status = Lost, Lost Reason = "No reply".</li>
+        <li><strong>Booking Status → Completed</strong> → create a Review (Requested); send thank-you now, rating ask next morning.</li>
+        <li><strong>Review Rating set</strong> → ≥ 4: send the Google review link, Routed To = Google; ≤ 3: create an owner task, Routed To = Owner follow-up, <strong>do not</strong> ask for a public review.</li>
+        <li><strong>Nightly</strong> → recompute each Customer's Segment; flag Lapsed (no completed trip in 120 days).</li>
+        <li><strong>Corporate Account stalled</strong> → nudge the owner every 3–5 business days while Stage is between Contacted and Negotiation.</li>
+        <li><strong>Payment Status → Failed</strong> → retry once, then send the customer a card-update link; hold the Booking 24 h and alert the owner.</li>
+      </ol>
+
+      <div class="note"><span class="lbl">Approval gates carry over</span>
+        <p>From the system blueprint: unusual quotes, refunds, late cancellations, driver-change messaging, and any reply to a 1–3★ review wait for a one-tap human approval. In Airtable that's a checkbox field ("Approved to send") the automation waits on; in Make it's a router with a "wait for webhook" step.</p>
+      </div>
+    </section>
+
+    <section id="intake">
+      <h2><span class="n">06</span> Website → CRM intake</h2>
+      <p>The funnel POSTs one <code>payload</code> per submission. <code>crm/intake.js</code> turns it into ordered upserts.</p>
+
+      <h3>What the funnel sends</h3>
+      <pre>{
+  reference: "NWTC-260902-4821",
+  kind: "reservation" | "quote-request" | "corporate-lead",
+  submittedAt: "2026-09-02T18:22:00Z",
+  values: { service, zone, pickup, dropoff, date, time, passengers,
+            vehicle, flight, stops, childSeats, notes,
+            name, phone, email, company, volume, corpUse, consent },
+  quote: { method, finalAmount, lineItems } | "corporate",
+  source: "https://northwesttowncarservice.com/book?utm_source=google&utm_medium=cpc",
+  gclid:  "Cj0K…"   // optional — Google Ads click id, if the site kept it
+}</pre>
+
+      <h3>Rules the transform enforces</h3>
+      <ul>
+        <li><strong>Dedupe the person.</strong> Match Customers on phone (digits, US-normalised), fall back to email. Update the existing Customer, don't insert a second.</li>
+        <li><strong>Idempotent leads.</strong> Upsert Leads, Quotes, and Bookings on <code>Reference</code> — a double-submit or a webhook retry updates the same rows.</li>
+        <li><strong>Status from kind + method:</strong>
+          <ul>
+            <li><code>reservation</code> → Lead <em>Booked</em>, Quote <em>Accepted</em>, create Booking.</li>
+            <li><code>quote-request</code> + flat/hourly → Lead <em>Quote Sent</em>, Quote <em>Sent</em>, Next Follow-up = +3 h.</li>
+            <li><code>quote-request</code> + manual-quote → Lead <em>New</em>, Quote <em>Draft</em> (dispatch prices and sends it).</li>
+            <li><code>corporate-lead</code> → upsert Corporate Account (Prospect) on Company, link the Customer, Lead <em>New</em>.</li>
+          </ul>
+        </li>
+        <li><strong>Attribution</strong> comes from the <code>source</code> URL — utm_* params, or <code>gclid</code> → google / cpc.</li>
+        <li><strong>Never</strong> trust <code>quote.finalAmount</code> for a booking without re-running <code>NWTCPricing.verifyQuote()</code> server-side first (see the pricing README).</li>
+      </ul>
+
+      <h3>Applying the ops</h3>
+      <p><code>funnelPayloadToCRM(payload)</code> returns <code>{ ops: [...] }</code>. Each op is <code>{ table, op: "upsert"|"create", matchOn, fields }</code>. Apply in array order; <code>_linkCustomer</code> / <code>_linkLead</code> / <code>_linkCorporate</code> markers tell the applier to resolve a link from the record matched earlier. A ~30-line Make "Airtable: search then create/update" per table, or one Airtable script action, does the whole thing.</p>
+    </section>
+
+    <section id="setup">
+      <h2><span class="n">07</span> Stand it up</h2>
+      <ol class="check">
+        <li>Create an Airtable base "NWTC Operations". Add the 11 tables with the fields in Section 2 — start with <strong>Customers, Leads, Quotes, Bookings, Corporate Accounts, Activity Log</strong>; Trips / Drivers / Vehicles / Payments / Reviews can come with Phase 2.</li>
+        <li>Set every <span class="pill">Single select</span>'s options exactly as listed — the automations and the pricing engine match on these strings.</li>
+        <li>Add the linked-record fields and the rollups/counts on Customers.</li>
+        <li>Build the Section 4 views.</li>
+        <li>Create an Airtable <strong>personal access token</strong> scoped to this base (data.records:read + write). Store it in your automation tool's secrets, never in the funnel.</li>
+        <li>In Make (or Zapier): a scenario triggered by a webhook. Point the funnel's <code>INTEGRATION</code> fetch at that webhook URL.</li>
+        <li>In the scenario: run <code>intake.js</code>'s <code>funnelPayloadToCRM</code> in a code step, then a loop that applies each op with "Airtable → Search records" then "Create or Update".</li>
+        <li>Test with the funnel: submit one airport booking, one wedding quote, one corporate lead. Confirm three Leads, three Customers (or fewer if you reused a phone), one Booking, the right Statuses, and three Activity Log rows.</li>
+        <li>Turn on automations 1 and 3 (acknowledgement + follow-up). Add the rest as Phase 2 lands payment and reminders.</li>
+      </ol>
+      <p class="foot">CRM schema v1 · Northwest Town Car Service · 2026-09-02. A design document — nothing is provisioned yet. Field types are Airtable's; HubSpot maps Leads→Contacts, Bookings/Quotes→Deals, Corporate Accounts→Companies.</p>
+    </section>
+  </main>
+</div>
+<script>
+  (function(){var K='nwtc-crm-theme',r=document.documentElement,b=document.getElementById('themeToggle');
+   try{var s=localStorage.getItem(K);if(s)r.setAttribute('data-theme',s);}catch(e){}
+   function l(){var x=r.getAttribute('data-theme');b.textContent=x==='dark'?'Light':x==='light'?'Dark':'Theme';}l();
+   b.addEventListener('click',function(){var c=r.getAttribute('data-theme');
+    var p=matchMedia('(prefers-color-scheme:dark)').matches;var n=c?(c==='dark'?'light':'dark'):(p?'light':'dark');
+    r.setAttribute('data-theme',n);try{localStorage.setItem(K,n);}catch(e){}l();});})();
+</script>
+</body>
+</html>

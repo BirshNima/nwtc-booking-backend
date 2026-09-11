@@ -1,0 +1,264 @@
+{
+  "version": "2026-09-03.2",
+  "currency": "USD",
+  "updated": "2026-09-03",
+  "updatedBy": "add cash payment option",
+  "notes": "Single source of truth for Northwest Town Car Service pricing. Edit here (or via the admin screen, which exports this file). No rates are hard-coded anywhere else.",
+  "vehicleClasses": {
+    "executive-sedan": {
+      "label": "Executive Sedan",
+      "capacity": 3,
+      "bags": 3,
+      "airportTier": "sedan"
+    },
+    "luxury-sedan": {
+      "label": "Luxury Sedan",
+      "capacity": 3,
+      "bags": 3,
+      "airportTier": "sedan"
+    },
+    "premium-suv": {
+      "label": "Premium SUV",
+      "capacity": 6,
+      "bags": 6,
+      "airportTier": "suv"
+    },
+    "luxury-suv": {
+      "label": "Luxury SUV",
+      "capacity": 6,
+      "bags": 6,
+      "airportTier": "suv"
+    },
+    "executive-van": {
+      "label": "Executive Van",
+      "capacity": 11,
+      "bags": 12,
+      "airportTier": null
+    },
+    "sprinter": {
+      "label": "Sprinter",
+      "capacity": 14,
+      "bags": 16,
+      "airportTier": null
+    }
+  },
+  "airportFlatRates": {
+    "airport": "SEA",
+    "note": "One-way flat rate between SEA and the named service area, either direction. Vans and Sprinters to/from the airport are priced by manual quote.",
+    "tiers": [
+      "sedan",
+      "suv"
+    ],
+    "zones": {
+      "Seattle": {
+        "sedan": 89,
+        "suv": 119
+      },
+      "Bellevue": {
+        "sedan": 89,
+        "suv": 119
+      },
+      "Kirkland": {
+        "sedan": 105,
+        "suv": 135
+      },
+      "Redmond": {
+        "sedan": 109,
+        "suv": 139
+      },
+      "Renton": {
+        "sedan": 79,
+        "suv": 109
+      },
+      "Kent": {
+        "sedan": 79,
+        "suv": 109
+      },
+      "Federal Way": {
+        "sedan": 85,
+        "suv": 115
+      },
+      "Auburn": {
+        "sedan": 89,
+        "suv": 119
+      },
+      "Tacoma": {
+        "sedan": 99,
+        "suv": 129
+      },
+      "Puyallup": {
+        "sedan": 109,
+        "suv": 139
+      },
+      "Lynnwood": {
+        "sedan": 109,
+        "suv": 139
+      },
+      "Edmonds": {
+        "sedan": 119,
+        "suv": 149
+      },
+      "Everett": {
+        "sedan": 139,
+        "suv": 169
+      },
+      "Gig Harbor": {
+        "sedan": 139,
+        "suv": 169
+      }
+    }
+  },
+  "hourly": {
+    "note": "Billed hours = max(requested hours, class minimum).",
+    "rates": {
+      "executive-sedan": {
+        "hourly": 95,
+        "minHours": 3
+      },
+      "luxury-sedan": {
+        "hourly": 105,
+        "minHours": 3
+      },
+      "premium-suv": {
+        "hourly": 125,
+        "minHours": 3
+      },
+      "luxury-suv": {
+        "hourly": 140,
+        "minHours": 3
+      },
+      "executive-van": {
+        "hourly": 175,
+        "minHours": 3
+      },
+      "sprinter": {
+        "hourly": 225,
+        "minHours": 4
+      }
+    }
+  },
+  "addOns": {
+    "additionalStop": {
+      "label": "Additional stop",
+      "amount": 20,
+      "suggestedRange": [
+        15,
+        25
+      ],
+      "per": "stop"
+    },
+    "childSeat": {
+      "label": "Child seat",
+      "amount": 15,
+      "per": "seat"
+    },
+    "meetAndGreet": {
+      "label": "Airport meet & greet",
+      "amount": 0,
+      "note": "Included where offered"
+    },
+    "flightMonitoring": {
+      "label": "Flight monitoring",
+      "amount": 0,
+      "note": "Included on airport trips"
+    }
+  },
+  "waiting": {
+    "extraWaitPerMinute": 1.5,
+    "airportFreeMinutes": 60,
+    "nonAirportFreeMinutes": 15
+  },
+  "passThrough": {
+    "note": "Parking and tolls are billed at actual cost and added after the trip. Any estimate shown to the customer is non-binding.",
+    "items": [
+      "Parking",
+      "Tolls"
+    ]
+  },
+  "fees": {
+    "fuelSurchargePct": 0,
+    "bookingFee": 0,
+    "note": "Both default to 0. Set only with the owner's approval; changes are logged."
+  },
+  "tax": {
+    "label": "WA sales tax",
+    "pct": 0,
+    "note": "Defaults to 0. Washington's tax treatment of passenger ground transportation varies by service and jurisdiction \u2014 confirm the correct rate with the business's accountant before enabling. When set, tax applies to the discounted service subtotal plus fees, not to gratuity or pass-through costs."
+  },
+  "gratuity": {
+    "defaultPct": 20,
+    "includedInQuote": true,
+    "editableByCustomer": true,
+    "note": "Shown as its own line. Calculated on the discounted service subtotal (before tax and pass-through). Corporate accounts may set a fixed gratuity policy that overrides the customer's choice."
+  },
+  "corporateTiers": {
+    "standard": {
+      "label": "Standard",
+      "discountPct": 0
+    },
+    "corporate": {
+      "label": "Corporate",
+      "discountPct": 5
+    },
+    "preferred": {
+      "label": "Preferred",
+      "discountPct": 10
+    },
+    "volume": {
+      "label": "Volume",
+      "discountPct": 12
+    },
+    "contract": {
+      "label": "Contract",
+      "discountPct": null,
+      "note": "Rate is set per signed agreement and passed in as the contract rate; the table discount does not apply."
+    }
+  },
+  "deposit": {
+    "note": "A deposit is collected ONLY after dispatch confirms the ride is real and the driver/vehicle is assigned. It is never collected in the quote funnel. Card entry happens on Stripe's hosted checkout \u2014 card data never touches NWTC servers.",
+    "instantPrice": {
+      "type": "flat",
+      "amount": 50,
+      "appliesToFare": true
+    },
+    "customQuote": {
+      "type": "percent",
+      "pct": 25,
+      "appliesToFare": true,
+      "note": "Default for weddings / events / out-of-area. Dispatch can override per quote."
+    },
+    "corporate": {
+      "type": "none",
+      "note": "Billed on account per the rate agreement \u2014 no deposit."
+    },
+    "cash": {
+      "allowed": true,
+      "note": "Customer pays the driver the full fare in cash at the end of the trip. No online deposit. Dispatch approves every cash booking; if a card deposit is wanted to hold the slot, send a normal deposit link instead and note the balance is due in cash.",
+      "restrictions": {
+        "maxFare": 600,
+        "flagNewCustomers": true,
+        "note": "Above maxFare, or for a first-time customer, the booking is held for dispatch approval rather than auto-confirmed."
+      }
+    },
+    "refundableUntilHoursBefore": 24,
+    "minAmount": 25
+  },
+  "manualQuoteServices": [
+    "wedding",
+    "event",
+    "crew",
+    "special-event"
+  ],
+  "rules": {
+    "flatRateWhenAvailable": true,
+    "noStackedDiscounts": true,
+    "discountSource": "account-only",
+    "overridePrecedence": [
+      "adminOverrideAmount",
+      "account.contractRate",
+      "account.corporateTier"
+    ],
+    "roundEachLineToDollar": true,
+    "quoteExpiresHours": 72
+  }
+}

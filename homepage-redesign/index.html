@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northwest Town Car Service | Seattle &amp; Puget Sound Chauffeur</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBGMUUxOSIvPjxwYXRoIGZpbGw9IiNDMDlBNTYiIGQ9Ik05IDloNGw2IDEwVjloNHYxNGgtNGwtNi0xMHYxMEg5eiIvPjwvc3ZnPg==">
+<link rel="canonical" href="https://www.northwesttowncarservice.com/">
+<meta name="description" content="Airport transfers, corporate travel, weddings, and hourly chauffeur service across Seattle, the Eastside, and the South Sound. Flat airport rates from $79, priced before you book. Dispatch answers 24/7 — (206) 596-5504.">
+<meta property="og:title" content="Northwest Town Car Service — Seattle &amp; Puget Sound chauffeur">
+<meta property="og:description" content="Flat airport rates from $79, priced before you book. Corporate accounts, weddings, hourly service. Dispatch 24/7.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0F1E19">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#0F1E19; --forest-2:#16281F; --forest-3:#0b1712;
+    --cream:#F1ECE0; --cream-dim:#A9B3A6;
+    --brass:#C09A56; --brass-lit:#D9B87A;
+    --sage:#7E9583;
+    --sand:#ECE4D3; --sand-ink:#1B2A22;
+    --line:rgba(241,236,224,0.12); --line-2:rgba(241,236,224,0.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{background:var(--forest);color:var(--cream);font-family:'Work Sans',system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:400;line-height:1.08;letter-spacing:-0.015em;text-wrap:balance;}
+  h1 em,h2 em,h3 em{font-style:italic;color:var(--brass-lit);}
+  .mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  .eyebrow{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-lit);}
+  .band{padding:96px 0;border-top:1px solid var(--line);}
+  @media (max-width:720px){.band{padding:64px 0;}}
+  .band-2{background:var(--forest-2);}
+  .band-sand{background:var(--sand);color:var(--sand-ink);}
+  .band-sand .eyebrow{color:#8a6a2e;}
+  .band-sand h2{color:var(--sand-ink);}
+  .sect-head{max-width:620px;margin-bottom:52px;}
+  .sect-head h2{font-size:clamp(28px,4vw,42px);margin-top:14px;}
+  .sect-head p{color:var(--cream-dim);margin-top:16px;font-size:17px;}
+  .band-sand .sect-head p{color:#4a5a4f;}
+
+  /* header */
+  header.site{position:sticky;top:0;z-index:50;background:rgba(15,30,25,0.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  header.site .wrap{display:flex;align-items:center;gap:20px;height:62px;}
+  .wordmark{font-family:'Fraunces',serif;font-size:16px;letter-spacing:0.02em;}
+  .wordmark em{font-style:normal;color:var(--brass-lit);}
+  header nav{display:none;margin-left:24px;gap:26px;font-size:14px;color:var(--cream-dim);}
+  header nav a:hover{color:var(--cream);}
+  @media (min-width:900px){header nav{display:flex;}}
+  .head-right{margin-left:auto;display:flex;align-items:center;gap:14px;}
+  .head-phone{font-family:ui-monospace,monospace;font-size:13px;color:var(--cream-dim);}
+  .head-phone:hover{color:var(--cream);}
+  @media (max-width:560px){.head-phone{display:none;}}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:10px 18px;border-radius:999px;border:1px solid transparent;white-space:nowrap;transition:background .15s,border-color .15s,transform .15s;}
+  .btn-solid{background:var(--brass);color:#1c1305;}
+  .btn-solid:hover{background:var(--brass-lit);}
+  .btn-line{border-color:var(--line-2);color:var(--cream);}
+  .btn-line:hover{border-color:var(--brass);color:var(--brass-lit);}
+  .btn-lg{font-size:15px;padding:14px 26px;}
+
+  /* hero */
+  .hero{padding:84px 0 92px;background:radial-gradient(1100px 460px at 88% -10%,rgba(192,154,86,0.16),transparent 62%);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:44px;}}
+  .hero h1{font-size:clamp(42px,6.4vw,66px);font-weight:300;max-width:12ch;}
+  .hero p.sub{margin-top:22px;font-size:18px;color:var(--cream-dim);max-width:42ch;}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;}
+  .ticks{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:30px;font-size:12.5px;color:var(--cream-dim);font-family:ui-monospace,monospace;}
+  .ticks span{display:flex;align-items:center;gap:7px;}
+  .ticks span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--sage);}
+
+  /* rate board */
+  .board{border:1px solid var(--line);background:var(--forest-2);border-radius:14px;padding:18px;box-shadow:0 24px 60px -30px rgba(0,0,0,.7);}
+  .board-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+  .board-top .eyebrow{font-size:10px;letter-spacing:0.16em;}
+  .board-top .k{font-family:ui-monospace,monospace;font-size:11px;color:var(--cream-dim);}
+  .board-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:11px 4px;border-top:1px solid var(--line);font-family:ui-monospace,monospace;font-size:13.5px;align-items:center;}
+  .board-row .city{color:var(--cream);}
+  .board-row .amt{color:var(--brass-lit);font-weight:500;}
+  .board-row.head{border-top:none;color:var(--cream-dim);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding-bottom:6px;}
+  .board-foot{margin-top:10px;font-size:11.5px;color:var(--cream-dim);font-family:ui-monospace,monospace;}
+  .board-foot a{color:var(--brass-lit);}
+  @keyframes flip{0%{transform:rotateX(-90deg);opacity:0;}100%{transform:rotateX(0);opacity:1;}}
+  .board-row.flip .amt{display:inline-block;transform-origin:top;animation:flip .5s ease .2s both;}
+
+  /* services */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  @media (max-width:820px){.svc-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.svc-grid{grid-template-columns:1fr;}}
+  .svc{background:var(--forest);padding:30px 26px;display:flex;flex-direction:column;gap:10px;min-height:190px;transition:background .15s;}
+  .svc:hover{background:var(--forest-2);}
+  .svc .n{font-family:ui-monospace,monospace;font-size:11px;color:var(--brass);}
+  .svc h3{font-size:21px;}
+  .svc p{color:var(--cream-dim);font-size:14px;flex-grow:1;}
+  .svc .go{font-family:ui-monospace,monospace;font-size:12px;color:var(--brass-lit);}
+
+  /* why */
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px 40px;}
+  @media (max-width:820px){.why-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.why-grid{grid-template-columns:1fr;}}
+  .why h3{font-size:18px;margin-bottom:8px;}
+  .why h3::before{content:"—  ";color:var(--brass);}
+  .why p{color:var(--cream-dim);font-size:14px;}
+
+  /* split feature (airport spotlight, corporate strip) */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;}
+  @media (max-width:820px){.split{grid-template-columns:1fr;gap:32px;}}
+  .split h2{font-size:clamp(26px,3.4vw,36px);}
+  .split ul{list-style:none;margin:22px 0 28px;}
+  .split li{padding:9px 0 9px 26px;position:relative;color:var(--cream-dim);font-size:15px;border-top:1px solid var(--line);}
+  .split li:first-child{border-top:none;}
+  .split li::before{content:"→";position:absolute;left:0;color:var(--brass);}
+
+  /* fleet */
+  .fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media (max-width:820px){.fleet-grid{grid-template-columns:1fr;}}
+  .fleet{border:1px solid var(--line);border-radius:14px;padding:24px;background:linear-gradient(165deg,var(--forest-2),var(--forest));}
+  .fleet .tag{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--sage);}
+  .fleet h3{font-size:19px;margin:10px 0 6px;}
+  .fleet p{color:var(--cream-dim);font-size:13.5px;}
+  .fleet .spec{margin-top:14px;font-family:ui-monospace,monospace;font-size:12px;color:var(--cream-dim);}
+  .fleet .spec div{padding:5px 0;border-top:1px solid var(--line);}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:s;}
+  @media (max-width:820px){.steps{grid-template-columns:1fr 1fr;}}
+  @media (max-width:460px){.steps{grid-template-columns:1fr;}}
+  .step{counter-increment:s;}
+  .step .num{font-family:ui-monospace,monospace;font-size:12px;color:#8a6a2e;}
+  .step .num::before{content:"0" counter(s) " / ";}
+  .step h3{font-size:18px;margin:8px 0 6px;color:var(--sand-ink);}
+  .step p{font-size:13.5px;color:#4a5a4f;}
+
+  /* review */
+  .review{max-width:760px;}
+  .review blockquote{font-family:'Fraunces',serif;font-size:clamp(22px,3.2vw,30px);font-weight:300;font-style:italic;line-height:1.4;}
+  .review cite{display:block;margin-top:20px;font-style:normal;font-family:ui-monospace,monospace;font-size:13px;color:var(--brass-lit);}
+  .review .more{margin-top:24px;font-family:ui-monospace,monospace;font-size:13px;color:var(--cream-dim);}
+  .review .more a{color:var(--brass-lit);}
+
+  /* areas */
+  .areas{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  @media (max-width:720px){.areas{grid-template-columns:1fr 1fr;}}
+  .areas a{background:var(--forest);padding:16px 18px;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:background .12s;}
+  .areas a:hover{background:var(--forest-2);color:var(--brass-lit);}
+  .areas a .p{font-family:ui-monospace,monospace;font-size:12px;color:var(--brass);}
+
+  /* faq */
+  .faq{max-width:760px;}
+  .faq details{border-top:1px solid var(--line);padding:18px 0;}
+  .faq details:last-child{border-bottom:1px solid var(--line);}
+  .faq summary{font-size:17px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:"+";color:var(--brass);font-family:ui-monospace,monospace;}
+  .faq details[open] summary::after{content:"–";}
+  .faq details p{color:var(--cream-dim);font-size:14.5px;margin-top:12px;max-width:64ch;}
+
+  /* final cta */
+  .final{text-align:center;padding:104px 0;background:radial-gradient(800px 380px at 50% 120%,rgba(192,154,86,0.18),transparent 60%);}
+  .final h2{font-size:clamp(32px,5vw,52px);font-weight:300;}
+  .final .hero-cta{justify-content:center;margin-top:30px;}
+
+  /* footer */
+  footer.site{background:var(--forest-3);border-top:1px solid var(--line);padding:60px 0 36px;}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:32px;}
+  @media (max-width:820px){.foot-grid{grid-template-columns:1fr 1fr;}}
+  footer h4{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:14px;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:8px;font-size:13.5px;color:var(--cream-dim);}
+  footer li a:hover{color:var(--brass-lit);}
+  .foot-brand p{font-size:13.5px;color:var(--cream-dim);margin-top:12px;max-width:34ch;}
+  .foot-bar{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:ui-monospace,monospace;font-size:11px;color:var(--cream-dim);}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;}}
+  html:not(.js) .reveal{opacity:1;transform:none;}
+
+  /* ---- mobile nav (<=899px) ---- */
+  .m-nav-btn,.m-nav-cta,.m-nav-tel{display:none;}
+  @media (max-width:899px){
+    header.site .wrap{height:auto;min-height:62px;gap:12px;}
+    .wordmark{font-size:14px;letter-spacing:0.01em;}
+    .head-right{display:none;}
+    .m-nav-btn{order:2;margin-left:auto;flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;background:transparent;border:1px solid var(--line-2);border-radius:9px;color:var(--cream);cursor:pointer;}
+    .m-nav-btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+    .m-nav-icon{position:relative;display:block;width:17px;height:2px;background:currentColor;}
+    .m-nav-icon::before,.m-nav-icon::after{content:"";position:absolute;left:0;width:17px;height:2px;background:currentColor;transition:transform .2s ease;}
+    .m-nav-icon::before{top:-6px;} .m-nav-icon::after{top:6px;}
+    .m-nav-btn[aria-expanded="true"] .m-nav-icon{background:transparent;}
+    .m-nav-btn[aria-expanded="true"] .m-nav-icon::before{transform:translateY(6px) rotate(45deg);}
+    .m-nav-btn[aria-expanded="true"] .m-nav-icon::after{transform:translateY(-6px) rotate(-45deg);}
+    header.site nav{position:absolute;left:0;right:0;top:100%;display:flex;flex-direction:column;gap:0;margin:0;font-size:15px;background:var(--forest-2);border-bottom:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(0,0,0,.6);max-height:0;overflow:hidden;visibility:hidden;transition:max-height .24s ease,visibility .24s;}
+    header.site nav.m-open{max-height:82vh;overflow-y:auto;visibility:visible;}
+    header.site nav a{padding:14px 28px;border-top:1px solid var(--line);color:var(--cream);}
+    header.site nav a:first-child{border-top:none;}
+    .m-nav-cta,.m-nav-tel{display:block;margin:10px 20px;padding:12px;text-align:center;font-weight:600;border-radius:999px;border-top:none!important;}
+    .m-nav-cta{background:var(--brass);color:#1c1305;}
+    .m-nav-tel{margin-top:0;border:1px solid var(--line-2)!important;color:var(--cream);font-family:ui-monospace,monospace;font-size:13px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">NORTHWEST TOWN CAR <em>SERVICE</em></a>
+    <button class="m-nav-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="m-nav-icon"></span></button>
+    <nav id="site-nav">
+      <a href="#services">Services</a>
+      <a href="#airport">Airport</a>
+      <a href="#fleet">Fleet</a>
+      <a href="#areas">Service area</a>
+      <a href="#corporate">Corporate</a>
+      <a href="#journal">Journal</a>
+      <a class="m-nav-cta" href="booking-funnel/index.html">Book a ride</a>
+      <a class="m-nav-tel" href="tel:+12065965504">Call (206) 596-5504</a>
+    </nav>
+    <div class="head-right">
+      <a class="head-phone" href="tel:+12065965504">(206) 596-5504</a>
+      <a class="btn btn-solid" href="booking-funnel/index.html">Book a ride</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Seattle &amp; the Puget Sound</span>
+      <h1>Every route, <em>handled</em>.</h1>
+      <p class="sub">Airport transfers, corporate travel, and point-to-point rides driven by chauffeurs who already know the way — and quoted before you book.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid btn-lg" href="booking-funnel/index.html">Book a ride</a>
+        <a class="btn btn-line btn-lg" href="booking-funnel/index.html">Get a quote</a>
+        <a class="btn btn-line btn-lg" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+      <div class="ticks">
+        <span>Licensed WUTC carrier</span>
+        <span>Fully insured</span>
+        <span>Dispatch answers 24/7</span>
+        <span>Flights tracked</span>
+      </div>
+    </div>
+
+    <div class="board" aria-label="Sample flat airport rates">
+      <div class="board-top">
+        <span class="eyebrow">SEA flat rates</span>
+        <span class="k">sedan · both ways</span>
+      </div>
+      <div class="board-row head"><span>Between SEA and</span><span>from</span></div>
+      <div class="board-row flip"><span class="city">Seattle</span><span class="amt">$89</span></div>
+      <div class="board-row"><span class="city">Bellevue</span><span class="amt">$89</span></div>
+      <div class="board-row"><span class="city">Kent · Renton</span><span class="amt">$79</span></div>
+      <div class="board-row"><span class="city">Tacoma</span><span class="amt">$99</span></div>
+      <div class="board-row"><span class="city">Redmond</span><span class="amt">$109</span></div>
+      <div class="board-row"><span class="city">Everett</span><span class="amt">$139</span></div>
+      <p class="board-foot">Flat, no surge. SUV and other areas <a href="airport-transportation.html">on the airport page →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">What we run</span>
+      <h2>Six ways people ride with us</h2>
+      <p>Every trip is dispatched, tracked, and confirmed — whether it's a 4 a.m. flight or a standing weekly account.</p>
+    </div>
+    <div class="svc-grid reveal">
+      <a class="svc" href="airport-transportation.html">
+        <span class="n">01</span><h3>Airport transfers</h3>
+        <p>Flight-tracked pickups to and from SEA, priced by flat rate before you book. Your chauffeur adjusts if the flight moves.</p>
+        <span class="go">Flat rates &amp; details →</span>
+      </a>
+      <a class="svc" href="corporate-transportation.html">
+        <span class="n">02</span><h3>Corporate &amp; executive</h3>
+        <p>Standing accounts with monthly invoicing, a dedicated dispatch line, and rates set per contract, not per ride.</p>
+        <span class="go">Set up an account →</span>
+      </a>
+      <a class="svc" href="wedding-transportation.html">
+        <span class="n">03</span><h3>Weddings &amp; events</h3>
+        <p>One vehicle or a coordinated fleet, arriving together and on schedule. Quoted around your timeline.</p>
+        <span class="go">Request a quote →</span>
+      </a>
+      <a class="svc" href="hourly-chauffeur.html">
+        <span class="n">04</span><h3>Hourly chauffeur</h3>
+        <p>Keep a car and driver on call by the hour — meetings, showings, a night out. Three-hour minimum, priced up front.</p>
+        <span class="go">See hourly rates →</span>
+      </a>
+      <a class="svc" href="point-to-point.html">
+        <span class="n">05</span><h3>Point-to-point</h3>
+        <p>One direct trip across town or across the county. Send the details and we'll send a quote, usually within the hour.</p>
+        <span class="go">Request a quote →</span>
+      </a>
+      <a class="svc" href="cruise-wine-tours.html">
+        <span class="n">06</span><h3>Cruise &amp; wine tours</h3>
+        <p>Pier 66 and Pier 91 transfers, and unhurried days through Woodinville and beyond with a driver who waits.</p>
+        <span class="go">Plan a trip →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="band band-2">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">Why Northwest</span>
+      <h2>Reliable is the whole product</h2>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why"><h3>Professional chauffeurs</h3><p>Vetted, licensed, and permitted drivers who dress the part and know the region's roads and shortcuts.</p></div>
+      <div class="why"><h3>On time, flight-aware</h3><p>We watch your flight and shift the pickup automatically. For departures we build in a buffer you don't have to think about.</p></div>
+      <div class="why"><h3>Transparent flat rates</h3><p>Airport and hourly trips are priced before you book — no surge, no meter anxiety, no surprise on the receipt.</p></div>
+      <div class="why"><h3>Comfortable, kept-up cars</h3><p>A quiet cabin, room to work, bottled water and Wi-Fi. Vehicles inspected and cleaned between every trip.</p></div>
+      <div class="why"><h3>One dispatcher, one number</h3><p>Call (206) 596-5504 any hour and reach a person who can move your reservation, not a queue.</p></div>
+      <div class="why"><h3>Licensed &amp; insured</h3><p>A registered WUTC carrier with commercial insurance — the paperwork corporate travel managers ask for is in order.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="airport">
+  <div class="wrap split">
+    <div class="reveal">
+      <span class="eyebrow">Airport transportation</span>
+      <h2>SEA runs, <em>priced before you book</em></h2>
+      <ul>
+        <li>Flat rate by area — sedan from $79, listed in full on the airport page</li>
+        <li>Flight tracking and automatic pickup adjustment, included</li>
+        <li>Meet-and-greet at baggage claim or a quick curbside pickup — your call</li>
+        <li>60 minutes of wait time included on airport pickups</li>
+        <li>Paine Field / Everett and other regional airports by request</li>
+      </ul>
+      <a class="btn btn-solid btn-lg" href="airport-transportation.html">See all airport rates</a>
+    </div>
+    <div class="board reveal">
+      <div class="board-top"><span class="eyebrow">SEA · SUV</span><span class="k">both ways · flat</span></div>
+      <div class="board-row head"><span>Between SEA and</span><span>from</span></div>
+      <div class="board-row"><span class="city">Seattle · Bellevue</span><span class="amt">$119</span></div>
+      <div class="board-row"><span class="city">Kent · Renton</span><span class="amt">$109</span></div>
+      <div class="board-row"><span class="city">Tacoma</span><span class="amt">$129</span></div>
+      <div class="board-row"><span class="city">Redmond</span><span class="amt">$139</span></div>
+      <div class="board-row"><span class="city">Everett · Gig Harbor</span><span class="amt">$169</span></div>
+      <p class="board-foot">Up to 6 riders, 6 bags. Full table &amp; add-ons on the <a href="airport-transportation.html">airport page →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-2" id="fleet">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">The fleet</span>
+      <h2>A car for the trip, not just any car</h2>
+    </div>
+    <div class="fleet-grid reveal">
+      <div class="fleet">
+        <span class="tag">Executive Sedan</span>
+        <h3>For one or two, moving fast</h3>
+        <p>The everyday choice for airport runs and solo business travel. Quiet, room to work.</p>
+        <div class="spec"><div>Up to 3 passengers</div><div>3 standard bags</div><div>Wi-Fi &amp; bottled water</div></div>
+      </div>
+      <div class="fleet">
+        <span class="tag">Premium SUV</span>
+        <h3>For groups and extra luggage</h3>
+        <p>Fits families flying in together or a crew headed to the same meeting, with the bags to match.</p>
+        <div class="spec"><div>Up to 6 passengers</div><div>6 standard bags</div><div>Captain's chairs</div></div>
+      </div>
+      <div class="fleet">
+        <span class="tag">Sprinter Van</span>
+        <h3>For the whole party</h3>
+        <p>Wedding parties, wine tours, team offsites — arrive together and stay together.</p>
+        <div class="spec"><div>Up to 14 passengers</div><div>Luggage trailer available</div><div>Onboard climate control</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-sand">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>From request to ride, in four steps</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><p class="num">Book or request a quote</p><h3>Tell us the trip</h3><p>Pickup, drop-off, time. Airport and hourly trips show a price on the spot; everything else comes back quoted.</p></div>
+      <div class="step"><p class="num">Confirmation</p><h3>Driver, vehicle, price</h3><p>A text and email confirm your chauffeur, the car, and the fare — nothing left to guess.</p></div>
+      <div class="step"><p class="num">Pickup</p><h3>Meet your chauffeur</h3><p>Curbside, at baggage claim, or at your door. You'll have the driver's name and number in advance.</p></div>
+      <div class="step"><p class="num">Done</p><h3>Ride, receipt, done</h3><p>An itemized receipt lands in your inbox. Corporate accounts are invoiced monthly.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="reviews">
+  <div class="wrap review reveal">
+    <span class="eyebrow">From the back seat</span>
+    <blockquote style="margin-top:20px;">"Called a few hours before my flight and they still got a driver to me. Smooth ride, no stress getting to SeaTac."</blockquote>
+    <cite>— Rider, Kent, WA</cite>
+    <!-- Add 2–3 more real reviews here, pulled from Google. Do not use invented or placeholder testimonials. -->
+    <p class="more">More reviews on <a href="https://www.google.com/search?q=Northwest+Town+Car+Service+Seattle+reviews">Google →</a></p>
+  </div>
+</section>
+
+<section class="band band-2" id="areas">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">Coverage</span>
+      <h2>If it's in the Puget Sound, we've driven it</h2>
+      <p>Based near SeaTac, running daily through King and Pierce counties. Don't see your city? Call — if it's reachable, we'll get a driver there.</p>
+    </div>
+    <div class="areas reveal">
+      <a href="service-area/seattle.html"><span>Seattle</span><span class="p">$89</span></a>
+      <a href="service-area/bellevue.html"><span>Bellevue</span><span class="p">$89</span></a>
+      <a href="service-area/kirkland.html"><span>Kirkland</span><span class="p">$105</span></a>
+      <a href="service-area/redmond.html"><span>Redmond</span><span class="p">$109</span></a>
+      <a href="service-area/renton.html"><span>Renton</span><span class="p">$79</span></a>
+      <a href="service-area/kent.html"><span>Kent</span><span class="p">$79</span></a>
+      <a href="service-area/federal-way.html"><span>Federal Way</span><span class="p">$85</span></a>
+      <a href="service-area/auburn.html"><span>Auburn</span><span class="p">$89</span></a>
+      <a href="service-area/tacoma.html"><span>Tacoma</span><span class="p">$99</span></a>
+      <a href="service-area/puyallup.html"><span>Puyallup</span><span class="p">$109</span></a>
+      <a href="service-area/lynnwood.html"><span>Lynnwood</span><span class="p">$109</span></a>
+      <a href="service-area/edmonds.html"><span>Edmonds</span><span class="p">$119</span></a>
+      <a href="service-area/everett.html"><span>Everett</span><span class="p">$139</span></a>
+      <a href="service-area/gig-harbor.html"><span>Gig Harbor</span><span class="p">$139</span></a>
+    </div>
+    <p style="margin-top:16px;font-size:13px;color:var(--cream-dim);font-family:ui-monospace,monospace;">Prices shown are one-way sedan flat rates between SEA and that area.</p>
+  </div>
+</section>
+
+<section class="band" id="corporate">
+  <div class="wrap split">
+    <div class="reveal">
+      <span class="eyebrow">Corporate accounts</span>
+      <h2>Travel your assistants will <em>actually like</em></h2>
+      <ul>
+        <li>Monthly invoicing on net terms — one statement, not a pile of receipts</li>
+        <li>Standing pickups and a dedicated dispatch line for your team's bookers</li>
+        <li>Consistent, vetted drivers who learn your executives' preferences</li>
+        <li>Tiered rates set per contract as your volume grows</li>
+        <li>Expense-ready itemized receipts on every trip</li>
+      </ul>
+      <a class="btn btn-solid btn-lg" href="corporate-transportation.html">Set up a corporate account</a>
+    </div>
+    <div class="reveal" style="border:1px solid var(--line);border-radius:14px;padding:26px;background:var(--forest-2);">
+      <p class="eyebrow" style="color:var(--brass-lit)">Account tiers</p>
+      <div class="board-row" style="border-top:none;"><span class="city">Standard</span><span class="amt" style="color:var(--cream-dim)">list rate</span></div>
+      <div class="board-row"><span class="city">Corporate</span><span class="amt">5% off</span></div>
+      <div class="board-row"><span class="city">Preferred</span><span class="amt">10% off</span></div>
+      <div class="board-row"><span class="city">Volume</span><span class="amt">12% off</span></div>
+      <div class="board-row"><span class="city">Contract</span><span class="amt" style="color:var(--cream-dim)">per agreement</span></div>
+      <p class="board-foot">Tier is set on your account and applied automatically to every booking.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-2">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2>Questions we hear a lot</h2>
+    </div>
+    <div class="faq reveal">
+      <details><summary>How far ahead should I book?</summary><p>For airport pickups, a day's notice is comfortable; we take same-day and last-minute rides whenever a car is free, so call if you're inside 24 hours. Weddings, events, and multi-vehicle bookings are best locked in two to three weeks out.</p></details>
+      <details><summary>What happens if my flight is delayed?</summary><p>We track it. Your pickup time moves with the flight automatically, and there's no charge for the wait on a delayed arrival.</p></details>
+      <details><summary>How is pricing set?</summary><p>Airport and hourly trips use published flat rates — you see the price before you book, and it doesn't change with traffic or demand. Weddings, events, and out-of-area trips are quoted individually, usually within the hour.</p></details>
+      <details><summary>Do you charge for wait time?</summary><p>Airport pickups include 60 minutes of wait; other pickups include 15. Beyond that it's $1.50 a minute. Parking and tolls are billed at actual cost.</p></details>
+      <details><summary>What areas do you serve?</summary><p>All of King and Pierce counties from a SeaTac base — Seattle, the Eastside, and the South Sound — plus North Sound cities like Everett and Edmonds. Ask about anywhere else.</p></details>
+      <details><summary>Can you provide child seats?</summary><p>Yes — infant, convertible, or booster, $15 each. Tell us the child's age and weight when you book.</p></details>
+      <details><summary>How do I pay?</summary><p>Individual trips are charged to a card after dispatch confirms the final quote. Corporate accounts are invoiced monthly.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="journal">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <span class="eyebrow">The journal</span>
+      <h2>Notes from the road</h2>
+      <p>Practical reading for anyone flying out of SeaTac, sailing from the piers, or managing a travel budget.</p>
+    </div>
+    <div class="svc-grid reveal">
+      <a class="svc" href="blog/how-early-book-seatac-pickup.html">
+        <span class="n">Airport travel</span><h3>How early to book a SeaTac airport pickup</h3>
+        <p>By departure time, by starting city, and for international flights and holiday weekends — from the people who dispatch these runs.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+      <a class="svc" href="blog/corporate-car-account-vs-rideshare.html">
+        <span class="n">For business</span><h3>Corporate car account vs. rideshare</h3>
+        <p>The honest comparison — cost at volume, no-show risk, expense reporting, and duty of care.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+      <a class="svc" href="blog/sea-to-cruise-terminal-guide.html">
+        <span class="n">Cruise travel</span><h3>SEA to the Seattle cruise terminals</h3>
+        <p>Pier 66 or Pier 91, drive times, when to actually arrive for boarding, and how the return morning works.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+      <a class="svc" href="blog/woodinville-wine-tour-itinerary.html">
+        <span class="n">Local guide</span><h3>A Woodinville wine tour itinerary</h3>
+        <p>The four districts, a sensible route through three or four rooms with lunch, and the practical details.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+    </div>
+    <p style="margin-top:20px;font-family:ui-monospace,monospace;font-size:13px;"><a href="blog/how-early-book-seatac-pickup.html" style="color:var(--brass-lit);">All 12 guides in the journal →</a></p>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <span class="eyebrow">Ready when you are</span>
+    <h2>A car is waiting.<br>So is your schedule.</h2>
+    <div class="hero-cta">
+      <a class="btn btn-solid btn-lg" href="booking-funnel/index.html">Book a ride</a>
+      <a class="btn btn-line btn-lg" href="tel:+12065965504">Call (206) 596-5504</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="wordmark" href="index.html">NORTHWEST TOWN CAR <em>SERVICE</em></a>
+        <p>Licensed, insured, and dispatched 24 hours a day across the greater Seattle and Puget Sound area.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="airport-transportation.html">Airport transfers</a></li>
+          <li><a href="corporate-transportation.html">Corporate &amp; executive</a></li>
+          <li><a href="wedding-transportation.html">Weddings &amp; events</a></li>
+          <li><a href="hourly-chauffeur.html">Hourly chauffeur</a></li>
+          <li><a href="point-to-point.html">Point-to-point</a></li>
+          <li><a href="cruise-wine-tours.html">Cruise &amp; wine tours</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Service area</h4>
+        <ul>
+          <li>Seattle &amp; SeaTac</li>
+          <li>Bellevue · Kirkland · Redmond</li>
+          <li>Renton · Kent · Auburn</li>
+          <li>Tacoma · Puyallup · Federal Way</li>
+          <li>Everett · Edmonds · Lynnwood</li>
+          <li>Gig Harbor</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+12065965504">(206) 596-5504</a> · 24/7 dispatch</li>
+          <li><a href="mailto:booking@northwesttowncarservice.com">booking@northwesttowncarservice.com</a></li>
+          <li>Kent, WA 98032</li>
+          <li>Office: Mon–Fri, 8a–6p</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <span>© 2026 Northwest Town Car Service</span>
+      <span>Licensed WUTC carrier · Fully insured</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LimousineService",
+  "name":"Northwest Town Car Service",
+  "url":"https://northwesttowncarservice.com",
+  "telephone":"+1-206-596-5504",
+  "priceRange":"$$",
+  "image":"https://northwesttowncarservice.com/og.jpg",
+  "address":{"@type":"PostalAddress","addressLocality":"Kent","addressRegion":"WA","postalCode":"98032","addressCountry":"US"},
+  "areaServed":["Seattle","SeaTac","Bellevue","Kirkland","Redmond","Renton","Kent","Auburn","Federal Way","Tacoma","Puyallup","Lynnwood","Edmonds","Everett","Gig Harbor"],
+  "openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},
+  "makesOffer":[
+    {"@type":"Offer","name":"SEA airport transfer (sedan)","priceCurrency":"USD","price":"79","priceSpecification":{"@type":"PriceSpecification","description":"Flat rate from SEA, varies by service area, starting at $79"}}
+  ]
+}
+</script>
+<script>
+  (function(){
+    document.documentElement.classList.add('js');
+    var els=document.querySelectorAll('.reveal');
+    var showAll=function(){els.forEach(function(e){e.classList.add('in');});};
+    if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){showAll();return;}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+    setTimeout(showAll,2000); /* safety net */
+  })();
+</script>
+<script>
+(function(){
+  var b=document.querySelector('.m-nav-btn'),n=document.getElementById('site-nav');
+  if(!b||!n)return;
+  function set(o){b.setAttribute('aria-expanded',o?'true':'false');n.classList.toggle('m-open',o);}
+  b.addEventListener('click',function(){set(b.getAttribute('aria-expanded')!=='true');});
+  n.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<title>NWTC SMS &amp; Email</title>
+<meta name="description" content="Every automated message Northwest Town Car Service sends — confirmations, the deposit link, the 24-hour reminder, review requests, and the day 0/1/3/7 quote follow-up — with its channel, trigger, stop conditions, and the compliance rules around SMS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5;--surface:#FBF8F1;--surface-2:#EDE7D8;--ink:#16261F;--muted:#5B6A5F;
+    --brass:#9A6E28;--brass-ink:#7C5A1E;--sage:#3E7A52;--amber:#A9741F;--risk:#A8443A;
+    --line:rgba(22,38,31,0.14);--line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 10px 30px -16px rgba(22,38,31,0.2);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1E19;--surface:#16281F;--surface-2:#1F3529;--ink:#F1ECE0;--muted:#A9B3A6;
+      --brass:#C09A56;--brass-ink:#D4AC66;--sage:#8FB08C;--amber:#D9B36A;--risk:#D98A7C;
+      --line:rgba(241,236,224,0.16);--line-soft:rgba(241,236,224,0.08);
+      --shadow:0 1px 2px rgba(0,0,0,0.3),0 12px 34px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1E19;--surface:#16281F;--surface-2:#1F3529;--ink:#F1ECE0;--muted:#A9B3A6;
+    --brass:#C09A56;--brass-ink:#D4AC66;--sage:#8FB08C;--amber:#D9B36A;--risk:#D98A7C;
+    --line:rgba(241,236,224,0.16);--line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 12px 34px -16px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,-apple-system,sans-serif;line-height:1.68;font-size:16.5px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.16;letter-spacing:-0.012em;text-wrap:balance;margin:0;}
+  p{margin:0 0 1rem;} strong{font-weight:600;}
+  a{color:var(--brass-ink);}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.86em;}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 110px;}
+  @media (min-width:1060px){
+    .page{display:grid;grid-template-columns:200px minmax(0,1fr);gap:52px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}
+  }
+  .toc{display:none;font-size:14px;}
+  @media (min-width:1060px){.toc{display:block;}}
+  .toc .toc-title{font-family:'Fraunces',serif;font-size:15px;margin-bottom:14px;padding-left:14px;}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{counter-increment:toc;}
+  .toc a{display:block;padding:6px 12px 6px 14px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;}
+  .toc a:hover{color:var(--ink);border-left-color:var(--brass);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);font-variant-numeric:tabular-nums;}
+
+  main{min-width:0;padding-top:40px;}
+  header.hero{padding:24px 0 34px;border-bottom:2px solid var(--ink);margin-bottom:44px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.6vw,2.9rem);margin:14px 0 0;font-weight:600;max-width:16ch;}
+  header.hero .stand{font-size:1.1rem;color:var(--muted);margin:16px 0 0;max-width:60ch;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);}
+
+  .toggle{position:fixed;top:14px;right:14px;z-index:40;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:6px 13px;font:inherit;font-size:12.5px;cursor:pointer;box-shadow:var(--shadow);}
+  .toggle:hover{border-color:var(--brass);}
+  .toggle:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+  section{margin:0 0 60px;scroll-margin-top:20px;}
+  section > h2{font-size:clamp(1.5rem,2.7vw,2rem);padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:baseline;}
+  section > h2 .n{font-family:ui-monospace,monospace;font-size:0.58em;color:var(--brass);font-weight:400;}
+  section > h3{font-size:1.2rem;margin:32px 0 12px;}
+  section p,section ul,section ol{max-width:70ch;}
+  section ul,section ol{padding-left:1.2rem;}
+  section li{margin:0 0 .4rem;}
+  .lead{font-size:1.1rem;}
+
+  .pill{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.04em;text-transform:uppercase;padding:3px 8px;border-radius:5px;border:1px solid var(--line);white-space:nowrap;}
+  .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;}
+  .pill.sms{color:var(--sage);border-color:color-mix(in srgb,var(--sage) 40%,transparent);}
+  .pill.email{color:var(--brass-ink);border-color:color-mix(in srgb,var(--brass) 40%,transparent);}
+  .pill.gate{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent);}
+
+  .note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:16px 18px;margin:20px 0;font-size:0.97rem;box-shadow:var(--shadow);}
+  .note p:last-child{margin-bottom:0;}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+
+  .table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;font-size:0.88rem;background:var(--surface);min-width:640px;}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-family:'Work Sans',sans-serif;font-weight:700;font-size:0.74rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);}
+  tbody tr:last-child td{border-bottom:none;}
+  td code{font-size:0.82em;}
+  .ex{color:var(--muted);font-style:italic;}
+
+  /* sequence rail */
+  .seq{margin:24px 0;display:flex;flex-direction:column;gap:0;}
+  .seq-step{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;}
+  .seq-when{font-family:ui-monospace,monospace;font-size:12px;color:var(--brass-ink);padding-top:14px;text-align:right;}
+  .seq-body{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:12px 15px;margin:6px 0;box-shadow:var(--shadow);}
+  .seq-body .h{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .seq-body .h strong{font-size:0.95rem;}
+  .seq-body .msg{color:var(--muted);font-size:0.87rem;margin-top:4px;}
+  .seq-rail{grid-column:1;justify-self:end;width:2px;background:var(--line);height:14px;margin-right:31px;}
+  .seq-stop{border:1px dashed var(--risk);border-radius:10px;background:color-mix(in srgb,var(--risk) 7%,var(--surface));padding:12px 15px;margin-top:10px;font-size:0.9rem;}
+  .seq-stop b{color:var(--risk);}
+
+  ol.checklist{counter-reset:c;list-style:none;padding:0;margin:14px 0 0;}
+  ol.checklist li{counter-increment:c;position:relative;padding-left:34px;margin:0 0 10px;max-width:70ch;}
+  ol.checklist li::before{content:counter(c);position:absolute;left:0;top:0;font-family:ui-monospace,monospace;font-size:0.72rem;color:var(--brass);border:1px solid var(--line);border-radius:6px;width:22px;height:22px;display:grid;place-items:center;}
+
+  .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;font-family:ui-monospace,monospace;}
+</style>
+<button class="toggle" id="tg" type="button" aria-label="Switch theme">Dark</button>
+
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="toc-title">Step 5</div>
+    <ol>
+      <li><a href="#inventory">Message inventory</a></li>
+      <li><a href="#sequence">Quote follow-up</a></li>
+      <li><a href="#channels">Channel policy</a></li>
+      <li><a href="#compliance">SMS compliance</a></li>
+      <li><a href="#failure">Failure handling</a></li>
+      <li><a href="#deploy">Deploy &amp; test</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service &middot; Revenue Core</span>
+      <h1>SMS &amp; email</h1>
+      <p class="stand">Every automated message, in one place. Transactional notes go out on both channels; the quote follow-up is a four-touch sequence that stops the instant the customer replies or books. Nothing marketing-flavored without a separate opt-in.</p>
+      <div class="hero-meta">
+        <span>Step 5 of 10</span>
+        <span>Files: comms/</span>
+        <span>Needs: Twilio (10DLC) + an email sender</span>
+        <span>2026-09-03</span>
+      </div>
+    </header>
+
+    <section id="inventory">
+      <h2><span class="n">01</span> Message inventory</h2>
+      <p class="lead">Templates live in <code>comms/messages.js</code> (<code>NWTCComms.TEMPLATES</code>). A CRM event calls <code>plan(trigger, ctx)</code>; it returns the messages to send, already filtered for consent and quiet hours. <code>send.js</code> delivers and logs them.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Trigger</th><th>Channel</th><th>Message</th><th>When</th></tr></thead>
+          <tbody>
+            <tr><td><code>lead.created</code> · reservation</td><td><span class="pill sms">sms</span> <span class="pill email">email</span></td><td>Acknowledgement — "we've got it, dispatch confirms then sends a deposit link"</td><td>immediately</td></tr>
+            <tr><td><code>lead.created</code> · quote</td><td><span class="pill sms">sms</span> <span class="pill email">email</span></td><td>Instant price → the quote + "reply YES". Manual → "written quote within the hour"</td><td>immediately</td></tr>
+            <tr><td><code>lead.created</code> · corporate</td><td><span class="pill email">email</span></td><td>"A specialist will call within one business day"</td><td>immediately</td></tr>
+            <tr><td><code>deposit.link.created</code></td><td><span class="pill sms">sms</span> <span class="pill email">email</span></td><td>The deposit request with the Stripe <code>checkoutUrl</code>, amount, refund window</td><td>when dispatch runs <code>/deposit-link</code></td></tr>
+            <tr><td><code>deposit.paid</code></td><td><span class="pill sms">sms</span> <span class="pill email">email</span></td><td>"Paid — fully booked. Driver details 24 h before."</td><td>Stripe webhook</td></tr>
+            <tr><td><code>trip.reminder</code></td><td><span class="pill sms">sms</span> <span class="pill email">email</span></td><td>Driver name + phone, vehicle, pickup time, flight tracking note</td><td>24 h before pickup, once a driver is assigned</td></tr>
+            <tr><td><code>trip.completed</code></td><td><span class="pill sms">sms</span></td><td>Thanks + "balance will be charged to the card on file"</td><td>trip marked complete</td></tr>
+            <tr><td><code>review.requested</code></td><td><span class="pill sms">sms</span> <span class="pill email">email</span></td><td>Review link — <strong>only sent when rating ≥ 4</strong> per the CRM rule; ≤ 3 routes to the owner instead</td><td>morning after the trip</td></tr>
+            <tr><td><code>payment.failed</code></td><td><span class="pill sms">sms</span></td><td>"Deposit didn't go through — try again" + link. After the 2nd failure the owner is alerted <span class="pill gate">gate</span></td><td>Stripe webhook</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <span class="lbl">No invented content</span>
+        <p>Every link a message contains is one the CRM record actually holds — the Stripe <code>checkoutUrl</code>, the Google review URL from settings. Driver name and phone come from the assigned Trip, never a placeholder. If a value is missing the reminder isn't sent and dispatch is told.</p>
+      </div>
+    </section>
+
+    <section id="sequence">
+      <h2><span class="n">02</span> Quote follow-up sequence</h2>
+      <p><code>comms/sequences.js</code> is a pure state machine. An hourly job runs <code>nextAction(lead)</code> over every open quote and sends whatever it returns. The clock starts at <code>Quote Sent At</code>.</p>
+
+      <div class="seq">
+        <div class="seq-step"><div class="seq-when">Day 0<br>+0 h</div><div class="seq-body"><div class="h"><strong>followup.d0</strong> <span class="pill sms">sms</span></div><div class="msg ex">"Your quote for [service] is [$X], good through [date]. Reply YES to lock it in."</div></div></div>
+        <div class="seq-rail"></div>
+        <div class="seq-step"><div class="seq-when">Day 1<br>+24 h</div><div class="seq-body"><div class="h"><strong>followup.d1</strong> <span class="pill sms">sms</span></div><div class="msg ex">"Still need a car for [date]? Your quote is held until [date]. Reply YES or call."</div></div></div>
+        <div class="seq-rail"></div>
+        <div class="seq-step"><div class="seq-when">Day 3<br>+72 h</div><div class="seq-body"><div class="h"><strong>followup.d3</strong> <span class="pill email">email</span></div><div class="msg ex">Full quote recap + "a one-line reply tells us to stop following up."</div></div></div>
+        <div class="seq-rail"></div>
+        <div class="seq-step"><div class="seq-when">Day 7<br>+168 h</div><div class="seq-body"><div class="h"><strong>followup.d7</strong> <span class="pill email">email</span></div><div class="msg ex">"Last time we'll email about this one." Then Lead → Lost, reason "No reply".</div></div></div>
+      </div>
+
+      <div class="seq-stop">
+        <b>Stops immediately</b> on any of: Lead Status becomes Booked / Won / Lost / Cancelled &nbsp;·&nbsp; the customer sends any inbound reply (<code>Customer Replied</code>) &nbsp;·&nbsp; they text STOP (<code>optedOut</code>) &nbsp;·&nbsp; the pickup date passes. A manual-quote Lead with no <code>Quote Sent At</code> returns <code>handoff</code> — dispatch prices it before the sequence can start.
+      </div>
+    </section>
+
+    <section id="channels">
+      <h2><span class="n">03</span> Channel policy</h2>
+      <p>Launch runbook, decision 5.</p>
+      <ul>
+        <li><strong>Transactional</strong> — acknowledgement, deposit link, deposit paid, 24 h reminder, receipt: <span class="pill sms">sms</span> <span class="pill email">email</span> both. These are expected and time-sensitive.</li>
+        <li><strong>Quote follow-up</strong> — day 0 and day 1 by <span class="pill sms">sms</span> (fast, high open rate while intent is warm); day 3 and day 7 by <span class="pill email">email</span> (room for the full recap, lower pressure).</li>
+        <li><strong>Marketing / win-back</strong> — not here. That is a separate list with its own express opt-in, driven from the CRM "Marketing Opt-in" field.</li>
+      </ul>
+    </section>
+
+    <section id="compliance">
+      <h2><span class="n">04</span> SMS compliance</h2>
+      <ul>
+        <li><strong>A2P 10DLC</strong> — register the brand and a campaign with Twilio before the first send. Carrier approval is 1–3 weeks; unregistered traffic is filtered. Use a Messaging Service (<code>TWILIO_MESSAGING_SERVICE_SID</code>) so the campaign and number pool are handled for you.</li>
+        <li><strong>Consent</strong> — the funnel's checkbox ("text and email me about this reservation") writes <code>Consent</code> on the Lead and <code>Marketing Opt-in</code> on the Customer. <code>plan()</code> will not produce an SMS when <code>smsConsent === false</code>.</li>
+        <li><strong>STOP / START / HELP</strong> — <code>send.js handleInboundSms()</code> handles them: STOP sets <code>SMS Opt-out</code> and confirms; START clears it; HELP replies with the business name and number. Point the Twilio number's inbound webhook at that handler.</li>
+        <li><strong>Quiet hours</strong> — <code>quietHoursShift()</code> pushes any SMS scheduled between 20:00 and 08:00 PT to 08:05. Email is unaffected.</li>
+        <li><strong>Every marketing-adjacent SMS</strong> carries "Reply STOP to opt out." Transactional confirmations don't need it but the deposit and review texts include it anyway.</li>
+        <li><strong>Email</strong> — SPF + DKIM on the domain before the first send; a List-Unsubscribe header on anything non-transactional.</li>
+      </ul>
+    </section>
+
+    <section id="failure">
+      <h2><span class="n">05</span> Failure handling</h2>
+      <ul>
+        <li><strong>Dedupe</strong> — every send is keyed <code>&lt;Reference&gt;:&lt;templateId&gt;</code> and checked against the <code>Messages</code> table first. A retried webhook or a double cron tick can't double-send.</li>
+        <li><strong>Retry</strong> — one retry after 1.5 s on a 5xx from Twilio or the email API. A 4xx (bad number, unsubscribed) fails fast.</li>
+        <li><strong>Logging</strong> — each attempt writes a <code>Messages</code> row (Sent / Failed + provider id + error) and an Activity Log line on the Lead.</li>
+        <li><strong>Escalation</strong> — any <code>Failed</code> send posts to <code>DISPATCH_WEBHOOK_URL</code> so a person can call the customer. The 24 h reminder failing is treated as urgent.</li>
+        <li><strong>Dry run</strong> — <code>COMMS_DRY_RUN=1</code> renders and logs every message without sending, for staging.</li>
+      </ul>
+    </section>
+
+    <section id="deploy">
+      <h2><span class="n">06</span> Deploy &amp; test</h2>
+      <ol class="checklist">
+        <li>Buy the Twilio number; start 10DLC brand + campaign registration the same day.</li>
+        <li>Stand up the email sender (Postmark / SES / Resend), add SPF + DKIM records, verify <code>book@northwesttowncarservice.com</code>.</li>
+        <li>Add the <code>Messages</code> table to the Airtable base; add <code>Customer Replied</code>, <code>Needs Reply</code>, <code>Followup Steps Sent</code> to Leads and <code>SMS Opt-out</code> to Customers.</li>
+        <li><code>.env</code> from <code>config.example.env</code>. Set <code>COMMS_DRY_RUN=1</code> for now.</li>
+        <li>Wire the CRM automations (step 3 doc) to call <code>deliverAll(NWTCComms.plan(trigger, ctx))</code> on each event.</li>
+        <li>Schedule the hourly follow-up job: for each open quote Lead, <code>NWTCSequence.nextAction()</code> → if <code>send</code>, deliver and append the step.</li>
+        <li>Point the Twilio inbound-SMS webhook at <code>handleInboundSms</code>. Text STOP from your phone; confirm the opt-out row and the sequence halting.</li>
+        <li>Dry-run one of each: reservation, instant quote, deposit link, reminder (with a fake driver), review at rating 5 and rating 2 (only 5 should send).</li>
+        <li>Flip <code>COMMS_DRY_RUN=0</code>. Send yourself a live confirmation and a live follow-up. Check both render correctly on a phone.</li>
+      </ol>
+    </section>
+
+    <p class="foot">SMS &amp; email · step 5 of the revenue core · 2026-09-03 · pairs with crm/ (the events that trigger these) and booking-payment/ (the deposit link these carry). Copy is in messages.js — edit there, not in the automations.</p>
+  </main>
+</div>
+
+<script>
+  (function(){
+    var b=document.getElementById('tg'),r=document.documentElement;
+    function cur(){var t=r.getAttribute('data-theme');return t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+    function s(){b.textContent=cur()==='dark'?'Light':'Dark';}
+    b.addEventListener('click',function(){r.setAttribute('data-theme',cur()==='dark'?'light':'dark');s();});
+    s();
+  })();
+</script>

@@ -1,0 +1,304 @@
+<title>NWTC Booking &amp; Payment</title>
+<meta name="description" content="How Northwest Town Car Service takes a deposit: the funnel writes the lead, dispatch confirms the ride, and only then does a Stripe deposit link go out. Endpoints, deposit policy, webhook events, and the test checklist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5;--surface:#FBF8F1;--surface-2:#EDE7D8;--ink:#16261F;--muted:#5B6A5F;
+    --brass:#9A6E28;--brass-ink:#7C5A1E;--sage:#3E7A52;--amber:#A9741F;--risk:#A8443A;
+    --line:rgba(22,38,31,0.14);--line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 10px 30px -16px rgba(22,38,31,0.2);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1E19;--surface:#16281F;--surface-2:#1F3529;--ink:#F1ECE0;--muted:#A9B3A6;
+      --brass:#C09A56;--brass-ink:#D4AC66;--sage:#8FB08C;--amber:#D9B36A;--risk:#D98A7C;
+      --line:rgba(241,236,224,0.16);--line-soft:rgba(241,236,224,0.08);
+      --shadow:0 1px 2px rgba(0,0,0,0.3),0 12px 34px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1E19;--surface:#16281F;--surface-2:#1F3529;--ink:#F1ECE0;--muted:#A9B3A6;
+    --brass:#C09A56;--brass-ink:#D4AC66;--sage:#8FB08C;--amber:#D9B36A;--risk:#D98A7C;
+    --line:rgba(241,236,224,0.16);--line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 12px 34px -16px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,-apple-system,sans-serif;line-height:1.68;font-size:16.5px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.16;letter-spacing:-0.012em;text-wrap:balance;margin:0;}
+  p{margin:0 0 1rem;} strong{font-weight:600;}
+  a{color:var(--brass-ink);text-underline-offset:2px;}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.86em;}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 110px;}
+  @media (min-width:1060px){
+    .page{display:grid;grid-template-columns:210px minmax(0,1fr);gap:52px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}
+  }
+  .toc{display:none;font-size:14px;}
+  @media (min-width:1060px){.toc{display:block;}}
+  .toc .toc-title{font-family:'Fraunces',serif;font-size:15px;margin-bottom:14px;padding-left:14px;}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{counter-increment:toc;}
+  .toc a{display:block;padding:6px 12px 6px 14px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;}
+  .toc a:hover{color:var(--ink);border-left-color:var(--brass);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);font-variant-numeric:tabular-nums;}
+
+  main{min-width:0;padding-top:40px;}
+  header.hero{padding:24px 0 34px;border-bottom:2px solid var(--ink);margin-bottom:44px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.6vw,2.9rem);margin:14px 0 0;font-weight:600;max-width:18ch;}
+  header.hero .stand{font-size:1.1rem;color:var(--muted);margin:16px 0 0;max-width:60ch;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);}
+
+  .toggle{position:fixed;top:14px;right:14px;z-index:40;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:6px 13px;font:inherit;font-size:12.5px;cursor:pointer;box-shadow:var(--shadow);}
+  .toggle:hover{border-color:var(--brass);}
+  .toggle:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+  section{margin:0 0 60px;scroll-margin-top:20px;}
+  section > h2{font-size:clamp(1.5rem,2.7vw,2rem);padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:baseline;}
+  section > h2 .n{font-family:ui-monospace,monospace;font-size:0.58em;color:var(--brass);font-weight:400;}
+  section > h3{font-size:1.25rem;margin:34px 0 12px;}
+  section p,section ul,section ol{max-width:70ch;}
+  section ul,section ol{padding-left:1.2rem;}
+  section li{margin:0 0 .4rem;}
+  .lead{font-size:1.1rem;}
+
+  .pill{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.04em;text-transform:uppercase;padding:3px 8px;border-radius:5px;border:1px solid var(--line);white-space:nowrap;}
+  .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;}
+  .pill.auto{color:var(--sage);border-color:color-mix(in srgb,var(--sage) 40%,transparent);}
+  .pill.gate{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent);}
+  .pill.risk{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 40%,transparent);}
+
+  .note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:16px 18px;margin:20px 0;font-size:0.97rem;box-shadow:var(--shadow);}
+  .note p:last-child{margin-bottom:0;}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+
+  /* money-flow spine */
+  .flow{margin:26px 0;display:flex;flex-direction:column;gap:0;}
+  .flow-node{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px;box-shadow:var(--shadow);}
+  .flow-node .t{font-weight:600;font-size:0.96rem;}
+  .flow-node .d{color:var(--muted);font-size:0.85rem;}
+  .flow-node .ep{font-family:ui-monospace,monospace;font-size:11px;color:var(--brass-ink);}
+  .flow-arrow{width:2px;height:20px;background:var(--line);margin:0 auto;}
+  .flow-gate{border:1px dashed var(--amber);background:color-mix(in srgb,var(--amber) 8%,var(--surface));border-radius:10px;padding:13px 16px;}
+  .flow-gate .t{display:block;color:var(--amber);font-weight:700;font-size:0.86rem;font-family:ui-monospace,monospace;letter-spacing:0.03em;text-transform:uppercase;margin-bottom:2px;}
+
+  /* endpoint cards */
+  .ep-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:18px 0;box-shadow:var(--shadow);}
+  .ep-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:6px;}
+  .ep-head .m{font-family:ui-monospace,monospace;font-weight:700;font-size:0.8rem;padding:2px 7px;border-radius:5px;background:var(--ink);color:var(--bg);}
+  .ep-head h3{font-family:ui-monospace,monospace;font-size:1rem;font-weight:400;margin:0;}
+  .ep-vis{margin-left:auto;}
+  .ep-card dl{display:grid;grid-template-columns:auto 1fr;gap:5px 16px;font-size:0.9rem;margin:12px 0 0;}
+  .ep-card dt{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .ep-card dd{margin:0;}
+  pre{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.5;margin:12px 0 0;}
+
+  .table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;font-size:0.9rem;background:var(--surface);}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-family:'Work Sans',sans-serif;font-weight:700;font-size:0.76rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);}
+  tbody tr:last-child td{border-bottom:none;}
+  td code{font-size:0.82em;}
+
+  ol.checklist{counter-reset:c;list-style:none;padding:0;margin:14px 0 0;}
+  ol.checklist li{counter-increment:c;position:relative;padding-left:34px;margin:0 0 10px;max-width:70ch;}
+  ol.checklist li::before{content:counter(c);position:absolute;left:0;top:0;font-family:ui-monospace,monospace;font-size:0.72rem;color:var(--brass);border:1px solid var(--line);border-radius:6px;width:22px;height:22px;display:grid;place-items:center;}
+
+  .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;font-family:ui-monospace,monospace;}
+</style>
+<button class="toggle" id="tg" type="button" aria-label="Switch theme">Dark</button>
+
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="toc-title">Step 4</div>
+    <ol>
+      <li><a href="#flow">The money flow</a></li>
+      <li><a href="#endpoints">The endpoints</a></li>
+      <li><a href="#deposit">Deposit policy</a></li>
+      <li><a href="#webhooks">Webhook events</a></li>
+      <li><a href="#manual">What stays manual</a></li>
+      <li><a href="#golive">Deploy &amp; test</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service &middot; Revenue Core</span>
+      <h1>Booking &amp; payment</h1>
+      <p class="stand">The funnel already collects and prices the ride. This step adds the money: a Stripe deposit link that goes out <em>only after a person confirms the ride is real</em> — never from the funnel, never with a card field on an NWTC page.</p>
+      <div class="hero-meta">
+        <span>Step 4 of 10</span>
+        <span>Files: booking-payment/</span>
+        <span>Needs: Stripe + Airtable + a sender</span>
+        <span>2026-09-03</span>
+      </div>
+    </header>
+
+    <section id="flow">
+      <h2><span class="n">01</span> The money flow</h2>
+      <p class="lead">Two things never happen: the funnel never touches a card, and no charge is created without a human step in between. The customer enters card details only on Stripe's own hosted page, reached by a link dispatch chooses to send.</p>
+
+      <div class="flow">
+        <div class="flow-node"><span class="t">Funnel submit</span><br><span class="d">6-step funnel builds the <code>payload</code> — service, route, schedule, contact, client-side price</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node"><span class="t">POST /intake</span> <span class="ep">· public</span><br><span class="d">Re-prices server-side with <code>verifyQuote()</code>. Writes Customer → Lead → Quote → Booking (idempotent on <code>Reference</code>). Alerts dispatch. <strong>No money.</strong> Booking = <code>Reserved · Deposit Pending</code></span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-gate"><span class="t">◆ Human step — dispatch confirms the ride</span><br><span class="d">Driver + vehicle assigned, schedule sane, price checked (especially if flagged as a mismatch). This is the gate.</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node"><span class="t">POST /deposit-link</span> <span class="ep">· dispatch only, bearer token</span><br><span class="d">Reads the Booking, computes the deposit from <code>pricing-table.json → deposit</code>, creates a Stripe Checkout Session, writes the link + session id onto the Booking, records a <code>Pending</code> Payment</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node"><span class="t">Confirmation SMS + email</span><br><span class="d">Carries the <code>checkoutUrl</code>. Customer pays on Stripe's hosted page</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node"><span class="t">POST /stripe-webhook</span> <span class="ep">· from Stripe, signature-verified</span><br><span class="d"><code>checkout.session.completed</code> → Payment <code>Succeeded</code>, <code>Deposit Paid</code> set, Booking → <code>Deposit Paid</code>, dispatch notified. Ride fully confirmed.</span></div>
+      </div>
+
+      <div class="note">
+        <span class="lbl">The cash branch</span>
+        <p>At the review step the customer can choose <strong>"cash to the driver"</strong> instead of a card. That choice rides in the payload to the Lead and Booking. At the gate, dispatch runs <code>/deposit-link</code> with <code>paymentMethod: "cash"</code> — no Stripe session; the full fare is recorded as a <code>Pending</code> cash Payment and the booking is confirmed (or held for approval over $600 / for a new customer). After the trip the driver runs <code>/record-cash-payment</code> and it becomes <code>Fare Collected</code>. Same human gate, no card.</p>
+      </div>
+
+      <div class="note">
+        <span class="lbl">Why a person in the middle</span>
+        <p>An instant price is reliable enough to <em>show</em> and to reserve against — but a deposit is money changing hands. Dispatch confirming first catches the impossible pickup time, the address in the wrong county, the SUV request for 8 people, and the rare price bug — before the customer is charged, not after. It costs one tap.</p>
+      </div>
+    </section>
+
+    <section id="endpoints">
+      <h2><span class="n">02</span> The endpoints</h2>
+      <p>All in <code>booking-payment/server.js</code> as framework-agnostic handlers, with adapters for Netlify Functions, Cloudflare Workers, and Express/Vercel at the bottom of the file.</p>
+
+      <div class="ep-card">
+        <div class="ep-head"><span class="m">POST</span><h3>/intake</h3><span class="ep-vis pill auto">public · automated</span></div>
+        <p>The funnel's <code>submitBooking()</code> posts here. Re-prices, writes the CRM, alerts dispatch. Returns fast; a CRM write failure still 202s and queues an alert with the raw payload so nothing is lost.</p>
+        <dl>
+          <dt>Auth</dt><dd>None. Rate-limit at the edge.</dd>
+          <dt>Body</dt><dd>The funnel <code>payload</code> (see <code>crm/intake.js</code> header).</dd>
+          <dt>Re-price</dt><dd><code>NWTCPricing.verifyQuote(clientTotal, request, table)</code>. On mismatch: the lead is still captured, the client amount is dropped, and the dispatch alert is flagged <strong>⚠ PRICE MISMATCH</strong>.</dd>
+          <dt>Writes</dt><dd>Customer, Lead, Quote, Booking (reservations), Activity Log — via <code>NWTCIntake.funnelPayloadToCRM()</code>, applied in order, deduped on phone / <code>Reference</code>.</dd>
+          <dt>Returns</dt><dd><code>{ ok, reference, status, amount, priceVerified, records }</code></dd>
+        </dl>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-head"><span class="m">POST</span><h3>/deposit-link</h3><span class="ep-vis pill gate">dispatch only · the gate</span></div>
+        <p>Called by whoever confirms rides — a button in your ops tool, an Airtable automation, or a manual <code>curl</code>. Requires <code>Authorization: Bearer $DISPATCH_API_TOKEN</code>.</p>
+        <dl>
+          <dt>Guard</dt><dd>Booking <code>Status</code> must be <code>Reserved</code> or <code>Confirmed</code> and not already paid. Pass <code>{"force":true}</code> to override; <code>{"depositOverride": 30}</code> to set a custom amount or <code>0</code> to waive.</dd>
+          <dt>Deposit</dt><dd><code>NWTCPayments.depositPlan(booking, table)</code> — flat for instant-price rides, percent for custom quotes, none for corporate. See §3.</dd>
+          <dt>Cash</dt><dd><code>{"paymentMethod":"cash"}</code> (or the customer's funnel choice) → <strong>no Stripe</strong>. Records the full fare as a <code>Pending</code> cash Payment, sets <code>Payment Method: Cash</code>, confirms the booking — unless the fare is over the cash limit or the customer is new, when it goes to <code>Needs Approval</code> and pings dispatch. <code>{"force":true}</code> approves a held one.</dd>
+          <dt>Stripe</dt><dd>(card only) One Checkout Session, <code>mode: payment</code>, idempotency key <code>deposit_&lt;Reference&gt;</code>, metadata carries reference / fare / balance / refund window.</dd>
+          <dt>Writes</dt><dd>Booking: <code>Deposit Amount</code>, <code>Balance</code>, <code>Deposit Link</code>, <code>Deposit Session Id</code>, <code>Status → Confirmed</code>. Payments: one <code>Pending</code> row.</dd>
+          <dt>Returns</dt><dd><code>{ ok, amount, balanceDue, checkoutUrl, sessionId, expiresAt }</code> for card; <code>{ ok, paymentMethod:"cash", held, cashDue }</code> for cash.</dd>
+        </dl>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-head"><span class="m">POST</span><h3>/record-cash-payment</h3><span class="ep-vis pill gate">dispatch / driver</span></div>
+        <p>After a cash trip — the driver (or dispatch) records what was actually collected. Same bearer token as <code>/deposit-link</code>.</p>
+        <dl>
+          <dt>Body</dt><dd><code>{ reference, amount?, type?, gratuity? }</code> — <code>amount</code> defaults to the Booking's <code>Cash Due</code>; <code>type</code> is <code>Balance</code> (default) / <code>Deposit</code> / <code>Gratuity</code>.</dd>
+          <dt>Writes</dt><dd>Payments: a <code>Succeeded</code> cash row. Booking: <code>Fare Collected</code> (+=), <code>Fare Collected At</code>, <code>Status → Completed</code>.</dd>
+          <dt>Why</dt><dd>Keeps the CRM and the offline-conversion feed (step 6) accurate — a cash fare still counts as revenue for Google Ads bidding.</dd>
+        </dl>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-head"><span class="m">POST</span><h3>/stripe-webhook</h3><span class="ep-vis pill auto">from Stripe · automated</span></div>
+        <p>Signature-verified with <code>STRIPE_WEBHOOK_SECRET</code>. Idempotent — every event id is checked against a <code>Webhook Events</code> ledger before it is handled, and 5xx responses let Stripe retry.</p>
+        <dl>
+          <dt>Subscribe</dt><dd><code>checkout.session.completed</code>, <code>checkout.session.expired</code>, <code>payment_intent.payment_failed</code>, <code>charge.refunded</code></dd>
+          <dt>Raw body</dt><dd>The signature check needs the unparsed body — use the raw-body adapter (<code>express.raw</code>, Netlify <code>rawBodyFor:'stripe'</code>).</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="deposit">
+      <h2><span class="n">03</span> Deposit policy</h2>
+      <p>Lives in <code>pricing/pricing-table.json → "deposit"</code> so you change it in the admin screen, not in code. <code>NWTCPayments.depositPlan()</code> is the one place that reads it.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ride type</th><th>Deposit</th><th>Applied to fare?</th><th>Refundable</th></tr></thead>
+          <tbody>
+            <tr><td>Airport flat / hourly (instant price)</td><td><strong>$50 flat</strong></td><td>Yes — balance due after the trip</td><td>Up to 24 h before pickup</td></tr>
+            <tr><td>Wedding / event / out-of-area (custom quote)</td><td><strong>25% of the quoted fare</strong><br><span class="mono">dispatch can override per quote</span></td><td>Yes</td><td>Up to 24 h before pickup</td></tr>
+            <tr><td>Corporate / on-account</td><td><strong>None</strong> — billed per rate agreement</td><td>n/a</td><td>n/a</td></tr>
+            <tr><td><strong>Cash to the driver</strong> (customer's choice)</td><td><strong>None</strong> — full fare paid in cash at trip's end</td><td>n/a — it <em>is</em> the fare</td><td>n/a</td></tr>
+            <tr><td>Dispatch override</td><td>Any amount, or <code>0</code> to waive</td><td>Yes (unless waived)</td><td>Up to 24 h before pickup</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Floor:</strong> <code>minAmount</code> $25. The deposit is never more than the fare itself. A percent policy with no known fare falls back to the $50 flat so a link can still go out.</p>
+      <p><strong>Cash</strong> (<code>"deposit.cash"</code>): allowed up to <code>maxFare</code> $600. Above that, or for a first-time customer (<code>flagNewCustomers</code>), the booking waits at <code>Needs Approval</code> for dispatch. If you want a card deposit to hold a cash booking's slot, send a normal deposit link instead and tell the customer the balance is cash.</p>
+      <div class="note">
+        <span class="lbl">Decision 1 from the launch runbook</span>
+        <p>These are the recommended defaults ($50 flat / 25% custom / refundable to 24 h). If you want a different number or window, change the four values in <code>pricing-table.json</code> and bump its <code>version</code> — no redeploy of the payment code.</p>
+      </div>
+    </section>
+
+    <section id="webhooks">
+      <h2><span class="n">04</span> Webhook events &amp; what each does</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Event</th><th>Handling</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><code>checkout.session.completed</code></td><td><span class="pill auto">auto</span></td><td>Payment <code>Succeeded</code> · Booking <code>Deposit Paid</code> + <code>Deposit Paid At</code> · dispatch told the ride is confirmed and the balance amount</td></tr>
+            <tr><td><code>checkout.session.expired</code></td><td><span class="pill auto">auto</span></td><td>Payment <code>Failed</code> (expired unpaid) · dispatch asked to resend, call, or release the slot</td></tr>
+            <tr><td><code>payment_intent.payment_failed</code></td><td><span class="pill auto">auto</span> → <span class="pill gate">escalates</span></td><td>Payment <code>Failed</code> logged. On the 2nd failure: Booking <code>Payment Held</code>, dispatch alerted to send a card-update link or call; auto-release in 24 h</td></tr>
+            <tr><td><code>charge.refunded</code></td><td><span class="pill gate">you initiate in Stripe</span></td><td>Payment <code>Refund</code> row · Booking <code>Deposit Paid → 0</code>, <code>Cancelled</code>. The refund decision itself is always manual — see §5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="manual">
+      <h2><span class="n">05</span> What stays manual</h2>
+      <p>Same line as the system blueprint. The payment layer automates collection and reconciliation; it never decides to give money back or to hold a booking hostage.</p>
+      <ul>
+        <li><strong>Refunds</strong> <span class="pill risk">human</span> — you issue them from the Stripe dashboard. <code>NWTCPayments.isRefundable(pickupISO, plan)</code> tells you if the ride is still inside its 24 h window; the choice is yours. The webhook only records what you did.</li>
+        <li><strong>Cancellations inside the window</strong> <span class="pill risk">human</span> — fee or goodwill waiver is a judgement call.</li>
+        <li><strong>Deposit overrides &amp; waivers</strong> <span class="pill gate">human</span> — passed explicitly on <code>/deposit-link</code>; never automatic.</li>
+        <li><strong>Releasing a held booking</strong> <span class="pill gate">human</span> — after a payment failure, dispatch decides.</li>
+        <li><strong>Approving a cash booking</strong> <span class="pill gate">human</span> — every one is confirmed by dispatch; large fares and new customers are held explicitly. Recording the collected cash is a one-line call the driver makes after the trip.</li>
+        <li><strong>Corporate billing</strong> <span class="pill gate">human</span> — on-account, invoiced per agreement, outside this flow.</li>
+      </ul>
+    </section>
+
+    <section id="golive">
+      <h2><span class="n">06</span> Deploy &amp; test</h2>
+      <ol class="checklist">
+        <li>Copy <code>config.example.env</code> → <code>.env</code>. Fill Stripe <strong>test</strong> keys, the Airtable token + base id, a <code>DISPATCH_API_TOKEN</code> (64 random chars), and a <code>DISPATCH_WEBHOOK_URL</code> (a Make catch-hook or Slack incoming webhook).</li>
+        <li>Add two tables to the Airtable base: <code>Webhook Events</code> (Event Id, Received) and confirm <code>Payments</code> has Amount / Type / Method / Processor Ref / Status / Note. Booking needs the deposit fields the server writes (<code>Deposit Amount</code>, <code>Balance</code>, <code>Deposit Link</code>, <code>Deposit Session Id</code>, <code>Deposit Paid</code>, <code>Deposit Paid At</code>) plus the cash fields (<code>Payment Method</code>, <code>Payment Preference</code>, <code>Cash Due</code>, <code>Fare Collected</code>, <code>Fare Collected At</code>) and a <code>Needs Approval</code> option on <code>Status</code>.</li>
+        <li>Deploy the three handlers. In Stripe → Developers → Webhooks, add the endpoint and subscribe to the four events; paste the signing secret into <code>.env</code>.</li>
+        <li>Set <code>window.NWTC_INTAKE_ENDPOINT</code> on the funnel page to the deployed <code>/intake</code> URL. Submit one airport booking — confirm one Lead, one Customer, one Booking (<code>Reserved</code>), and a dispatch alert.</li>
+        <li>Confirm that booking, then <code>curl -H "Authorization: Bearer &lt;token&gt;" -d '{"reference":"NWTC-…"}' …/deposit-link</code>. Open the returned <code>checkoutUrl</code>.</li>
+        <li>Pay with Stripe test card <code>4242 4242 4242 4242</code>, any future expiry, any CVC. Confirm Payment → <code>Succeeded</code>, Booking → <code>Deposit Paid</code>, <code>Balance</code> correct, dispatch notified.</li>
+        <li>Test the sad paths: card <code>4000 0000 0000 9995</code> (declined) → Payment <code>Failed</code>; let a session expire → <code>checkout.session.expired</code> handled. Use the Stripe CLI (<code>stripe listen --forward-to …/stripe-webhook</code>) to replay events locally.</li>
+        <li>Test cash: submit a funnel booking with "cash to the driver" selected. Confirm the Lead/Booking show <code>Payment Preference: cash</code>, then <code>POST /deposit-link {"reference":"…","paymentMethod":"cash"}</code> → no Stripe, Booking <code>Confirmed</code>, a <code>Pending</code> cash Payment for the full fare, cash confirmation sent. Then <code>POST /record-cash-payment {"reference":"…"}</code> → Payment <code>Succeeded</code>, <code>Fare Collected</code> set. Try a fare over $600 → <code>Needs Approval</code> + dispatch alert.</li>
+        <li>Re-submit the same funnel <code>payload</code> twice — verify still one Lead, one Booking (idempotent on <code>Reference</code>).</li>
+        <li>Only when all eight pass: swap to Stripe <strong>live</strong> keys and a live webhook secret.</li>
+      </ol>
+      <div class="note">
+        <span class="lbl">PCI</span>
+        <p>Card data never reaches NWTC servers — Checkout is hosted by Stripe — so you stay in the simplest SAQ-A scope. Do not add card fields to the funnel or anywhere else. That is the whole reason the link goes out after confirmation instead of a checkout living in the funnel.</p>
+      </div>
+    </section>
+
+    <p class="foot">Booking &amp; payment · step 4 of the revenue core · 2026-09-03 · pairs with pricing/ (the engine), crm/ (the schema + intake), and launch/ (the go-live sequence). Nothing is provisioned — this is the design plus the code that runs it.</p>
+  </main>
+</div>
+
+<script>
+  (function(){
+    var b=document.getElementById('tg'),r=document.documentElement;
+    function cur(){var t=r.getAttribute('data-theme');return t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+    function s(){b.textContent=cur()==='dark'?'Light':'Dark';}
+    b.addEventListener('click',function(){r.setAttribute('data-theme',cur()==='dark'?'light':'dark');s();});
+    s();
+  })();
+</script>

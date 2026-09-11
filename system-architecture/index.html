@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NWTC Booking System Blueprint</title>
+<meta name="description" content="System architecture for Northwest Town Car Service: the pipeline from ad click to repeat booking, the data model, every automation workflow with its human-approval gate, the integration stack, and a phased rollout.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ---- Brand tokens, dual theme. Light is the default; dark mirrors the live site. ---- */
+  :root{
+    --bg:#F4F0E5;
+    --surface:#FBF8F1;
+    --surface-2:#EFEADC;
+    --ink:#16261F;
+    --muted:#5B6A5F;
+    --brass:#9A6E28;
+    --brass-ink:#7C5A1E;
+    --sage:#3E7A52;
+    --amber:#A9741F;
+    --risk:#A8443A;
+    --line:rgba(22,38,31,0.14);
+    --line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 8px 24px -12px rgba(22,38,31,0.18);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1E19;
+      --surface:#16281F;
+      --surface-2:#1B3026;
+      --ink:#F1ECE0;
+      --muted:#A9B3A6;
+      --brass:#C09A56;
+      --brass-ink:#D4AC66;
+      --sage:#8FB08C;
+      --amber:#D9B36A;
+      --risk:#D98A7C;
+      --line:rgba(241,236,224,0.16);
+      --line-soft:rgba(241,236,224,0.08);
+      --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1E19;
+    --surface:#16281F;
+    --surface-2:#1B3026;
+    --ink:#F1ECE0;
+    --muted:#A9B3A6;
+    --brass:#C09A56;
+    --brass-ink:#D4AC66;
+    --sage:#8FB08C;
+    --amber:#D9B36A;
+    --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16);
+    --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    line-height:1.7;font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.01em;text-wrap:balance;margin:0;}
+  a{color:var(--brass-ink);text-underline-offset:2px;}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.86em;}
+  p{margin:0 0 1rem;}
+  strong{font-weight:600;}
+
+  .page{max-width:1200px;margin:0 auto;padding:0 24px 120px;display:grid;grid-template-columns:1fr;gap:0;}
+  @media (min-width:1080px){
+    .page{grid-template-columns:230px minmax(0,1fr);gap:56px;padding-right:40px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}
+  }
+  .toc{display:none;font-size:14px;}
+  @media (min-width:1080px){.toc{display:block;}}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{margin:0;counter-increment:toc;}
+  .toc a{display:block;padding:6px 12px 6px 0;color:var(--muted);text-decoration:none;border-left:2px solid transparent;padding-left:14px;}
+  .toc a:hover{color:var(--ink);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);font-variant-numeric:tabular-nums;}
+  .toc .toc-title{font-family:'Fraunces',serif;font-size:15px;color:var(--ink);margin-bottom:14px;padding-left:14px;}
+
+  main{min-width:0;padding-top:40px;}
+
+  header.hero{padding:32px 0 44px;border-bottom:1px solid var(--line);margin-bottom:48px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.4vw,3rem);margin:14px 0 0;max-width:20ch;}
+  header.hero p.stand{font-size:1.15rem;color:var(--muted);margin:18px 0 0;max-width:60ch;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:26px;font-size:13px;color:var(--muted);font-family:ui-monospace,monospace;}
+
+  .theme-toggle{
+    position:fixed;top:16px;right:16px;z-index:40;
+    background:var(--surface);color:var(--ink);border:1px solid var(--line);
+    border-radius:100px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .theme-toggle:hover{border-color:var(--brass);}
+
+  section{margin:0 0 64px;scroll-margin-top:24px;}
+  section > h2{
+    font-size:clamp(1.5rem,2.6vw,1.95rem);padding-bottom:14px;border-bottom:1px solid var(--line);
+    display:flex;gap:14px;align-items:baseline;
+  }
+  section > h2 .n{font-family:ui-monospace,monospace;font-size:0.6em;color:var(--brass);font-weight:400;}
+  section > h3{font-size:1.2rem;margin:36px 0 12px;}
+  section > h4{font-size:1rem;margin:24px 0 8px;font-family:'Work Sans',sans-serif;font-weight:700;letter-spacing:0.01em;}
+  section p, section ul, section ol{max-width:68ch;}
+  section ul,section ol{padding-left:1.25rem;margin:0 0 1rem;}
+  section li{margin:0 0 .4rem;}
+
+  .lead{font-size:1.1rem;}
+
+  /* pills */
+  .pill{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.04em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--line);white-space:nowrap;}
+  .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;}
+  .pill.auto{color:var(--sage);border-color:color-mix(in srgb,var(--sage) 40%,transparent);}
+  .pill.gate{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent);}
+  .pill.risk{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 40%,transparent);}
+
+  /* callout */
+  .note{
+    background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);
+    border-radius:8px;padding:16px 18px;margin:20px 0;font-size:0.97rem;box-shadow:var(--shadow);
+  }
+  .note p:last-child{margin-bottom:0;}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+
+  /* tables */
+  .table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;font-size:0.92rem;background:var(--surface);}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-family:'Work Sans',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);}
+  tbody tr:last-child td{border-bottom:none;}
+  td .mono{color:var(--muted);}
+
+  /* pipeline diagram */
+  .pipe{margin:28px 0;display:flex;flex-direction:column;align-items:stretch;gap:0;}
+  .pipe-node{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;box-shadow:var(--shadow);position:relative;
+  }
+  .pipe-node .t{font-weight:600;font-size:0.95rem;}
+  .pipe-node .d{color:var(--muted);font-size:0.83rem;}
+  .pipe-arrow{width:2px;height:22px;background:var(--line);margin:0 auto;}
+  .pipe-fork{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:560px){.pipe-fork{grid-template-columns:1fr;}}
+  .pipe-branch{border:1px dashed var(--line);border-radius:12px;padding:14px;background:var(--surface-2);}
+  .pipe-branch h4{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brass-ink);margin:0 0 10px;}
+  .pipe-branch .pipe-node{margin-bottom:10px;}
+  .pipe-branch .pipe-node:last-child{margin-bottom:0;}
+  .pipe-branch .pipe-arrow{height:14px;}
+
+  /* workflow cards */
+  .wf{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:18px 0;box-shadow:var(--shadow);}
+  .wf-head{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-bottom:14px;}
+  .wf-head h4{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;margin:0;flex:1 1 auto;}
+  .wf-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:0.9rem;margin:0 0 12px;}
+  .wf-grid dt{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .wf-grid dd{margin:0;}
+  .wf ol.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0 0;}
+  .wf ol.steps li{counter-increment:s;position:relative;padding-left:30px;margin:0 0 6px;font-size:0.92rem;}
+  .wf ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;font-family:ui-monospace,monospace;font-size:0.75rem;color:var(--brass);border:1px solid var(--line);border-radius:5px;width:20px;height:20px;display:grid;place-items:center;}
+
+  /* phases */
+  .phase{border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:16px 0;background:var(--surface);box-shadow:var(--shadow);}
+  .phase h3{margin:0 0 4px;display:flex;align-items:baseline;gap:12px;}
+  .phase h3 .wk{font-family:ui-monospace,monospace;font-size:0.7rem;color:var(--brass);letter-spacing:0.06em;}
+  .phase .goal{color:var(--muted);font-size:0.95rem;margin:0 0 14px;}
+
+  hr{border:none;border-top:1px solid var(--line);margin:8px 0 0;}
+  .foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="toc-title">Blueprint</div>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#pipeline">The pipeline</a></li>
+      <li><a href="#data">Data model</a></li>
+      <li><a href="#workflows">Automation workflows</a></li>
+      <li><a href="#matrix">Automate vs. approve</a></li>
+      <li><a href="#stack">Integration stack</a></li>
+      <li><a href="#rollout">Phased rollout</a></li>
+      <li><a href="#reporting">Dashboards &amp; the optimization loop</a></li>
+      <li><a href="#decisions">Open decisions</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service</span>
+      <h1>Booking system blueprint</h1>
+      <p class="stand">How the website becomes a customer-acquisition and booking system: the pipeline from ad click to repeat fare, the data it runs on, every automation and where a human signs off, the tools that do the work, and the order to build them in.</p>
+      <div class="hero-meta">
+        <span>v1 &middot; 2026-09-01</span>
+        <span>Owner: business owner + implementer</span>
+        <span>Status: design, pre-implementation</span>
+      </div>
+    </header>
+
+    <!-- 1 -->
+    <section id="overview">
+      <h2><span class="n">01</span> Overview</h2>
+      <p class="lead">Today the site is a brochure: a visitor reads it, maybe calls, and everything after that lives in a phone and an inbox. This blueprint turns it into a system that captures every lead, prices and follows up automatically where that's safe, hands the risky calls to a person, and learns from its own numbers.</p>
+
+      <h3>Two principles</h3>
+      <p><strong>1. Automate what's reliable; gate what's risky.</strong> Confirmations, reminders, and review requests run untouched. Unusual quotes, refunds, late cancellations, driver changes, corporate terms, and any reply to a complaint wait for a one-tap human approval before they go out. Every workflow below is tagged <span class="pill auto">automated</span> or <span class="pill gate">approval gate</span>.</p>
+      <p><strong>2. Build in phases.</strong> A half-built system that never loses a lead beats a fully-specified one that ships in six months. Section 7 sequences it so value lands in week 4.</p>
+
+      <h3>What "done" looks like</h3>
+      <ul>
+        <li>Every enquiry — form, call, or online booking — creates one record in one place, tagged with where it came from.</li>
+        <li>A booking confirms, takes a deposit, and schedules its own reminders without anyone touching it.</li>
+        <li>A quote that isn't accepted chases itself four times, then stops the moment the customer books.</li>
+        <li>A finished trip asks for a review; a great review is routed to Google, a poor one to the owner.</li>
+        <li>The owner opens one dashboard and sees today's trips, unpaid bookings, stale quotes, and where revenue moved.</li>
+      </ul>
+
+      <div class="note">
+        <span class="lbl">How to read this</span>
+        <p>Sections 2–6 are the design — hand them to whoever implements. Section 7 is the plan. Section 9 lists the decisions only you can make; nothing gets built until those are settled.</p>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="pipeline">
+      <h2><span class="n">02</span> The pipeline</h2>
+      <p>Traffic arrives from search, maps, social, ads, and referrals, and lands on a service or location page. From there it forks: a small share book immediately, most ask for a quote or call. Both paths meet again at dispatch, and everything after the trip is a loop designed to produce the next booking.</p>
+
+      <div class="pipe">
+        <div class="pipe-node"><span class="t">Acquisition</span><br><span class="d">Google &amp; Bing search &middot; Google Business Profile &middot; social &middot; paid search &middot; referrals</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Service / location landing page</span><br><span class="d">Airport, corporate, wedding, hourly, cruise &middot; each city it genuinely serves</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Call to action</span><br><span class="d">Book Now &middot; Get a Quote &middot; Call &middot; Request a Corporate Account</span></div>
+        <div class="pipe-arrow"></div>
+
+        <div class="pipe-fork">
+          <div class="pipe-branch">
+            <h4>Booking branch</h4>
+            <div class="pipe-node"><span class="t">Booking engine</span><br><span class="d">Trip details, vehicle, price from rate table</span></div>
+            <div class="pipe-arrow"></div>
+            <div class="pipe-node"><span class="t">Payment — deposit or full</span></div>
+            <div class="pipe-arrow"></div>
+            <div class="pipe-node"><span class="t">CRM record</span><br><span class="d">Status: <span class="mono">Booked → Paid</span></span></div>
+          </div>
+          <div class="pipe-branch">
+            <h4>Quote / call branch</h4>
+            <div class="pipe-node"><span class="t">CRM record</span><br><span class="d">Status: <span class="mono">New lead</span>, source tagged</span></div>
+            <div class="pipe-arrow"></div>
+            <div class="pipe-node"><span class="t">Quote</span><br><span class="d">Auto from rate table, or <span class="pill gate">approval gate</span> if unusual</span></div>
+            <div class="pipe-arrow"></div>
+            <div class="pipe-node"><span class="t">Follow-up sequence</span><br><span class="d">Day 0 / 1 / 3 / 7 — stops on booking</span></div>
+          </div>
+        </div>
+
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Confirmation &amp; automated comms</span><br><span class="d">Booking confirmation, receipt, pre-trip instructions</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Dispatch — calendar, driver assignment, driver app</span><br><span class="d">Reminders at 24h and day-of; airport pickup instructions with flight number</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Trip completed</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Thank-you → review request</span><br><span class="d">4–5★ → Google &middot; 1–3★ → owner <span class="pill gate">approval gate</span></span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Segmentation</span><br><span class="d">Airport regular &middot; corporate &middot; wedding/event &middot; one-time &middot; lapsed</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Repeat booking &amp; corporate follow-up</span><br><span class="d">Win-back at 60/120 days &middot; quarterly corporate check-in</span></div>
+        <div class="pipe-arrow"></div>
+        <div class="pipe-node"><span class="t">Analytics → AI-assisted optimization</span><br><span class="d">Monthly review of what moved revenue; recommendations reviewed by a human before action</span></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="data">
+      <h2><span class="n">03</span> Data model</h2>
+      <p>One source of truth. Whatever CRM you pick (Section 9), these are the records it must hold and how they connect. A <strong>Lead</strong> and a <strong>Customer</strong> are the same person at different stages — don't split them into disconnected systems, or you'll double-text people and lose attribution.</p>
+
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Record</th><th>Key fields</th><th>Links to</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Lead</strong></td><td><span class="mono">lead_id</span>, created_at, name, phone, email, service, pickup, dropoff, date, time, party size, <span class="mono">source</span>, <span class="mono">campaign</span>, <span class="mono">status</span>, next_follow_up</td><td>becomes Customer; has Quotes</td></tr>
+          <tr><td><strong>Customer</strong></td><td><span class="mono">customer_id</span>, name, phone, email, home area, <span class="mono">segment</span>, lifetime_value, trip_count, first_trip, last_trip, notes, marketing_opt_in</td><td>has Bookings, Trips, Reviews; may belong to Corporate Account</td></tr>
+          <tr><td><strong>Corporate Account</strong></td><td><span class="mono">account_id</span>, company, billing contact, <span class="mono">stage</span>, rate agreement, payment terms (e.g. net-15), authorized bookers, monthly volume</td><td>has Customers, Bookings, one monthly Invoice run</td></tr>
+          <tr><td><strong>Quote</strong></td><td><span class="mono">quote_id</span>, lead_id, line items, total, valid_until, <span class="mono">status</span> (draft / sent / accepted / expired), approved_by</td><td>belongs to Lead; converts to Booking</td></tr>
+          <tr><td><strong>Booking</strong></td><td><span class="mono">booking_id</span>, customer_id, service, pickup, dropoff, stops, date/time, return, vehicle_type, flight_no, price, deposit_paid, balance, <span class="mono">status</span>, special_requests</td><td>belongs to Customer; has one Trip, one+ Payments</td></tr>
+          <tr><td><strong>Trip</strong></td><td><span class="mono">trip_id</span>, booking_id, driver_id, vehicle_id, actual pickup/dropoff times, wait time, tolls, <span class="mono">status</span> (assigned / en route / completed / no-show)</td><td>belongs to Booking; has Driver, Vehicle</td></tr>
+          <tr><td><strong>Driver</strong></td><td><span class="mono">driver_id</span>, name, phone, license/permit expiry, vehicles qualified, availability</td><td>has Trips</td></tr>
+          <tr><td><strong>Vehicle</strong></td><td><span class="mono">vehicle_id</span>, class (sedan / SUV / Sprinter), capacity, luggage, plate, inspection/registration expiry</td><td>has Trips</td></tr>
+          <tr><td><strong>Payment</strong></td><td><span class="mono">payment_id</span>, booking_id, amount, type (deposit / balance / gratuity / refund), method, processor_ref, <span class="mono">status</span></td><td>belongs to Booking</td></tr>
+          <tr><td><strong>Review</strong></td><td><span class="mono">review_id</span>, customer_id, trip_id, rating, text, platform, <span class="mono">status</span> (requested / received / responded), routed_to</td><td>belongs to Customer + Trip</td></tr>
+          <tr><td><strong>Marketing Source</strong></td><td><span class="mono">source</span>, medium, campaign, first_touch, last_touch — captured on the Lead/Booking at creation from URL parameters and the "how did you hear about us" field</td><td>rolls up in Analytics</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>Lead status — the pipeline every enquiry moves through</h3>
+      <p><span class="mono">New → Contacted → Quote Sent → Follow-up → Booked → Paid → Completed → (Review) </span> — with <span class="mono">Cancelled</span> and <span class="mono">Lost</span> as exits. A Lead that reaches <span class="mono">Booked</span> is now driven by its Booking status; the two shouldn't disagree.</p>
+
+      <h3>Corporate pipeline — a separate track</h3>
+      <p><span class="mono">Prospect → Contacted → Qualified → Proposal → Negotiation → Account Created → Active → Inactive.</span> Corporate deals move on weeks, not hours, so they get their own follow-up cadence and their own view in the dashboard.</p>
+    </section>
+
+    <!-- 4 -->
+    <section id="workflows">
+      <h2><span class="n">04</span> Automation workflows</h2>
+      <p>Each workflow below names its trigger, its steps, whether a human approves anything, who owns it, and what happens when a step fails. Every one of them inherits the same <strong>safety rig</strong>:</p>
+      <div class="note">
+        <span class="lbl">Shared safety rig — applies to all workflows</span>
+        <ul style="margin-bottom:0;">
+          <li><strong>Duplicate protection</strong> — match on phone + pickup date before creating any Lead, Customer, or Booking; update instead of inserting.</li>
+          <li><strong>Retry</strong> — transient failures (email/SMS/API timeouts) retry 3× with backoff, then raise an alert.</li>
+          <li><strong>Failure alert</strong> — any unrecovered failure texts/emails the owner with the record link and the error.</li>
+          <li><strong>Logging</strong> — every send, status change, and approval is written to an activity log on the record.</li>
+          <li><strong>Manual override</strong> — every automated step can be paused, skipped, or re-sent by hand from the CRM.</li>
+        </ul>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>New online booking</h4><span class="pill auto">automated</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Booking engine reports a completed reservation + successful deposit.</dd>
+          <dt>Owner</dt><dd>System</dd>
+          <dt>On failure</dt><dd>If the CRM write fails after retries, hold the confirmation, alert the owner — never confirm a booking that isn't recorded.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Create or attach Customer (dedupe on phone), create Booking (status <span class="mono">Booked</span>), record Payment.</li>
+          <li>Send booking confirmation (email + SMS) with reference, vehicle, price, and what happens next.</li>
+          <li>Notify owner/dispatch: new trip, date, value.</li>
+          <li>Add the trip to the dispatch calendar as <span class="mono">unassigned</span>.</li>
+          <li>Schedule the pre-trip reminder workflow.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>New quote request / inbound call</h4><span class="pill auto">automated</span> <span class="pill gate">gate on unusual quotes</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Website quote form, "request a quote" from the funnel, or a logged call.</dd>
+          <dt>Owner</dt><dd>System creates; owner prices exceptions.</dd>
+          <dt>On failure</dt><dd>Form submissions also email a copy to the booking inbox as a backstop.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Create Lead (status <span class="mono">New</span>), capture source + campaign from the URL.</li>
+          <li>Send an instant "we've got your request" acknowledgement with expected response time.</li>
+          <li>If the trip fits the standard rate table (known city pair, standard vehicle, ≤ set distance): generate the Quote automatically, move to <span class="mono">Quote Sent</span>.</li>
+          <li>If it doesn't (events, multi-vehicle, out-of-area, custom): route to the owner as <span class="pill gate">approve / adjust</span>; send only after a tap.</li>
+          <li>Start the quote follow-up sequence.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Quote follow-up sequence</h4><span class="pill auto">automated</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Quote reaches <span class="mono">Quote Sent</span>.</dd>
+          <dt>Stop condition</dt><dd>Customer books, replies asking to hold, or opts out. Booking <em>immediately</em> halts the sequence.</dd>
+          <dt>Owner</dt><dd>System</dd>
+        </dl>
+        <ol class="steps">
+          <li><strong>Day 0</strong> (a few hours later): "did you get the quote, any questions?"</li>
+          <li><strong>Day 1</strong>: short reminder, restate the price and what's included.</li>
+          <li><strong>Day 3</strong>: gentle nudge — offer to hold the vehicle, note availability.</li>
+          <li><strong>Day 7</strong>: final follow-up; if no response, move Lead to <span class="mono">Lost</span> with reason "no reply".</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Abandoned booking recovery</h4><span class="pill gate">approve copy once, then automated</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Booking engine captured contact details but no payment within 60 minutes.</dd>
+          <dt>Owner</dt><dd>Owner approves the message template once; sends run automatically after.</dd>
+          <dt>On failure / caution</dt><dd>Only fire if an email or phone was captured with consent. One message, not a sequence. Never for the same person twice in 30 days.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Create Lead (status <span class="mono">New</span>, tag "abandoned").</li>
+          <li>Wait 1 hour; if still unpaid, send one helpful message: "want a hand finishing this? reply or call."</li>
+          <li>If no response in 48h, fold into the normal follow-up sequence at Day 3.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Pre-trip reminders &amp; instructions</h4><span class="pill auto">automated</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Scheduled from booking, relative to pickup time.</dd>
+          <dt>Owner</dt><dd>System</dd>
+          <dt>On failure</dt><dd>If SMS fails, fall back to email and flag the trip for a manual call.</dd>
+        </dl>
+        <ol class="steps">
+          <li><strong>24h before</strong>: confirm pickup time and address; link to reply with changes.</li>
+          <li><strong>Day-of / 3h before</strong>: driver name, vehicle, plate, and direct contact once assigned.</li>
+          <li><strong>Airport pickups</strong>: include terminal/meeting-point instructions, the flight number on file, curbside vs. meet-and-greet, and the dispatch number. Adjust the send time if flight tracking shows a delay.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Driver assignment / dispatch</h4><span class="pill gate">human assigns</span> <span class="pill auto">notifications automated</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>New trip on the calendar, or a change to an assigned trip.</dd>
+          <dt>Owner</dt><dd>Owner / dispatcher assigns the driver.</dd>
+          <dt>On failure</dt><dd>Unassigned trips inside 12h of pickup escalate — repeated alert until assigned.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Dispatcher assigns a driver + vehicle (system checks capacity vs. party size and flags conflicts).</li>
+          <li>Driver is notified with trip sheet; must accept.</li>
+          <li>On accept, the day-of reminder to the customer unlocks the driver's details.</li>
+          <li>Reassignment triggers a new customer notification <span class="pill gate">owner confirms the message</span>.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Trip completion → thank-you → review</h4><span class="pill auto">automated</span> <span class="pill gate">gate on low ratings</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Driver marks the trip complete (or the pickup time passes + no dispute).</dd>
+          <dt>Owner</dt><dd>System; owner handles anything under 4★.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Set Trip <span class="mono">completed</span>, charge any balance/gratuity, send the receipt.</li>
+          <li>Wait 2–3 hours, send a short thank-you.</li>
+          <li>Next morning: ask for a 1–5 rating (one tap in the message).</li>
+          <li><strong>4–5★</strong>: thank them, link straight to Google/Yelp review.</li>
+          <li><strong>1–3★</strong>: do <em>not</em> ask for a public review. Create a task for the owner to call within 24h <span class="pill gate">owner-owned</span>.</li>
+          <li>Record review status on the Customer.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Segmentation &amp; repeat booking</h4><span class="pill auto">automated</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Trip completion updates the Customer's segment nightly.</dd>
+          <dt>Owner</dt><dd>System; owner approves any new campaign template.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Re-segment: airport regular, corporate, wedding/event, one-time, lapsed (no trip in 120 days).</li>
+          <li>Airport regulars: light touch before common travel periods.</li>
+          <li>Lapsed at 60 days: friendly check-in. At 120: a stronger win-back offer <span class="pill gate">offer approved once</span>.</li>
+          <li>All campaign sends honor marketing opt-in and include one-tap unsubscribe.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Corporate lead &amp; account follow-up</h4><span class="pill gate">human-led</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>"Corporate account" chosen in the funnel, or the owner flags a lead as corporate.</dd>
+          <dt>Owner</dt><dd>Owner</dd>
+        </dl>
+        <ol class="steps">
+          <li>Create Corporate Account (stage <span class="mono">Prospect</span>), send a capabilities + rate-sheet intro.</li>
+          <li>Automated reminders nudge the <em>owner</em> (not the client) to advance stalled stages every 3–5 business days.</li>
+          <li>On <span class="mono">Account Created</span>: set up the rate agreement, billing terms, authorized bookers.</li>
+          <li>Quarterly: automated prompt for the owner to send a usage summary + check-in.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Cancellation &amp; refund</h4><span class="pill risk">always human-approved</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Customer requests a cancellation, or the owner cancels a trip.</dd>
+          <dt>Owner</dt><dd>Owner</dd>
+        </dl>
+        <ol class="steps">
+          <li>System shows the cancellation policy, time-to-pickup, and amount paid.</li>
+          <li>Owner decides: full refund / partial / fee retained, and approves.</li>
+          <li>System processes the refund, updates Booking + Payment, sends confirmation, frees the calendar slot.</li>
+        </ol>
+      </div>
+
+      <div class="wf">
+        <div class="wf-head"><h4>Payment failure</h4><span class="pill auto">automated</span> <span class="pill gate">escalates to human</span></div>
+        <dl class="wf-grid">
+          <dt>Trigger</dt><dd>Deposit or balance charge declines.</dd>
+          <dt>Owner</dt><dd>System retries; owner intervenes after.</dd>
+        </dl>
+        <ol class="steps">
+          <li>Retry once after a short delay.</li>
+          <li>If still failing, message the customer with a secure link to update the card.</li>
+          <li>Booking held (not cancelled) for 24h; owner alerted to follow up before releasing the slot.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="matrix">
+      <h2><span class="n">05</span> Automate vs. approve</h2>
+      <p>The dividing line: automate anything where a wrong send is cheap to fix and rare. Gate anything that moves money, changes a commitment, or speaks for the business in a delicate moment.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Runs automatically, end to end</th><th>Human approves, system then executes</th></tr></thead>
+        <tbody>
+          <tr><td>Booking &amp; payment confirmations, receipts</td><td>Quotes outside the standard rate table — events, multi-vehicle, out-of-area, &gt; set distance</td></tr>
+          <tr><td>Pre-trip reminders (24h, day-of)</td><td>Refunds, credits, fare adjustments, goodwill gestures</td></tr>
+          <tr><td>Airport pickup instructions, flight-aware timing</td><td>Cancellations inside the penalty window</td></tr>
+          <tr><td>Thank-you messages; review requests for 4–5★</td><td>Driver reassignment messaging to the customer</td></tr>
+          <tr><td>Lead → CRM record, source/campaign tagging</td><td>Any reply to a complaint or a 1–3★ review</td></tr>
+          <tr><td>Quote follow-up sequence (day 0/1/3/7)</td><td>Corporate contract terms, rates, and payment terms</td></tr>
+          <tr><td>Nightly re-segmentation</td><td>First send of any new campaign or template</td></tr>
+          <tr><td>Repeat / win-back campaigns from approved templates</td><td>Abandoned-booking outreach copy (approve once, then automated)</td></tr>
+          <tr><td>Payment retry + card-update request</td><td>Releasing a held booking after payment failure</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note">
+        <span class="lbl">Approval mechanics</span>
+        <p>A gate should be one tap on a phone — a message with <strong>Approve</strong> / <strong>Edit</strong> / <strong>Decline</strong>, or a task in the CRM app. If nothing is approved within a set window (e.g. 2h for quotes during business hours), it re-alerts rather than sending on its own. As volume grows, individual rules can graduate from "gate" to "auto" once they've proven reliable — that's a deliberate decision, logged, not a default.</p>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="stack">
+      <h2><span class="n">06</span> Integration stack</h2>
+      <p>Every layer names a recommended tool, at least one alternative, and a rough monthly cost at low volume. Costs are ballpark for planning, not quotes. The biggest single decision — one all-in-one limo platform vs. assembled parts — is in Section 9.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Layer</th><th>Role</th><th>Recommended</th><th>Alternatives</th><th>~ Monthly</th></tr></thead>
+        <tbody>
+          <tr><td>Website / CMS</td><td>Pages, service &amp; location content, SEO</td><td>Existing WordPress, cleaned up</td><td>Webflow; static site</td><td>$0–30 hosting</td></tr>
+          <tr><td>Funnel / forms</td><td>Multi-step booking &amp; quote capture</td><td>The custom funnel (already built) + Formspree/webhook</td><td>Gravity Forms; Typeform; Fillout</td><td>$0–25</td></tr>
+          <tr><td>Booking engine</td><td>Trip details, availability, price, deposit</td><td><strong>Moovs</strong> or <strong>Limo Anywhere</strong> (limo-specific: booking widget + dispatch + driver app)</td><td>Custom on top of the funnel + Stripe; Bookinglayer</td><td>$0–199</td></tr>
+          <tr><td>Payments</td><td>Deposits, balances, refunds</td><td><strong>Stripe</strong></td><td>Square; Authorize.net; processor built into the limo platform</td><td>2.9% + 30¢</td></tr>
+          <tr><td>CRM</td><td>Leads, customers, corporate accounts, pipeline</td><td><strong>HubSpot</strong> free tier, or <strong>Airtable</strong> if you want full control of the schema</td><td>Zoho CRM; Pipedrive; the limo platform's built-in CRM</td><td>$0–50</td></tr>
+          <tr><td>Automation / orchestration</td><td>Connects the pieces, runs the workflows, holds the approval gates</td><td><strong>Make</strong> (visual, granular) or <strong>Zapier</strong> (simplest)</td><td>n8n (self-host); native automations inside HubSpot</td><td>$0–40</td></tr>
+          <tr><td>Email</td><td>Transactional + campaigns</td><td><strong>Resend</strong> or <strong>Postmark</strong> (transactional) + the CRM for campaigns</td><td>Mailchimp; Brevo; SendGrid</td><td>$0–30</td></tr>
+          <tr><td>SMS</td><td>Confirmations, reminders, follow-ups</td><td><strong>Twilio</strong></td><td>Telnyx; SimpleTexting; platform-native SMS</td><td>$20–60 + usage</td></tr>
+          <tr><td>Calendar / dispatch</td><td>Trip schedule, driver assignment, driver app</td><td>Built into Moovs / Limo Anywhere</td><td>Google Calendar + a shared sheet (phase 1 only)</td><td>included / $0</td></tr>
+          <tr><td>Flight tracking</td><td>Adjust airport pickup timing</td><td>Built into the limo platform</td><td>FlightAware AeroAPI; AviationStack</td><td>$0–50</td></tr>
+          <tr><td>Reviews</td><td>Request, route, monitor</td><td>Automation-driven links + <strong>Google Business Profile</strong></td><td>NiceJob; Podium; Birdeye</td><td>$0–99</td></tr>
+          <tr><td>Call tracking</td><td>Attribute phone leads to source</td><td><strong>CallRail</strong></td><td>WhatConverts; Twilio numbers + manual tagging</td><td>$45+</td></tr>
+          <tr><td>Analytics</td><td>Traffic, funnel, conversion, revenue</td><td><strong>GA4</strong> + <strong>Google Search Console</strong> + <strong>Looker Studio</strong> dashboard</td><td>Plausible/Fathom (privacy-friendly) alongside GA4</td><td>$0</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><strong>Rough all-in:</strong> assembled-from-parts, low volume: <strong>~$150–350/mo</strong> plus payment fees and SMS usage. An all-in-one limo platform replaces the booking engine, dispatch, driver app, flight tracking, and some CRM for <strong>~$100–300/mo</strong>, at the cost of less control over the data model.</p>
+      <div class="note">
+        <span class="lbl">Compliance to budget for</span>
+        <p>US business SMS now requires <strong>A2P 10DLC registration</strong> (brand + campaign) before Twilio or any provider will deliver reliably — a few weeks of lead time and a small registration fee. Also: PCI stays Stripe's problem only if card data never touches your servers (use Stripe Checkout / Payment Links, not custom card fields), and marketing messages need clear consent capture + opt-out.</p>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="rollout">
+      <h2><span class="n">07</span> Phased rollout</h2>
+      <p>Each phase is independently useful. Don't start a phase until the previous one is running cleanly.</p>
+
+      <div class="phase">
+        <h3>Phase 1 <span class="wk">weeks 1–4</span></h3>
+        <p class="goal">Stop losing leads. Every enquiry lands in one place and gets an instant acknowledgement.</p>
+        <h4>Scope</h4>
+        <ul>
+          <li>Booking &amp; quote funnel live on a "Book Online" page, wired to a lead sink.</li>
+          <li>CRM set up with the data model; every form + call creates a Lead with source tagging.</li>
+          <li>Automated: instant acknowledgement, owner notification, booking confirmation email/SMS.</li>
+          <li>Dispatch stays manual — Google Calendar + driver texts. Quoting stays manual.</li>
+          <li>Call tracking number in place so phone leads are attributed.</li>
+        </ul>
+        <h4>Add</h4>
+        <p class="mono">CRM &middot; Make/Zapier &middot; Twilio (start 10DLC now) &middot; Resend/Postmark &middot; CallRail &middot; GA4 + Search Console</p>
+        <h4>Done when</h4>
+        <p>You can't name a lead from the last two weeks that isn't in the CRM, and every one got a reply within minutes.</p>
+      </div>
+
+      <div class="phase">
+        <h3>Phase 2 <span class="wk">weeks 5–10</span></h3>
+        <p class="goal">Money and reminders run themselves. Quotes chase; trips confirm; reviews come in.</p>
+        <h4>Scope</h4>
+        <ul>
+          <li>Booking engine + Stripe deposits (build on the funnel, or stand up Moovs/Limo Anywhere).</li>
+          <li>Standard-rate auto-quoting; unusual quotes routed to the owner's approval gate.</li>
+          <li>Quote follow-up sequence (day 0/1/3/7, stop on booking).</li>
+          <li>Pre-trip reminder workflow, including airport instructions + flight-aware timing.</li>
+          <li>Trip completion → thank-you → review request, with the 1–3★ gate.</li>
+          <li>Abandoned-booking recovery (one message).</li>
+        </ul>
+        <h4>Add</h4>
+        <p class="mono">Stripe &middot; booking engine &middot; flight tracking &middot; review routing</p>
+        <h4>Done when</h4>
+        <p>A weekday with no owner input still produces confirmed bookings, sent reminders, and at least one review request.</p>
+      </div>
+
+      <div class="phase">
+        <h3>Phase 3 <span class="wk">weeks 11+</span></h3>
+        <p class="goal">The system grows the business, not just runs it.</p>
+        <h4>Scope</h4>
+        <ul>
+          <li>Nightly segmentation; repeat + win-back campaigns from approved templates.</li>
+          <li>Corporate pipeline automation — owner-nudge reminders, quarterly check-ins, monthly invoicing.</li>
+          <li>Admin dashboard (Section 8) and the monthly performance report.</li>
+          <li>The AI-assisted optimization loop — recommendations reviewed by a human before anything changes.</li>
+          <li>Driver app / self-serve dispatch if not already via the platform.</li>
+        </ul>
+        <h4>Add</h4>
+        <p class="mono">Looker Studio dashboard &middot; campaign tooling &middot; invoicing</p>
+        <h4>Done when</h4>
+        <p>The monthly report writes most of itself, and you're making changes based on its numbers rather than hunches.</p>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section id="reporting">
+      <h2><span class="n">08</span> Dashboards &amp; the optimization loop</h2>
+
+      <h3>Admin dashboard — the daily view</h3>
+      <p>One screen, opened every morning:</p>
+      <ul>
+        <li><strong>Today &amp; tomorrow's trips</strong> — with assignment status; unassigned ones flagged.</li>
+        <li><strong>New leads</strong> (last 24–48h) and <strong>pending quotes</strong> awaiting approval or customer response.</li>
+        <li><strong>Unpaid bookings</strong> and <strong>held bookings</strong> (payment failed).</li>
+        <li><strong>Stale quotes</strong> — sent &gt; 3 days ago, no response.</li>
+        <li><strong>Corporate leads</strong> by stage; anything untouched &gt; 5 business days.</li>
+        <li><strong>This week</strong>: bookings, revenue, cancellations, completed trips.</li>
+        <li><strong>Reviews</strong> needing a response.</li>
+      </ul>
+
+      <h3>Monthly performance report</h3>
+      <p>Generated from GA4 + Search Console + the CRM + Stripe. Answers the twelve questions you listed: what moved revenue up and down, which services and locations are growing or shrinking, which pages produce bookings vs. traffic with no leads, which keywords and campaigns bring paying customers, what technical issues and reviews need attention, and what to test next. Ends in a <strong>Top 10 priorities</strong> list — each with problem, evidence, recommended action, expected impact, difficulty, owner, deadline, and the metric that proves it worked. It maintains a running backlog rather than proposing rebuilds.</p>
+
+      <h3>The AI-assisted optimization loop</h3>
+      <ol>
+        <li>Monthly, the data is pulled into a structured summary (no raw dumping).</li>
+        <li>An analysis pass identifies patterns, anomalies, and candidate experiments against the backlog.</li>
+        <li>It drafts the Top 10 with evidence attached.</li>
+        <li><strong>A human reviews and picks</strong> what to actually do — this is a gate, not an autopilot.</li>
+        <li>Chosen changes are made, tagged with a start date, and measured against their success metric next cycle.</li>
+      </ol>
+      <div class="note">
+        <span class="lbl">Guardrail</span>
+        <p>The loop never changes pricing, ad spend, page content, or automations on its own. It recommends; you approve; the change is logged so next month's report can measure it.</p>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="decisions">
+      <h2><span class="n">09</span> Open decisions</h2>
+      <p>Nothing gets built until these are settled — they change which tools go in the stack and how much of Section 4 is custom.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Decision</th><th>Options</th><th>Affects</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Booking engine: buy or build</strong></td><td>All-in-one limo platform (Moovs / Limo Anywhere) — fastest, includes dispatch + driver app + flight tracking, less schema control. &nbsp;vs.&nbsp; Custom on the existing funnel + Stripe + your own CRM — full control, more to build and maintain.</td><td>Sections 4, 6, 7; ongoing cost</td></tr>
+          <tr><td><strong>CRM</strong></td><td>HubSpot free (polished, limits on automation) / Airtable (total schema control, you build the views) / the limo platform's built-in CRM (one less tool, weaker marketing side).</td><td>Data model home; campaign tooling</td></tr>
+          <tr><td><strong>Deposit policy</strong></td><td>Flat deposit / percentage / full prepay / card-on-file only. Plus the cancellation window and fees.</td><td>Payment + cancellation workflows</td></tr>
+          <tr><td><strong>Standard rate table</strong></td><td>The exact city pairs, per-mile and hourly rates, surcharges, and the distance/complexity threshold above which a quote needs approval.</td><td>Auto-quoting; the approval gate</td></tr>
+          <tr><td><strong>Dispatch owner</strong></td><td>Owner does it / a dispatcher / drivers self-serve from an app.</td><td>Assignment workflow; platform choice</td></tr>
+          <tr><td><strong>SMS sender identity + 10DLC</strong></td><td>Which number, registered to which legal business entity. Start now — it gates all SMS.</td><td>Phase 1 timeline</td></tr>
+          <tr><td><strong>Access for implementation</strong></td><td>WordPress admin, Google (Analytics / Search Console / Business Profile), and the ad accounts — shared via an interactive session or a password manager.</td><td>Everything past design</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>Recommended next step</h3>
+      <p>Settle the <strong>buy-or-build</strong> and <strong>CRM</strong> decisions, provide the standard rate table, and start the 10DLC registration. With those, Phase 1 can be stood up in the first couple of weeks — and it's the phase that pays for itself, because it stops leads leaking.</p>
+
+      <p class="foot">Blueprint v1 &middot; Northwest Town Car Service &middot; drafted 2026-09-01. A design document — no part of this system is built yet. Costs and vendor capabilities are planning estimates, verify against current pricing before committing.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+  (function(){
+    var KEY='nwtc-blueprint-theme';
+    var root=document.documentElement, btn=document.getElementById('themeToggle');
+    try{var saved=localStorage.getItem(KEY); if(saved)root.setAttribute('data-theme',saved);}catch(e){}
+    function label(){
+      var explicit=root.getAttribute('data-theme');
+      btn.textContent = explicit==='dark' ? 'Light' : explicit==='light' ? 'Dark' : 'Theme';
+    }
+    label();
+    btn.addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      var prefersDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      var next = cur ? (cur==='dark'?'light':'dark') : (prefersDark?'light':'dark');
+      root.setAttribute('data-theme',next);
+      try{localStorage.setItem(KEY,next);}catch(e){}
+      label();
+    });
+  })();
+</script>
+</body>
+</html>

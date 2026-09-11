@@ -1,0 +1,852 @@
+<title>Book a Ride | Northwest Town Car Service</title>
+<meta name="description" content="Reserve a private chauffeur with Northwest Town Car Service. Real-time quotes on airport and hourly trips; custom quotes for weddings, events, and group travel across Seattle and the Puget Sound.">
+<meta property="og:title" content="Book a Ride — Northwest Town Car Service">
+<meta property="og:description" content="Real-time quotes on airport and hourly trips; a written quote within the hour on everything else. No card needed to reserve.">
+<meta name="theme-color" content="#0F1E19">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1E19; --ink-2:#16281F; --ink-3:#0c1713; --steel:#3c4f45;
+    --paper:#F1ECE0; --paper-dim:#a9b3a6;
+    --brass:#C09A56; --brass-bright:#D9B87A;
+    --signal:#c96a5c; --ok:#8FB08C;
+    --line:rgba(241,236,224,0.14); --line-strong:rgba(241,236,224,0.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--ink);color:var(--paper);font-family:'Work Sans',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-0.01em;line-height:1.1;text-wrap:balance;}
+  .mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;}
+  a{color:inherit;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px;}
+  .eyebrow{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-bright);}
+  .eyebrow.ok{color:var(--ok);}
+  .opt{color:var(--paper-dim);font-weight:400;}
+
+  .site-head{border-bottom:1px solid var(--line);background:rgba(15,30,25,0.92);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);}
+  .site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;}
+  .brand{font-family:'Fraunces',serif;font-size:15px;letter-spacing:0.04em;text-decoration:none;}
+  .brand em{font-style:normal;color:var(--brass-bright);}
+  .call-link{font-size:12px;color:var(--paper-dim);text-decoration:none;white-space:nowrap;}
+  .call-link:hover{color:var(--paper);}
+  .site-foot{border-top:1px solid var(--line);margin-top:64px;padding:28px 0;}
+  .site-foot .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--paper-dim);}
+
+  .booking{padding:40px 20px 24px;}
+  .booking-intro{margin-bottom:24px;}
+  .booking-intro h1{font-size:clamp(30px,6vw,44px);margin-top:8px;}
+  .lede{color:var(--paper-dim);margin-top:12px;font-size:16px;max-width:54ch;}
+
+  .progress{list-style:none;display:flex;gap:4px;margin:0 0 28px;padding:0;overflow-x:auto;scrollbar-width:none;}
+  .progress::-webkit-scrollbar{display:none;}
+  .progress li{flex:1 0 auto;display:flex;align-items:center;gap:7px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:var(--paper-dim);white-space:nowrap;padding:6px 4px;}
+  .progress .dot{width:7px;height:7px;border-radius:50%;background:var(--steel);flex:none;transition:background .2s;}
+  .progress li.active{color:var(--paper);}
+  .progress li.active .dot{background:var(--brass-bright);box-shadow:0 0 0 3px rgba(212,172,102,0.25);}
+  .progress li.done .dot{background:var(--ok);}
+
+  .step{animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .step h2{font-size:clamp(22px,4vw,30px);}
+  .step-hint,.field-note{color:var(--paper-dim);font-size:13px;margin-top:8px;}
+  .field-note{margin-top:6px;}
+
+  .field{margin-top:20px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;}
+  .form-row .field{margin-top:0;}
+  @media (max-width:520px){.form-row{grid-template-columns:1fr;}}
+  label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--paper-dim);margin-bottom:7px;}
+  label.choice{margin-bottom:0;}
+  input,select,textarea{width:100%;background:var(--ink-2);border:1px solid var(--line);color:var(--paper);padding:12px 13px;font-size:16px;font-family:'Work Sans',sans-serif;border-radius:3px;}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--paper-dim) 50%),linear-gradient(135deg,var(--paper-dim) 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:38px;}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--brass);outline-offset:1px;border-color:transparent;}
+  textarea{resize:vertical;min-height:76px;}
+  input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--signal);}
+
+  .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+  @media (max-width:520px){.choice-grid{grid-template-columns:1fr;}}
+  .choice{position:relative;display:block;cursor:pointer;}
+  .choice input{position:absolute;opacity:0;pointer-events:none;}
+  .choice-body{display:block;border:1px solid var(--line);border-radius:3px;padding:14px;background:var(--ink-2);transition:border-color .15s,background .15s;height:100%;text-transform:none;letter-spacing:normal;}
+  .choice-body strong{display:block;font-size:15px;font-weight:600;color:var(--paper);}
+  .choice-body small{display:block;color:var(--paper-dim);font-size:12px;margin-top:4px;font-weight:400;}
+  .choice:hover .choice-body{border-color:var(--line-strong);}
+  .choice input:checked + .choice-body{border-color:var(--brass);background:rgba(192,154,86,0.12);}
+  .choice input:focus-visible + .choice-body{outline:2px solid var(--brass);outline-offset:2px;}
+  .vehicles .choice-body small{font-family:ui-monospace,monospace;}
+  .choice.dim{opacity:0.5;}
+
+  .checks{border:1px solid var(--line);border-radius:3px;padding:14px;}
+  .checks legend{padding:0 6px;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--paper-dim);}
+  .check{display:flex;align-items:center;gap:10px;font-size:14px;text-transform:none;letter-spacing:0;color:var(--paper);margin:8px 0;cursor:pointer;}
+  .check input{width:16px;height:16px;flex:none;accent-color:var(--brass);}
+  .check .mono{margin-left:auto;color:var(--paper-dim);font-size:12px;}
+
+  .field-error{color:var(--signal);font-size:13px;margin-top:16px;font-family:ui-monospace,monospace;}
+
+  .form-nav{display:flex;gap:12px;align-items:center;margin-top:32px;flex-wrap:wrap;}
+  .btn-primary,.btn-ghost{font-size:15px;font-weight:600;padding:13px 24px;border-radius:3px;cursor:pointer;text-decoration:none;border:1px solid transparent;font-family:'Work Sans',sans-serif;}
+  .btn-primary{background:var(--brass);color:var(--ink);}
+  .btn-primary:hover{background:var(--brass-bright);}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--paper-dim);}
+  .btn-text{background:none;border:none;color:var(--paper-dim);font-size:13px;cursor:pointer;text-decoration:underline;font-family:'Work Sans',sans-serif;margin-left:auto;}
+  .btn-text:hover{color:var(--paper);}
+
+  .review-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;margin-top:24px;}
+  @media (max-width:680px){.review-grid{grid-template-columns:1fr;}}
+  .summary{font-size:14px;}
+  .summary div{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:9px 0;border-top:1px solid var(--line);}
+  .summary div:first-child{border-top:none;}
+  .summary dt{color:var(--paper-dim);font-size:12px;text-transform:uppercase;letter-spacing:0.06em;}
+  .summary dd{color:var(--paper);}
+
+  .estimate{border:1px solid var(--line);border-radius:3px;padding:18px;background:var(--ink-2);align-self:start;}
+  .price-tag{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:5px;border:1px solid;display:inline-block;margin-bottom:12px;}
+  .price-tag.flat,.price-tag.hourly{color:var(--ok);border-color:rgba(143,176,140,0.5);}
+  .price-tag.manual-quote{color:var(--brass-bright);border-color:rgba(212,172,102,0.5);}
+  .estimate-line{display:flex;justify-content:space-between;gap:12px;font-family:ui-monospace,monospace;font-size:12.5px;padding:5px 0;color:var(--paper-dim);}
+  .estimate-line span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .estimate-line.neg span:last-child{color:var(--ok);}
+  .estimate-line.total{border-top:1px solid var(--line-strong);margin-top:6px;padding-top:12px;color:var(--paper);font-size:15px;font-weight:600;}
+  .estimate-line.total span:last-child{color:var(--brass-bright);}
+  .estimate-quote{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--brass-bright);line-height:1.6;}
+  .estimate-disclaimer{font-size:11px;color:var(--paper-dim);margin-top:14px;line-height:1.5;}
+
+  .confirmation{animation:fade .3s ease;padding-top:8px;}
+  .confirmation h2{font-size:clamp(24px,5vw,34px);margin-top:8px;font-family:ui-monospace,monospace;letter-spacing:0.02em;}
+  .next-list{list-style:none;margin:18px 0 0;padding:0;}
+  .next-list li{padding:8px 0 8px 24px;position:relative;font-size:14px;color:var(--paper-dim);border-top:1px solid var(--line);}
+  .next-list li:first-child{border-top:none;}
+  .next-list li::before{content:"→";position:absolute;left:0;color:var(--brass);}
+  #copy-status{min-height:1.2em;}
+  .pay-choice{border:1px solid var(--line);border-radius:12px;padding:16px;margin:18px 0 0;display:flex;flex-direction:column;gap:10px;}
+  .pay-choice legend{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;color:var(--brass-bright);padding:0 4px;}
+  .pay-opt{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;line-height:1.45;cursor:pointer;color:var(--paper-dim);}
+  .pay-opt input{margin-top:3px;flex:none;accent-color:var(--brass);}
+  .pay-opt strong{color:var(--paper);text-transform:none;letter-spacing:normal;}
+  .conf-sync{font-size:.9rem;padding:10px 14px;border-radius:8px;margin:0 0 4px;}
+  .conf-sync.ok{background:rgba(62,122,82,0.12);color:#2f5d3f;}
+  .conf-sync.warn{background:rgba(168,68,58,0.10);color:#8a3a30;}
+  @media (prefers-color-scheme:dark){.conf-sync.ok{color:#8FB08C;}.conf-sync.warn{color:#D98A7C;}}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}html{scroll-behavior:auto;}}
+</style>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/">NORTHWEST TOWN CAR <em>SERVICE</em></a>
+    <a class="call-link mono" href="tel:+12065965504">Dispatch 24/7 &middot; (206) 596-5504</a>
+  </div>
+</header>
+
+<main class="wrap booking">
+  <div class="booking-intro">
+    <p class="eyebrow">Reservations</p>
+    <h1>Book your ride</h1>
+    <p class="lede">Airport transfers and hourly service get a price on the spot. Weddings, events, and group trips get a custom quote from dispatch, usually within the hour.</p>
+  </div>
+
+  <ol class="progress" id="progress" aria-label="Booking progress">
+    <li data-step="1"><span class="dot"></span>Service</li>
+    <li data-step="2"><span class="dot"></span>Trip</li>
+    <li data-step="3"><span class="dot"></span>Schedule</li>
+    <li data-step="4"><span class="dot"></span>Details</li>
+    <li data-step="5"><span class="dot"></span>Contact</li>
+    <li data-step="6"><span class="dot"></span>Review</li>
+  </ol>
+
+  <form id="booking-form" novalidate>
+
+    <!-- STEP 1 -->
+    <section class="step" data-step="1" aria-labelledby="s1-h">
+      <h2 id="s1-h">What do you need?</h2>
+      <p class="step-hint">Airport and hourly trips are priced instantly. The rest come back as a custom quote.</p>
+      <div class="choice-grid" role="radiogroup" aria-labelledby="s1-h">
+        <label class="choice"><input type="radio" name="service" value="Airport pickup (from SEA)" required><span class="choice-body"><strong>Airport pickup</strong><small>We meet your flight at SEA &middot; instant price</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Airport drop-off (to SEA)"><span class="choice-body"><strong>Airport drop-off</strong><small>Ride to SEA &middot; instant price</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Hourly / as-directed"><span class="choice-body"><strong>Hourly / as-directed</strong><small>Car and driver on call &middot; instant price</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Point-to-point"><span class="choice-body"><strong>Point-to-point</strong><small>One direct trip &middot; custom quote</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Round trip"><span class="choice-body"><strong>Round trip</strong><small>Out and back &middot; custom quote</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Wedding / event"><span class="choice-body"><strong>Wedding / event</strong><small>One or more vehicles &middot; custom quote</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Cruise terminal"><span class="choice-body"><strong>Cruise terminal</strong><small>Pier 66 / Pier 91 &middot; custom quote</small></span></label>
+        <label class="choice"><input type="radio" name="service" value="Corporate account"><span class="choice-body"><strong>Corporate account</strong><small>Set up recurring business travel</small></span></label>
+      </div>
+      <p class="field-error" data-error="service" hidden>Choose a service to continue.</p>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step" data-step="2" aria-labelledby="s2-h" hidden>
+      <h2 id="s2-h">Trip details</h2>
+
+      <div class="fieldset-block" data-when="airport" hidden>
+        <div class="field">
+          <label for="zone">Service area <span class="opt">— the non-airport end of the trip</span></label>
+          <select id="zone" name="zone">
+            <option value="">Select an area…</option>
+            <option>Seattle</option><option>Bellevue</option><option>Kirkland</option><option>Redmond</option>
+            <option>Renton</option><option>Kent</option><option>Federal Way</option><option>Auburn</option>
+            <option>Tacoma</option><option>Puyallup</option><option>Lynnwood</option><option>Edmonds</option>
+            <option>Everett</option><option>Gig Harbor</option>
+            <option value="other">Another Washington area</option>
+          </select>
+          <p class="field-note">Flat rates cover these areas. Anywhere else, dispatch sends a quick quote.</p>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="pickup">Pickup address</label><input id="pickup" name="pickup" autocomplete="off" placeholder="Terminal, address, or hotel"></div>
+          <div class="field"><label for="dropoff">Drop-off address</label><input id="dropoff" name="dropoff" autocomplete="off" placeholder="Address or hotel"></div>
+        </div>
+      </div>
+
+      <div class="fieldset-block" data-when="hourly" hidden>
+        <div class="field">
+          <label for="hours">How many hours?</label>
+          <select id="hours" name="hours">
+            <option value="3">3 hours (minimum)</option><option value="4">4 hours</option>
+            <option value="5">5 hours</option><option value="6">6 hours</option>
+            <option value="8">8 hours</option><option value="10">10+ hours</option>
+          </select>
+        </div>
+        <div class="field"><label for="hourly-start">Starting location</label><input id="hourly-start" name="hourlyStart" autocomplete="off" placeholder="Where should the car meet you?"></div>
+      </div>
+
+      <div class="fieldset-block" data-when="ptp" hidden>
+        <div class="form-row">
+          <div class="field"><label for="p-pickup">Pickup</label><input id="p-pickup" name="pPickup" autocomplete="off" placeholder="Address, hotel, or venue"></div>
+          <div class="field"><label for="p-dropoff">Drop-off</label><input id="p-dropoff" name="pDropoff" autocomplete="off" placeholder="Address, hotel, or venue"></div>
+        </div>
+        <p class="field-note">We'll send a custom quote for this trip — no card needed to request it.</p>
+      </div>
+
+      <div class="fieldset-block" data-when="corporate" hidden>
+        <div class="field"><label for="company">Company</label><input id="company" name="company" autocomplete="organization" placeholder="Company name"></div>
+        <div class="form-row">
+          <div class="field"><label for="volume">Estimated trips / month</label>
+            <select id="volume" name="volume"><option value="">Select…</option><option>1&ndash;5</option><option>6&ndash;15</option><option>16&ndash;40</option><option>40+</option></select></div>
+          <div class="field"><label for="corp-use">Primary use</label>
+            <select id="corp-use" name="corpUse"><option value="">Select…</option><option>Airport transfers</option><option>Client / executive travel</option><option>Roadshows &amp; events</option><option>Crew transportation</option><option>Mixed</option></select></div>
+        </div>
+      </div>
+
+      <p class="field-error" data-error="step2" hidden>Add the trip details above to continue.</p>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step" data-step="3" aria-labelledby="s3-h" hidden>
+      <h2 id="s3-h">Schedule &amp; passengers</h2>
+      <div class="form-row">
+        <div class="field"><label for="date">Pickup date</label><input id="date" name="date" type="date" required></div>
+        <div class="field"><label for="time">Pickup time</label><input id="time" name="time" type="time" required></div>
+      </div>
+      <div class="form-row" data-when="return" hidden>
+        <div class="field"><label for="return-date">Return date</label><input id="return-date" name="returnDate" type="date"></div>
+        <div class="field"><label for="return-time">Return time</label><input id="return-time" name="returnTime" type="time"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="passengers">Passengers</label><input id="passengers" name="passengers" type="number" min="1" max="56" value="1" inputmode="numeric" required></div>
+        <div class="field"><label for="bags">Checked bags</label><input id="bags" name="bags" type="number" min="0" max="60" value="0" inputmode="numeric"></div>
+      </div>
+      <div class="field">
+        <label>Vehicle</label>
+        <p class="field-note" id="vehicle-suggest">Suggested for your party size:</p>
+        <div class="choice-grid vehicles" role="radiogroup" aria-label="Vehicle">
+          <label class="choice"><input type="radio" name="vehicle" value="Executive Sedan"><span class="choice-body"><strong>Executive Sedan</strong><small>Up to 3 riders &middot; 3 bags</small></span></label>
+          <label class="choice"><input type="radio" name="vehicle" value="Premium SUV"><span class="choice-body"><strong>Premium SUV</strong><small>Up to 6 riders &middot; 6 bags</small></span></label>
+          <label class="choice"><input type="radio" name="vehicle" value="Sprinter Van"><span class="choice-body"><strong>Sprinter Van</strong><small>Up to 14 riders &middot; large groups</small></span></label>
+          <label class="choice"><input type="radio" name="vehicle" value="Let us choose"><span class="choice-body"><strong>Let us choose</strong><small>We'll match the vehicle to your trip</small></span></label>
+        </div>
+      </div>
+      <p class="field-error" data-error="step3" hidden>Add a date, time, and vehicle to continue.</p>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step" data-step="4" aria-labelledby="s4-h" hidden>
+      <h2 id="s4-h">A few more details</h2>
+      <div class="field" data-when="flight" hidden>
+        <label for="flight">Flight number</label>
+        <input id="flight" name="flight" autocomplete="off" placeholder="e.g. DL1234 or AS502">
+        <p class="field-note">We track your flight and adjust pickup time if it shifts. Included, no charge.</p>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="stops">Additional stops</label><input id="stops" name="stops" type="number" min="0" max="5" value="0" inputmode="numeric"></div>
+        <div class="field"><label for="childSeats">Child / booster seats</label><input id="childSeats" name="childSeats" type="number" min="0" max="4" value="0" inputmode="numeric"></div>
+      </div>
+      <fieldset class="field checks">
+        <legend>Add-ons</legend>
+        <label class="check"><input type="checkbox" name="meetGreet" value="yes"> Meet &amp; greet inside the terminal <span class="mono">included</span></label>
+        <label class="check"><input type="checkbox" name="tipIncluded" value="yes" checked> Include 20% gratuity in my estimate</label>
+      </fieldset>
+      <div class="field">
+        <label for="notes">Special requests</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Accessibility needs, car-seat type, signage name, greeting preferences…"></textarea>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="step" data-step="5" aria-labelledby="s5-h" hidden>
+      <h2 id="s5-h">Where do we send the confirmation?</h2>
+      <div class="form-row">
+        <div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required placeholder="Jordan Alvarez"></div>
+        <div class="field"><label for="phone">Mobile phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="(206) 555-0192"></div>
+      </div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@email.com"></div>
+      <div class="field" data-when="corp-contact" hidden><label for="title">Your role <span class="opt">— optional</span></label><input id="title" name="title" autocomplete="organization-title" placeholder="Executive Assistant, Travel Manager…"></div>
+      <div class="field"><label class="check"><input type="checkbox" name="consent" value="yes" required> I agree to be contacted by text and email about this reservation.</label></div>
+      <p class="field-error" data-error="step5" hidden>Add your name, phone, email, and consent to continue.</p>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="step" data-step="6" aria-labelledby="s6-h" hidden>
+      <h2 id="s6-h">Review &amp; confirm</h2>
+      <div class="review-grid">
+        <dl id="review-summary" class="summary"></dl>
+        <aside class="estimate" id="estimate-panel">
+          <p class="eyebrow">Your quote</p>
+          <div id="estimate-body"></div>
+          <p class="estimate-disclaimer" id="estimate-disc"></p>
+        </aside>
+      </div>
+      <fieldset class="pay-choice" id="pay-choice" hidden>
+        <legend>How would you like to pay?</legend>
+        <label class="pay-opt"><input type="radio" name="paymentPreference" value="card" checked>
+          <span><strong>Card</strong> — we email a secure link for the deposit once dispatch confirms; the balance is charged after the trip.</span></label>
+        <label class="pay-opt"><input type="radio" name="paymentPreference" value="cash">
+          <span><strong>Cash to the driver</strong> — pay the full fare in cash at the end of the trip. No deposit. Dispatch confirms every cash booking.</span></label>
+      </fieldset>
+      <p class="field-error" data-error="submit" hidden>Something's missing above. Step back and check the highlighted fields.</p>
+    </section>
+
+    <div class="form-nav">
+      <button type="button" class="btn-ghost" id="btn-back" hidden>Back</button>
+      <button type="button" class="btn-primary" id="btn-next">Continue</button>
+      <button type="submit" class="btn-primary" id="btn-submit" hidden>Reserve this ride</button>
+      <button type="button" class="btn-text" id="btn-reset" hidden>Start over</button>
+    </div>
+  </form>
+
+  <section class="confirmation" id="confirmation" hidden aria-live="polite">
+    <p class="eyebrow ok" id="conf-kicker" tabindex="-1">Reservation received</p>
+    <h2 id="conf-ref"></h2>
+    <p class="lede" id="conf-lede"></p>
+    <dl id="conf-summary" class="summary"></dl>
+    <ul class="next-list" id="conf-next"></ul>
+    <p class="conf-sync" id="conf-sync" hidden aria-live="polite"></p>
+    <div class="form-nav">
+      <button type="button" class="btn-primary" id="btn-email">Email these details to dispatch</button>
+      <button type="button" class="btn-ghost" id="btn-copy">Copy details</button>
+      <button type="button" class="btn-text" id="btn-new">New reservation</button>
+    </div>
+    <p class="field-note" id="copy-status" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="mono">Northwest Town Car Service &middot; Kent &amp; SeaTac, WA &middot; Dispatch 24/7</span>
+    <span class="mono">Licensed WUTC carrier &middot; Fully insured</span>
+  </div>
+</footer>
+
+<script>
+/* ==== INLINED pricing-table.json (rates as of v2026-09-02.1) — keep rates in sync with
+   pricing/pricing-table.json. The "deposit" block (added v2026-09-03.1) is intentionally
+   omitted here: deposits are computed server-side only, never in the funnel. ==== */
+var PRICING_TABLE = {
+  "version":"2026-09-02.1","currency":"USD",
+  "vehicleClasses":{
+    "executive-sedan":{"label":"Executive Sedan","capacity":3,"bags":3,"airportTier":"sedan"},
+    "luxury-sedan":{"label":"Luxury Sedan","capacity":3,"bags":3,"airportTier":"sedan"},
+    "premium-suv":{"label":"Premium SUV","capacity":6,"bags":6,"airportTier":"suv"},
+    "luxury-suv":{"label":"Luxury SUV","capacity":6,"bags":6,"airportTier":"suv"},
+    "executive-van":{"label":"Executive Van","capacity":11,"bags":12,"airportTier":null},
+    "sprinter":{"label":"Sprinter","capacity":14,"bags":16,"airportTier":null}
+  },
+  "airportFlatRates":{"airport":"SEA","tiers":["sedan","suv"],"zones":{
+    "Seattle":{"sedan":89,"suv":119},"Bellevue":{"sedan":89,"suv":119},"Kirkland":{"sedan":105,"suv":135},
+    "Redmond":{"sedan":109,"suv":139},"Renton":{"sedan":79,"suv":109},"Kent":{"sedan":79,"suv":109},
+    "Federal Way":{"sedan":85,"suv":115},"Auburn":{"sedan":89,"suv":119},"Tacoma":{"sedan":99,"suv":129},
+    "Puyallup":{"sedan":109,"suv":139},"Lynnwood":{"sedan":109,"suv":139},"Edmonds":{"sedan":119,"suv":149},
+    "Everett":{"sedan":139,"suv":169},"Gig Harbor":{"sedan":139,"suv":169}}},
+  "hourly":{"rates":{
+    "executive-sedan":{"hourly":95,"minHours":3},"luxury-sedan":{"hourly":105,"minHours":3},
+    "premium-suv":{"hourly":125,"minHours":3},"luxury-suv":{"hourly":140,"minHours":3},
+    "executive-van":{"hourly":175,"minHours":3},"sprinter":{"hourly":225,"minHours":4}}},
+  "addOns":{"additionalStop":{"label":"Additional stop","amount":20},"childSeat":{"label":"Child seat","amount":15}},
+  "waiting":{"extraWaitPerMinute":1.5,"airportFreeMinutes":60,"nonAirportFreeMinutes":15},
+  "fees":{"fuelSurchargePct":0,"bookingFee":0},
+  "tax":{"label":"WA sales tax","pct":0},
+  "gratuity":{"defaultPct":20,"includedInQuote":true,"editableByCustomer":true},
+  "corporateTiers":{"standard":{"label":"Standard","discountPct":0},"corporate":{"label":"Corporate","discountPct":5},
+    "preferred":{"label":"Preferred","discountPct":10},"volume":{"label":"Volume","discountPct":12},
+    "contract":{"label":"Contract","discountPct":null}},
+  "manualQuoteServices":["wedding","event","crew","special-event"],
+  "rules":{"quoteExpiresHours":72}
+};
+</script>
+<script>
+/* ==== INLINED pricing-engine.js v1 — keep in sync with pricing/pricing-engine.js ==== */
+(function(global){'use strict';
+function round(n){return Math.round(Number(n)||0);}function money(n){return Math.max(0,round(n));}
+function cap(s){return String(s).charAt(0).toUpperCase()+String(s).slice(1);}
+function tierFor(t,vc){var v=t.vehicleClasses&&t.vehicleClasses[vc];return v?v.airportTier||null:null;}
+function flatRate(t,z,tier){var zz=t.airportFlatRates&&t.airportFlatRates.zones[z];return zz&&zz[tier]!=null?zz[tier]:null;}
+function describeRoute(r){if(r.service==='hourly')return 'Hourly / as-directed';
+ if(r.service==='airport')return r.direction==='to-airport'?((r.zone||'?')+' → SEA'):('SEA → '+(r.zone||'?'));
+ if(r.pickup||r.dropoff)return (r.pickup||'?')+' → '+(r.dropoff||'?');return cap(r.service||'trip');}
+function method(r,t){var s=r.service,m=t.manualQuoteServices||[];
+ if(m.indexOf(s)!==-1)return 'manual-quote';
+ if(s==='hourly')return t.hourly.rates[r.vehicleClass]?'hourly':'manual-quote';
+ var wf=s==='airport'||((s==='point-to-point'||s==='cruise')&&r.isAirportLeg);
+ if(wf){var tr=tierFor(t,r.vehicleClass);if(tr&&flatRate(t,r.zone,tr)!=null)return 'flat';return 'manual-quote';}
+ return 'manual-quote';}
+function manualReason(r,t){var s=r.service;
+ if((t.manualQuoteServices||[]).indexOf(s)!==-1)return cap(s)+' bookings are priced individually. Dispatch will send a full quote.';
+ if(s==='round-trip')return 'Round trips are quoted with your return timing so we can hold the vehicle or schedule a second pickup.';
+ if(s==='airport'||r.isAirportLeg){if(!tierFor(t,r.vehicleClass))return 'Vans and Sprinters to or from the airport are priced by manual quote.';
+  return 'We don’t have a flat rate for that area yet — dispatch will send a quick quote.';}
+ return 'This trip is priced individually. Dispatch will send a quote, usually within the hour.';}
+function quote(r,t){r=r||{};var m=method(r,t);
+ var o={version:t.version,currency:t.currency||'USD',method:m,vehicleClass:r.vehicleClass||null,
+  vehicleLabel:(t.vehicleClasses[r.vehicleClass]||{}).label||r.vehicleClass||null,route:describeRoute(r),
+  lineItems:[],baseRate:0,addOns:0,waiting:0,discount:0,fees:0,tax:0,gratuity:0,passThrough:0,
+  finalAmount:null,quoteExpiresHours:(t.rules&&t.rules.quoteExpiresHours)||72,needsManualQuote:m==='manual-quote',notes:[]};
+ if(m==='manual-quote'){o.notes.push(manualReason(r,t));return o;}
+ var isAir=r.service==='airport'||!!r.isAirportLeg;var a=r.account||null;
+ var hasOv=r.adminOverrideAmount!=null;var hasCon=!!(a&&a.contractRate!=null);
+ var base=0,bl='';
+ if(hasOv){base=money(r.adminOverrideAmount);bl='Agreed rate (dispatch)';o.notes.push('Administrator special quote applied — corporate discounts do not stack.');}
+ else if(hasCon){base=money(a.contractRate);bl='Contract rate';}
+ else if(m==='flat'){var tr=tierFor(t,r.vehicleClass);base=flatRate(t,r.zone,tr);bl=o.route+' — flat '+tr+' rate';}
+ else{var hr=t.hourly.rates[r.vehicleClass];var ask=Number(r.hours)||hr.minHours;var bh=Math.max(ask,hr.minHours);
+  base=bh*hr.hourly;bl=o.vehicleLabel+' — '+bh+' hrs @ $'+hr.hourly+'/hr'+(bh>ask?(' ('+hr.minHours+'-hr minimum)'):'');}
+ base=money(base);o.baseRate=base;o.lineItems.push({code:'base',label:bl,amount:base});
+ var add=0,stops=Math.max(0,parseInt(r.stops||0,10));
+ if(stops>0){var ea=t.addOns.additionalStop.amount;var c=money(stops*ea);add+=c;
+  o.lineItems.push({code:'stops',label:stops+' additional stop'+(stops>1?'s':'')+' @ $'+ea,amount:c});}
+ var seats=Math.max(0,parseInt(r.childSeats||0,10));
+ if(seats>0){var se=t.addOns.childSeat.amount;var cs=money(seats*se);add+=cs;
+  o.lineItems.push({code:'child-seat',label:seats+' child seat'+(seats>1?'s':'')+' @ $'+se,amount:cs});}
+ o.addOns=add;
+ var wait=0,wm=Math.max(0,parseInt(r.waitMinutes||0,10));
+ if(wm>0){var free=isAir?t.waiting.airportFreeMinutes:t.waiting.nonAirportFreeMinutes;var b=Math.max(0,wm-free);
+  if(b>0){wait=money(b*t.waiting.extraWaitPerMinute);
+   o.lineItems.push({code:'waiting',label:b+' min extra wait @ $'+Number(t.waiting.extraWaitPerMinute).toFixed(2)+'/min ('+free+' min included)',amount:wait});}}
+ o.waiting=wait;var sub=base+add+wait;var disc=0;
+ if(!hasOv&&!hasCon&&a&&a.corporateTier){var tc=t.corporateTiers[a.corporateTier];
+  if(tc&&tc.discountPct){disc=-money(sub*tc.discountPct/100);o.lineItems.push({code:'discount',label:tc.label+' account — '+tc.discountPct+'% off',amount:disc});}}
+ o.discount=disc;var dd=sub+disc;var fees=0;var fp=(t.fees&&t.fees.fuelSurchargePct)||0;
+ if(fp){var f=money(dd*fp/100);fees+=f;o.lineItems.push({code:'fuel',label:'Fuel surcharge '+fp+'%',amount:f});}
+ var bf=(t.fees&&t.fees.bookingFee)||0;if(bf){bf=money(bf);fees+=bf;o.lineItems.push({code:'booking-fee',label:'Booking fee',amount:bf});}
+ o.fees=fees;var tax=0;var tp=(t.tax&&t.tax.pct)||0;
+ if(tp){tax=money((dd+fees)*tp/100);o.lineItems.push({code:'tax',label:(t.tax.label||'Tax')+' '+tp+'%',amount:tax});}
+ o.tax=tax;var gp=t.gratuity.defaultPct;
+ if(a&&a.fixedGratuityPct!=null)gp=a.fixedGratuityPct;
+ else if(t.gratuity.editableByCustomer&&r.gratuityPct!=null)gp=Number(r.gratuityPct);
+ gp=Math.max(0,Number(gp)||0);var grat=money(dd*gp/100);
+ if(grat>0||t.gratuity.includedInQuote)o.lineItems.push({code:'gratuity',label:'Gratuity '+gp+'%',amount:grat});
+ o.gratuity=grat;var pt=0;
+ if(r.passThroughEstimate){Object.keys(r.passThroughEstimate).forEach(function(k){var v=money(r.passThroughEstimate[k]);
+  if(v>0){pt+=v;o.lineItems.push({code:'passthrough',label:cap(k)+' (estimate — billed at cost)',amount:v});}});}
+ o.passThrough=pt;o.finalAmount=base+add+wait+disc+fees+tax+grat+pt;return o;}
+function verifyQuote(client,r,t,tol){tol=tol==null?0.01:tol;var s=quote(r,t);var c=Number(client);
+ return{valid:s.finalAmount!=null&&Math.abs(s.finalAmount-c)<=tol,method:s.method,serverAmount:s.finalAmount,clientAmount:c,
+  delta:s.finalAmount==null?null:+(s.finalAmount-c).toFixed(2),breakdown:s};}
+global.NWTCPricing={quote:quote,verifyQuote:verifyQuote};
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script>
+<script>
+/* ================= FUNNEL ================= */
+(function () {
+  'use strict';
+  var STORE_KEY = 'nwtc_booking_v2', LOG_KEY = 'nwtc_bookings';
+  var DISPATCH_EMAIL = 'booking@northwesttowncarservice.com';
+  /* INTEGRATION: the booking/payment server's public endpoint (booking-payment/server.js
+     handleIntake). Leave '' to run the funnel standalone (localStorage + the
+     "email dispatch" fallback button only). */
+  var INTAKE_ENDPOINT = (window.NWTC_INTAKE_ENDPOINT || '');
+  var TOTAL_STEPS = 6;
+
+  /* analytics/events.js if the host page loaded it; safe no-ops otherwise */
+  var A = window.NWTCAnalytics || null;
+  function track(name, params) { try { if (A && A.track) A.track(name, params || {}); } catch (e) {} }
+  var _startFired = false, _seenStep = {};
+
+  var INSTANT = ['Airport pickup (from SEA)', 'Airport drop-off (to SEA)', 'Hourly / as-directed'];
+  var AIRPORT = ['Airport pickup (from SEA)', 'Airport drop-off (to SEA)'];
+  var PTP = ['Point-to-point', 'Round trip', 'Wedding / event', 'Cruise terminal'];
+
+  var form = document.getElementById('booking-form');
+  var steps = [].slice.call(form.querySelectorAll('.step'));
+  var progress = [].slice.call(document.querySelectorAll('#progress li'));
+  var btnBack = document.getElementById('btn-back');
+  var btnNext = document.getElementById('btn-next');
+  var btnSubmit = document.getElementById('btn-submit');
+  var btnReset = document.getElementById('btn-reset');
+  var confirmation = document.getElementById('confirmation');
+  var current = 1;
+
+  var $ = function (s, r) { return (r || form).querySelector(s); };
+  var money = function (n) { return (n < 0 ? '-$' : '$') + Math.abs(n).toLocaleString('en-US'); };
+  var data = function () { return Object.fromEntries(new FormData(form).entries()); };
+  var validEmail = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || ''); };
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]); }); };
+  var fmtTime = function (t) { if (!t) return ''; var p = t.split(':').map(Number); var ap = p[0] >= 12 ? 'PM' : 'AM'; var h = p[0] % 12 || 12; return h + ':' + String(p[1]).padStart(2, '0') + ' ' + ap; };
+  var showError = function (k, on) { var el = form.querySelector('[data-error="' + k + '"]'); if (el) el.hidden = !on; };
+  var toggle = function (sel, on) { form.querySelectorAll(sel).forEach(function (el) { el.hidden = !on; }); };
+
+  /* ---- conditional fields ---- */
+  function refreshConditional() {
+    var d = data(), svc = d.service || '';
+    toggle('[data-when="airport"]', AIRPORT.indexOf(svc) !== -1);
+    toggle('[data-when="hourly"]', svc === 'Hourly / as-directed');
+    toggle('[data-when="ptp"]', PTP.indexOf(svc) !== -1);
+    toggle('[data-when="corporate"]', svc === 'Corporate account');
+    toggle('[data-when="flight"]', AIRPORT.indexOf(svc) !== -1);
+    toggle('[data-when="return"]', svc === 'Round trip');
+    toggle('[data-when="corp-contact"]', svc === 'Corporate account');
+    suggestVehicle(parseInt(d.passengers || '1', 10));
+  }
+  function suggestVehicle(pax) {
+    var pick = pax > 6 ? 'Sprinter Van' : pax > 3 ? 'Premium SUV' : 'Executive Sedan';
+    var note = $('#vehicle-suggest');
+    if (note) note.textContent = 'Suggested for ' + pax + ' passenger' + (pax === 1 ? '' : 's') + ': ' + pick + '.';
+    form.querySelectorAll('.vehicles .choice').forEach(function (l) {
+      var v = l.querySelector('input').value;
+      l.classList.toggle('dim', (v === 'Executive Sedan' && pax > 3) || (v === 'Premium SUV' && pax > 6));
+    });
+    if (!data().vehicle) { var tgt = form.querySelector('.vehicles input[value="' + pick + '"]'); if (tgt) tgt.checked = true; }
+  }
+
+  /* ---- map funnel answers -> pricing request ---- */
+  function resolveVehicleClass(d) {
+    if (d.vehicle === 'Executive Sedan') return 'executive-sedan';
+    if (d.vehicle === 'Premium SUV') return 'premium-suv';
+    if (d.vehicle === 'Sprinter Van') return 'sprinter';
+    var p = parseInt(d.passengers || '1', 10);
+    return p > 6 ? 'sprinter' : p > 3 ? 'premium-suv' : 'executive-sedan';
+  }
+  function pricingRequest(d) {
+    var map = {
+      'Airport pickup (from SEA)': { service: 'airport', direction: 'from-airport' },
+      'Airport drop-off (to SEA)': { service: 'airport', direction: 'to-airport' },
+      'Hourly / as-directed': { service: 'hourly' },
+      'Point-to-point': { service: 'point-to-point' },
+      'Round trip': { service: 'round-trip' },
+      'Wedding / event': { service: 'wedding' },
+      'Cruise terminal': { service: 'cruise' },
+      'Corporate account': { service: 'corporate' }
+    };
+    var req = Object.assign({}, map[d.service] || { service: 'point-to-point' });
+    req.zone = d.zone === 'other' ? '' : (d.zone || '');
+    req.vehicleClass = resolveVehicleClass(d);
+    req.hours = parseInt(d.hours || '0', 10);
+    req.stops = parseInt(d.stops || '0', 10);
+    req.childSeats = parseInt(d.childSeats || '0', 10);
+    req.waitMinutes = 0;
+    req.gratuityPct = d.tipIncluded === 'yes' ? PRICING_TABLE.gratuity.defaultPct : 0;
+    return req;
+  }
+
+  /* ---- validation ---- */
+  function markInvalid(sel, bad) { var el = $(sel); if (el) el.setAttribute('aria-invalid', bad ? 'true' : 'false'); }
+  function clearInvalid(step) { (steps[step - 1] || {}).querySelectorAll && steps[step - 1].querySelectorAll('[aria-invalid="true"]').forEach(function (el) { el.setAttribute('aria-invalid', 'false'); }); }
+  function trimmed(v) { return v && v.trim(); }
+  function validateStep(step) {
+    var d = data(); clearInvalid(step);
+    if (step === 1) { var ok = !!d.service; showError('service', !ok); return ok; }
+    if (step === 2) {
+      var svc = d.service, ok = true;
+      if (AIRPORT.indexOf(svc) !== -1) {
+        ok = !!d.zone && !!trimmed(d.pickup) && !!trimmed(d.dropoff);
+        markInvalid('#zone', !d.zone); markInvalid('#pickup', !trimmed(d.pickup)); markInvalid('#dropoff', !trimmed(d.dropoff));
+      } else if (svc === 'Hourly / as-directed') {
+        ok = !!trimmed(d.hourlyStart); markInvalid('#hourly-start', !ok);
+      } else if (PTP.indexOf(svc) !== -1) {
+        ok = !!trimmed(d.pPickup) && !!trimmed(d.pDropoff);
+        markInvalid('#p-pickup', !trimmed(d.pPickup)); markInvalid('#p-dropoff', !trimmed(d.pDropoff));
+      } else if (svc === 'Corporate account') {
+        ok = !!trimmed(d.company); markInvalid('#company', !ok);
+      }
+      showError('step2', !ok); return ok;
+    }
+    if (step === 3) {
+      var needV = d.service !== 'Corporate account';
+      var ok3 = !!d.date && !!d.time && (!needV || !!d.vehicle);
+      markInvalid('#date', !d.date); markInvalid('#time', !d.time);
+      showError('step3', !ok3); return ok3;
+    }
+    if (step === 5) {
+      var ok5 = !!trimmed(d.name) && !!trimmed(d.phone) && validEmail(d.email) && !!d.consent;
+      markInvalid('#name', !trimmed(d.name)); markInvalid('#phone', !trimmed(d.phone)); markInvalid('#email', !validEmail(d.email));
+      showError('step5', !ok5); return ok5;
+    }
+    return true;
+  }
+
+  /* ---- review ---- */
+  function currentQuote() {
+    var d = data();
+    if (d.service === 'Corporate account') return { corporate: true };
+    return NWTCPricing.quote(pricingRequest(d), PRICING_TABLE);
+  }
+  function renderReview() {
+    showError('submit', false);
+    var d = data(), rows = [], add = function (k, v) { if (v) rows.push([k, v]); };
+    add('Service', d.service);
+    add('Company', d.company);
+    if (d.service === 'Hourly / as-directed') { add('Duration', d.hours + ' hours'); add('Start', d.hourlyStart); }
+    else if (AIRPORT.indexOf(d.service) !== -1) { add('Service area', d.zone === 'other' ? 'Other WA area' : d.zone); add('Pickup', d.pickup); add('Drop-off', d.dropoff); }
+    else { add('Pickup', d.pPickup); add('Drop-off', d.pDropoff); }
+    if (d.stops && d.stops !== '0') add('Extra stops', d.stops);
+    if (d.childSeats && d.childSeats !== '0') add('Child seats', d.childSeats);
+    add('Date', d.date); add('Time', d.time ? fmtTime(d.time) : '');
+    if (d.returnDate) add('Return', d.returnDate + ' ' + fmtTime(d.returnTime || ''));
+    add('Passengers', d.passengers); add('Bags', d.bags); add('Vehicle', d.vehicle);
+    add('Flight', d.flight);
+    if (d.meetGreet === 'yes') add('Add-on', 'Meet & greet');
+    add('Notes', d.notes); add('Name', d.name); add('Phone', d.phone); add('Email', d.email);
+    document.getElementById('review-summary').innerHTML = rows.map(function (r) {
+      return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+    }).join('');
+
+    var q = currentQuote();
+    var body = document.getElementById('estimate-body');
+    var disc = document.getElementById('estimate-disc');
+    var payChoice = document.getElementById('pay-choice');
+    payChoice.hidden = true;
+    if (q.corporate) {
+      body.innerHTML = '<p class="estimate-quote">A corporate specialist will call to set up your account and rate sheet.</p>';
+      disc.textContent = '';
+      btnSubmit.textContent = 'Send my request';
+      return;
+    }
+    var tag = '<span class="price-tag ' + q.method + '">' + q.method.replace('-', ' ') + '</span>';
+    var head = '<div style="font-family:ui-monospace,monospace;font-size:12px;color:var(--paper-dim);margin:0 0 10px;">' + esc(q.route) + (q.vehicleLabel ? ' · ' + esc(q.vehicleLabel) : '') + '</div>';
+    if (q.needsManualQuote) {
+      body.innerHTML = tag + head + '<p class="estimate-quote">' + esc(q.notes.join(' ')) + '</p>';
+      disc.textContent = 'No card needed to request a quote.';
+      btnSubmit.textContent = 'Send quote request';
+    } else {
+      var lines = q.lineItems.map(function (li) {
+        return '<div class="estimate-line' + (li.amount < 0 ? ' neg' : '') + '"><span>' + esc(li.label) + '</span><span>' + money(li.amount) + '</span></div>';
+      }).join('');
+      body.innerHTML = tag + head + lines +
+        '<div class="estimate-line total"><span>Quoted total</span><span>' + money(q.finalAmount) + '</span></div>';
+      disc.textContent = 'Quote holds ' + q.quoteExpiresHours + ' hours. Parking and tolls are billed at actual cost. Dispatch confirms the final quote before any payment.';
+      btnSubmit.textContent = 'Reserve this ride';
+      payChoice.hidden = false;
+      track('quote_shown', { service: d.service, quote_method: q.method, quote_value: q.finalAmount || 0, service_area: d.zone || '' });
+    }
+  }
+
+  /* ---- navigation ---- */
+  function goTo(step, opts) {
+    var focus = !opts || opts.focus !== false;
+    current = Math.max(1, Math.min(TOTAL_STEPS, step));
+    steps.forEach(function (s) { s.hidden = Number(s.dataset.step) !== current; });
+    progress.forEach(function (li) {
+      var n = Number(li.dataset.step);
+      li.classList.toggle('active', n === current);
+      li.classList.toggle('done', n < current);
+    });
+    btnBack.hidden = current === 1;
+    btnReset.hidden = current === 1;
+    btnNext.hidden = current === TOTAL_STEPS;
+    btnSubmit.hidden = current !== TOTAL_STEPS;
+    if (current === 6) renderReview();
+    if (!_startFired) { _startFired = true; track('funnel_start', {}); }
+    if (!_seenStep[current]) { _seenStep[current] = true; track('funnel_step', { step_index: current, step_name: (steps[current - 1] && steps[current - 1].dataset.name) || ('step' + current) }); }
+    save();
+    if (focus) { var h = steps[current - 1].querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); h.focus(); } }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function nextStep() {
+    if (!validateStep(current)) return;
+    var t = current + 1;
+    if (t === 4 && data().service === 'Corporate account') t = 5;
+    goTo(t);
+  }
+  function prevStep() {
+    var t = current - 1;
+    if (t === 4 && data().service === 'Corporate account') t = 3;
+    goTo(t);
+  }
+
+  /* ---- persistence ---- */
+  function save() {
+    try {
+      var checks = {};
+      form.querySelectorAll('input[type="checkbox"]').forEach(function (c, i) { checks[(c.name || 'cb') + ':' + (c.value || i)] = c.checked; });
+      localStorage.setItem(STORE_KEY, JSON.stringify({ step: current, values: data(), checks: checks }));
+    } catch (e) {}
+  }
+  function restore() {
+    var saved;
+    try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) {}
+    if (!saved) return;
+    Object.keys(saved.values || {}).forEach(function (k) {
+      [].slice.call(form.elements).filter(function (e) { return e.name === k; }).forEach(function (e) {
+        if (e.type === 'radio') e.checked = e.value === saved.values[k];
+        else if (e.type !== 'checkbox') e.value = saved.values[k];
+      });
+    });
+    if (saved.checks) form.querySelectorAll('input[type="checkbox"]').forEach(function (c, i) {
+      var key = (c.name || 'cb') + ':' + (c.value || i);
+      if (key in saved.checks) c.checked = saved.checks[key];
+    });
+    refreshConditional();
+    goTo(saved.step || 1, { focus: false });
+  }
+  function wipe() { try { localStorage.removeItem(STORE_KEY); } catch (e) {} }
+
+  /* ---- submit ---- */
+  function submitBooking(e) {
+    e.preventDefault();
+    var gate = [1, 2, 3, 5];
+    for (var i = 0; i < gate.length; i++) {
+      if (!validateStep(gate[i])) { showError('submit', true); goTo(gate[i]); return; }
+    }
+    var d = data();
+    var q = currentQuote();
+    var booked = !q.corporate && !q.needsManualQuote;
+    var kind = q.corporate ? 'corporate-lead' : booked ? 'reservation' : 'quote-request';
+    var ref = 'NWTC-' + new Date().toISOString().slice(2, 10).replace(/-/g, '') + '-' + Math.floor(1000 + Math.random() * 9000);
+
+    var attr = (A && A.getAttribution) ? A.getAttribution() : null;
+    var payload = {
+      reference: ref, kind: kind, submittedAt: new Date().toISOString(),
+      values: d, quote: q.corporate ? 'corporate' : { method: q.method, finalAmount: q.finalAmount || null, lineItems: q.lineItems },
+      source: location.href,
+      gclid: attr ? attr.gclid : undefined,
+      attribution: attr || undefined
+    };
+    var val = q.corporate ? 0 : (q.finalAmount || 0);
+    track('generate_lead', { lead_kind: kind, value: val, currency: 'USD', service: d.service });
+    track(kind === 'reservation' ? 'reservation_submitted' : kind === 'corporate-lead' ? 'corporate_lead' : 'quote_requested',
+      { value: val, service: d.service, service_area: d.zone || '', reference: ref });
+    // Keep a local copy first — this must survive even if the network call fails.
+    try { var log = JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); log.push(payload); localStorage.setItem(LOG_KEY, JSON.stringify(log)); } catch (err) {}
+    // Then hand it to the booking/payment server (re-prices, writes the CRM,
+    // alerts dispatch). Non-blocking: the confirmation screen shows regardless;
+    // on failure the customer still has the "email dispatch" button.
+    postIntake(payload);
+
+    form.hidden = true;
+    document.getElementById('progress').hidden = true;
+    document.querySelector('.booking-intro').hidden = true;
+    confirmation.hidden = false;
+    confirmation._payload = payload;
+
+    var kicker = document.getElementById('conf-kicker');
+    var lede = document.getElementById('conf-lede');
+    var next = document.getElementById('conf-next');
+    if (booked) {
+      var cash = d.paymentPreference === 'cash';
+      kicker.textContent = 'Reservation received';
+      lede.textContent = 'Your ride is reserved at the quoted price below. Dispatch confirms the driver and vehicle shortly.';
+      next.innerHTML = [
+        'Text and email confirmation on the way to ' + esc(d.phone) + ' and ' + esc(d.email) + '.',
+        cash
+          ? 'You chose to pay cash — have ' + money(q.finalAmount) + ' ready for your driver at the end of the trip. Dispatch confirms every cash booking.'
+          : 'Dispatch confirms the final quote (' + money(q.finalAmount) + ', held ' + q.quoteExpiresHours + ' h) and sends a secure link for the deposit.',
+        'A reminder with your driver and vehicle goes out 24 hours before pickup.'
+      ].map(function (x) { return '<li>' + x + '</li>'; }).join('');
+    } else if (q.corporate) {
+      kicker.textContent = 'Request received';
+      lede.textContent = 'A corporate specialist will reach out to set up your account, rates, and billing.';
+      next.innerHTML = ['We’ll call ' + esc(d.phone) + ' within one business day.', 'You’ll get a rate sheet and an account login for your team’s bookers.'].map(function (x) { return '<li>' + x + '</li>'; }).join('');
+    } else {
+      kicker.textContent = 'Quote request received';
+      lede.textContent = 'Dispatch is pricing your trip now. No card needed until you accept the quote.';
+      next.innerHTML = [
+        'A written quote lands in your inbox and by text, usually within the hour.',
+        'Reply to accept — that’s when we reserve the vehicle and send a payment link.',
+        q.notes && q.notes.length ? esc(q.notes.join(' ')) : ''
+      ].filter(Boolean).map(function (x) { return '<li>' + x + '</li>'; }).join('');
+    }
+
+    document.getElementById('conf-ref').textContent = ref;
+    document.getElementById('conf-summary').innerHTML = document.getElementById('review-summary').innerHTML +
+      (booked ? '<div><dt>Quoted total</dt><dd>' + money(q.finalAmount) + ' (held ' + q.quoteExpiresHours + ' h)</dd></div>' : '');
+
+    wipe();
+    kicker.focus && kicker.focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* POST the payload to the booking/payment server. Retries once on transient
+     failure; marks the confirmation screen so the customer knows to use the
+     email-dispatch button if it never lands. Never throws. */
+  function postIntake(payload, attempt) {
+    if (!INTAKE_ENDPOINT) return;
+    attempt = attempt || 1;
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctrl && setTimeout(function () { ctrl.abort(); }, 12000);
+    fetch(INTAKE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: ctrl ? ctrl.signal : undefined,
+      keepalive: true
+    }).then(function (res) {
+      if (timer) clearTimeout(timer);
+      if (!res.ok && res.status >= 500 && attempt < 2) return void setTimeout(function () { postIntake(payload, attempt + 1); }, 1500);
+      if (!res.ok) return void markIntake(false);
+      markIntake(true);
+    }).catch(function () {
+      if (timer) clearTimeout(timer);
+      if (attempt < 2) return void setTimeout(function () { postIntake(payload, attempt + 1); }, 1500);
+      markIntake(false);
+    });
+  }
+  function markIntake(ok) {
+    var el = document.getElementById('conf-sync');
+    if (!el) return;
+    el.hidden = false;
+    el.className = 'conf-sync ' + (ok ? 'ok' : 'warn');
+    el.textContent = ok
+      ? 'Sent to dispatch.'
+      : 'We saved your request on this device but couldn’t reach dispatch automatically — please tap “Email dispatch” below or call (206) 596-5504.';
+  }
+
+  function emailDispatch() {
+    var p = confirmation._payload || {}, d = p.values || {};
+    var lines = Object.keys(d).map(function (k) { return k + ': ' + d[k]; });
+    if (p.quote && p.quote.finalAmount) lines.push('quoted total: ' + money(p.quote.finalAmount) + ' (' + p.quote.method + ')');
+    var subject = 'Reservation ' + p.reference + ' — ' + (d.service || '') + ' — ' + (d.name || '');
+    var body = 'New ' + (p.kind || 'request') + ' from the website:\n\n' + lines.join('\n');
+    location.href = 'mailto:' + DISPATCH_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+  function copyDetails() {
+    var p = confirmation._payload || {}, d = p.values || {};
+    var txt = 'Reference: ' + p.reference + '\n' + Object.keys(d).map(function (k) { return k + ': ' + d[k]; }).join('\n');
+    var st = document.getElementById('copy-status');
+    navigator.clipboard.writeText(txt).then(function () { st.textContent = 'Copied to clipboard.'; },
+      function () { st.textContent = 'Copy failed — select the text manually.'; });
+  }
+
+  /* ---- wire ---- */
+  form.addEventListener('change', function () { refreshConditional(); save(); });
+  form.addEventListener('input', save);
+  btnNext.addEventListener('click', nextStep);
+  btnBack.addEventListener('click', prevStep);
+  btnSubmit.addEventListener('click', function () { form.requestSubmit(); });
+  form.addEventListener('submit', submitBooking);
+  btnReset.addEventListener('click', function () {
+    if (!confirm('Clear this reservation and start over?')) return;
+    form.reset(); wipe(); refreshConditional(); goTo(1);
+  });
+  document.getElementById('btn-email').addEventListener('click', emailDispatch);
+  document.getElementById('btn-copy').addEventListener('click', copyDetails);
+  document.getElementById('btn-new').addEventListener('click', function () { location.reload(); });
+
+  var dateEl = $('#date'); if (dateEl) dateEl.min = new Date().toISOString().slice(0, 10);
+  var rdEl = $('#return-date'); if (rdEl) rdEl.min = new Date().toISOString().slice(0, 10);
+
+  refreshConditional();
+  restore();
+  goTo(current, { focus: false });
+})();
+</script>

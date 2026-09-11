@@ -1,0 +1,74 @@
+# ============================================================================
+#  Secrets — never commit these
+# ============================================================================
+# Real environment files (the *.example.env templates ARE committed — see below)
+.env
+.env.*
+*.env
+!*.example.env
+!config.example.env
+
+# Stripe / Twilio / Airtable / Google keys, tokens, service-account files
+*.key
+*.pem
+*.p12
+*_secret*
+*secret_key*
+*-key.json
+service-account*.json
+gcp-*.json
+credentials.json
+client_secret*.json
+.stripe/
+.dispatch-token
+
+# Local overrides
+*.local
+config.local.*
+secrets/
+.secrets/
+
+# ============================================================================
+#  Node / build
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.cache/
+.parcel-cache/
+.netlify/
+.wrangler/
+.vercel/
+
+# ============================================================================
+#  Editor / OS
+# ============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
+
+# ============================================================================
+#  Project-local scratch
+# ============================================================================
+scratchpad/
+tmp/
+*.log
+
+# Local tools (gh CLI, etc.)
+/bin/
+
+# Build artifacts
+northwesttowncarservice-site.zip
+dist/

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NWTC Ads &amp; Corporate Growth</title>
+<meta name="description" content="Paid search and B2B growth plan for Northwest Town Car Service: seven Google Ads campaigns with keywords, negatives and ad copy; Local Services Ads; conversion tracking wired to the CRM; Microsoft Ads; budget tiers; and a corporate-account outreach motion with templates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5; --surface:#FBF8F1; --surface-2:#EFEADC;
+    --ink:#16261F; --muted:#5B6A5F;
+    --brass:#9A6E28; --brass-ink:#7C5A1E;
+    --sage:#3E7A52; --amber:#A9741F; --risk:#A8443A;
+    --line:rgba(22,38,31,0.14); --line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 8px 24px -12px rgba(22,38,31,0.18);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.01em;margin:0;text-wrap:balance;}
+  a{color:var(--brass-ink);}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.85em;}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+  p{margin:0 0 1rem;} strong{font-weight:600;}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 120px;}
+  @media (min-width:1060px){.page{display:grid;grid-template-columns:230px minmax(0,1fr);gap:52px;padding-right:36px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}}
+  .toc{display:none;font-size:13.5px;}
+  @media (min-width:1060px){.toc{display:block;}}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{counter-increment:toc;}
+  .toc a{display:block;padding:5px 0 5px 14px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;}
+  .toc a:hover{color:var(--ink);border-left-color:var(--brass);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);}
+  .toc .tt{font-family:'Fraunces',serif;font-size:15px;color:var(--ink);margin:0 0 12px 14px;}
+
+  main{min-width:0;padding-top:40px;}
+  header.hero{padding:28px 0 40px;border-bottom:1px solid var(--line);margin-bottom:44px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.2vw,2.9rem);margin:12px 0 0;max-width:20ch;}
+  header.hero p{font-size:1.12rem;color:var(--muted);margin:16px 0 0;max-width:62ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-size:12.5px;color:var(--muted);font-family:ui-monospace,monospace;}
+
+  .theme-toggle{position:fixed;top:16px;right:16px;z-index:40;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;box-shadow:var(--shadow);}
+  .theme-toggle:hover{border-color:var(--brass);}
+
+  section{margin:0 0 56px;scroll-margin-top:20px;}
+  section>h2{font-size:clamp(1.45rem,2.6vw,1.9rem);padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:baseline;}
+  section>h2 .n{font-family:ui-monospace,monospace;font-size:0.55em;color:var(--brass);}
+  section>h3{font-size:1.15rem;margin:30px 0 6px;}
+  section>h4{font-size:0.98rem;margin:22px 0 6px;font-family:'Work Sans',sans-serif;font-weight:700;letter-spacing:0.01em;}
+  section p,section ul,section ol{max-width:72ch;}
+  section ul,section ol{padding-left:1.2rem;} section li{margin:0 0 .35rem;}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:16px 0;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface);}
+  th,td{text-align:left;padding:9px 13px;border-top:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);border-top:none;}
+  td .mono,td.mono{color:var(--muted);font-family:ui-monospace,monospace;font-size:12px;}
+  td:first-child{white-space:nowrap;}
+
+  .camp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0;box-shadow:var(--shadow);}
+  .camp h4{font-family:'Fraunces',serif;font-weight:500;font-size:1.1rem;margin:0 0 4px;display:flex;justify-content:space-between;gap:12px;align-items:baseline;}
+  .camp h4 .tag{font-family:ui-monospace,monospace;font-size:11px;color:var(--brass-ink);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap;}
+  .camp dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0 0;font-size:13.5px;}
+  .camp dt{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .camp dd{margin:0;}
+  .kw{font-family:ui-monospace,monospace;font-size:12px;color:var(--sage);}
+
+  .note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:14px 16px;margin:18px 0;font-size:0.95rem;box-shadow:var(--shadow);}
+  .note.warn{border-left-color:var(--risk);}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+  .note.warn .lbl{color:var(--risk);}
+  .note p:last-child{margin-bottom:0;}
+
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:ui-monospace,monospace;font-size:12.5px;margin:14px 0;color:var(--muted);}
+  .flow b{color:var(--ink);} .flow .ar{color:var(--brass);}
+
+  ol.check{counter-reset:c;list-style:none;padding:0;}
+  ol.check li{counter-increment:c;position:relative;padding:8px 0 8px 34px;border-top:1px solid var(--line-soft);max-width:74ch;}
+  ol.check li:first-child{border-top:none;}
+  ol.check li::before{content:counter(c);position:absolute;left:0;top:7px;width:22px;height:22px;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;font-family:ui-monospace,monospace;font-size:12px;color:var(--brass);}
+
+  .phase{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:var(--surface);box-shadow:var(--shadow);}
+  .phase h3{margin:0 0 4px;display:flex;gap:12px;align-items:baseline;}
+  .phase h3 .wk{font-family:ui-monospace,monospace;font-size:0.68rem;color:var(--brass);}
+  .phase .goal{color:var(--muted);font-size:0.93rem;margin:0 0 12px;}
+
+  .assets{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0;font-size:13px;}
+  .assets h5{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;}
+  .assets ol{margin:0;padding-left:1.3rem;} .assets li{margin:2px 0;}
+  .assets + .assets{margin-top:8px;}
+
+  .foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="tt">Ads &amp; growth</div>
+    <ol>
+      <li><a href="#strategy">Strategy</a></li>
+      <li><a href="#structure">Account structure</a></li>
+      <li><a href="#campaigns">The campaigns</a></li>
+      <li><a href="#lsa">Local Services Ads</a></li>
+      <li><a href="#negatives">Negative keywords</a></li>
+      <li><a href="#copy">Ad copy &amp; extensions</a></li>
+      <li><a href="#landing">Landing pages</a></li>
+      <li><a href="#tracking">Conversion tracking</a></li>
+      <li><a href="#microsoft">Microsoft Ads</a></li>
+      <li><a href="#budget">Budget &amp; phasing</a></li>
+      <li><a href="#corporate">Corporate growth</a></li>
+      <li><a href="#plan">Measurement &amp; 90-day plan</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service</span>
+      <h1>Paid search &amp; corporate growth</h1>
+      <p>Step 10. Paid search buys the demand that already exists while SEO builds; the corporate motion turns one-off riders into monthly recurring revenue. Both run on the same principle as the rest of the system — <strong>nothing scales until it's measured to a booking.</strong></p>
+      <div class="meta"><span>v1 · 2026-09-02</span><span>Channels: Google Ads · LSA · Microsoft Ads · B2B outreach</span><span>Depends on: conversion tracking (§8)</span></div>
+    </header>
+
+    <!-- 1 -->
+    <section id="strategy">
+      <h2><span class="n">01</span> Strategy</h2>
+      <h3>Paid is for now; SEO is for later</h3>
+      <p>The SEO plan takes 2–12 months to produce leads. Paid search produces them this week — at a cost. Run paid to cover the gap and to buy the highest-intent clicks SEO may never rank #1 for, then let organic take over the terms it can win and shift budget to the next opportunity.</p>
+      <h3>Tracking first, spend second</h3>
+      <p>Do not turn on a campaign until §8 is done and verified. Smart Bidding optimizes toward whatever you tell it is a conversion; if that's "landed on the page" you'll pay for traffic, and if it's a real booking you'll pay for revenue. The difference is the whole game.</p>
+      <h3>One campaign, prove it, then expand</h3>
+      <p>Start with <strong>Airport</strong> only — highest intent, most predictable value (flat rates), clearest ad message. Run it 30 days. If cost per qualified lead lands in range, add the next campaign. If it doesn't, fix the funnel or the targeting before spending more.</p>
+      <div class="note warn"><span class="lbl">Access needed</span>
+        <p>A Google Ads account, a Google Business Profile (for Local Services Ads and location extensions), GA4 + Google Tag Manager, and a call-tracking account. Local Services Ads also need license (WUTC) and insurance verification — start that process early, it takes weeks.</p>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="structure">
+      <h2><span class="n">02</span> Account structure</h2>
+      <p>Seven search campaigns plus Local Services Ads. Tight ad groups — one theme, 5–15 close-variant keywords each — so the ad always matches the search.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Campaign</th><th>Goal (conversion)</th><th>Launch</th><th>Target CPA*</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Airport</strong></td><td>Airport booking / quote</td><td>Phase 1</td><td>≤ $35</td></tr>
+          <tr><td><strong>Local Services Ads</strong></td><td>Verified lead (call/message)</td><td>Phase 1</td><td>≤ $45 / lead</td></tr>
+          <tr><td><strong>Branded</strong></td><td>Any conversion</td><td>Phase 1</td><td>≤ $10</td></tr>
+          <tr><td><strong>Corporate</strong></td><td>Account-setup lead</td><td>Phase 2</td><td>≤ $120 (recurring value)</td></tr>
+          <tr><td><strong>Wedding &amp; event</strong></td><td>Wedding quote request</td><td>Phase 2 (seasonal)</td><td>≤ $60</td></tr>
+          <tr><td><strong>Hourly &amp; wine tour</strong></td><td>Hourly booking / quote</td><td>Phase 2</td><td>≤ $45</td></tr>
+          <tr><td><strong>General / brand-category</strong></td><td>Any booking</td><td>Phase 3 (only after CPL proven)</td><td>≤ $45</td></tr>
+        </tbody>
+      </table></div>
+      <p class="mono" style="font-size:12px;color:var(--muted);max-width:70ch;">* Starting targets. An airport fare averages ~$110 with strong repeat value, so a $35 lead cost is comfortable if the lead-to-booking rate holds. Recalibrate off real data after 30 days. Set campaigns to Maximize Conversions first, switch to Target CPA once each has ~20–30 conversions.</p>
+      <h4>Settings that apply to every campaign</h4>
+      <ul>
+        <li><strong>Networks:</strong> Search only. No Display, no Search Partners at launch.</li>
+        <li><strong>Location:</strong> King + Pierce counties + the North Sound cities you serve. Target "presence" (people <em>in</em> the area), not "presence or interest" — you don't want someone in Ohio researching Seattle.</li>
+        <li><strong>Language:</strong> English. Ad schedule: all hours (dispatch is 24/7) — bid-adjust up for the booking-heavy windows once data shows them.</li>
+        <li><strong>Devices:</strong> no exclusions; mobile is where the calls come from. Ensure the sticky call button is unmissable on the landing pages.</li>
+        <li><strong>Match types:</strong> phrase + exact at launch. Broad match only later, with Smart Bidding and a mature negative list.</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section id="campaigns">
+      <h2><span class="n">03</span> The campaigns</h2>
+
+      <div class="camp">
+        <h4>Airport <span class="tag">Phase 1 · $30–45/day</span></h4>
+        <dl>
+          <dt>Goal</dt><dd>Airport bookings and quote-completions. Landing page: <code>/airport-transportation</code>.</dd>
+          <dt>Ad group — SEA airport car service</dt><dd><span class="kw">"seattle airport car service" · [seatac airport car service] · [sea-tac car service] · "sea airport transportation" · [seatac town car service] · "airport transportation seattle"</span></dd>
+          <dt>Ad group — Airport limo / black car</dt><dd><span class="kw">"seattle airport limo" · [sea-tac limo service] · "seattle airport black car" · "sea-tac airport chauffeur"</span></dd>
+          <dt>Ad group — City → SEA</dt><dd><span class="kw">"bellevue to seatac car service" · "kent to sea-tac airport" · "tacoma airport transportation" · "redmond to seatac" · "everett to sea-tac car service"</span> — the rate table on the landing page answers these directly</dd>
+          <dt>Ad group — Airport pickup / meet &amp; greet</dt><dd><span class="kw">"seatac airport pickup service" · "sea-tac meet and greet" · "airport greeter service seattle"</span></dd>
+          <dt>Bidding</dt><dd>Maximize Conversions → Target CPA $35 after ~25 conv.</dd>
+          <dt>Notes</dt><dd>Highest priority. The flat-rate message ("from $79, priced before you book") is a genuine differentiator against surge-priced rideshare — lean on it in every ad.</dd>
+        </dl>
+      </div>
+
+      <div class="camp">
+        <h4>Branded <span class="tag">Phase 1 · $3–5/day</span></h4>
+        <dl>
+          <dt>Goal</dt><dd>Catch people who already know you — from a referral, a vehicle, a past ride — and defend against competitors bidding on your name.</dd>
+          <dt>Ad group — Brand</dt><dd><span class="kw">[northwest town car service] · "northwest town car" · "nw town car seattle" · "northwest town car service phone number"</span></dd>
+          <dt>Bidding</dt><dd>Maximize Conversions. Impression share target 90%+.</dd>
+          <dt>Notes</dt><dd>Cheap and near-100% intent. If no competitor is bidding on your name after 60 days, you can pause it and rely on the organic listing — but it's usually worth the few dollars.</dd>
+        </dl>
+      </div>
+
+      <div class="camp">
+        <h4>Corporate <span class="tag">Phase 2 · $20–30/day</span></h4>
+        <dl>
+          <dt>Goal</dt><dd>Account-setup leads (the corporate form). Landing page: <code>/corporate-transportation</code>. Ad schedule weighted to business hours.</dd>
+          <dt>Ad group — Corporate car service</dt><dd><span class="kw">"seattle corporate car service" · [corporate transportation seattle] · "corporate chauffeur seattle" · "business car service seattle"</span></dd>
+          <dt>Ad group — Executive transportation</dt><dd><span class="kw">"seattle executive car service" · "executive transportation seattle" · "executive chauffeur seattle"</span></dd>
+          <dt>Ad group — Eastside corporate</dt><dd><span class="kw">"bellevue corporate transportation" · "redmond executive car service" · "kirkland corporate car service"</span></dd>
+          <dt>Ad group — Roadshow / event travel</dt><dd><span class="kw">"roadshow transportation seattle" · "conference transportation seattle" · "corporate event car service seattle"</span></dd>
+          <dt>Bidding</dt><dd>Maximize Conversions → Target CPA $120. One account is worth many single fares — a higher lead cost is fine.</dd>
+          <dt>Notes</dt><dd>Lower volume, longer sales cycle. Pair it with the outreach motion in §11 — the ad captures inbound, outreach creates demand.</dd>
+        </dl>
+      </div>
+
+      <div class="camp">
+        <h4>Wedding &amp; event <span class="tag">Phase 2 · $15–25/day · seasonal</span></h4>
+        <dl>
+          <dt>Goal</dt><dd>Wedding quote requests. Landing: <code>/wedding-transportation</code>.</dd>
+          <dt>Ad group — Wedding transportation</dt><dd><span class="kw">"seattle wedding transportation" · [wedding car service seattle] · "wedding shuttle seattle" · "wedding limo seattle"</span></dd>
+          <dt>Ad group — Event transportation</dt><dd><span class="kw">"seattle event transportation" · "corporate event shuttle seattle" · "gala transportation seattle"</span></dd>
+          <dt>Ad group — Venue-adjacent</dt><dd><span class="kw">"woodinville wedding transportation" · "wedding shuttle bellevue" · "snohomish wedding transportation"</span></dd>
+          <dt>Bidding</dt><dd>Maximize Conversions → Target CPA $60.</dd>
+          <dt>Seasonality</dt><dd>Heaviest Jan–Aug (planning season). Cut budget 60–70% Nov–Dec. Raise it in January.</dd>
+        </dl>
+      </div>
+
+      <div class="camp">
+        <h4>Hourly &amp; wine tour <span class="tag">Phase 2 · $10–20/day</span></h4>
+        <dl>
+          <dt>Goal</dt><dd>Hourly bookings and wine-tour quotes. Landing: <code>/hourly-chauffeur</code> (hourly terms) or <code>/cruise-wine-tours</code> (wine-tour terms).</dd>
+          <dt>Ad group — Hourly chauffeur</dt><dd><span class="kw">"seattle hourly chauffeur" · "hire a chauffeur seattle" · "private chauffeur seattle" · "chauffeur for a day seattle"</span></dd>
+          <dt>Ad group — Wine tour transportation</dt><dd><span class="kw">"woodinville wine tour transportation" · "seattle wine tour car service" · "woodinville wine tour driver" · "chelan wine tour transportation"</span></dd>
+          <dt>Ad group — Cruise transfer</dt><dd><span class="kw">"seattle cruise terminal transportation" · "pier 91 cruise transfer" · "sea-tac to cruise port" · "cruise shuttle seattle"</span></dd>
+          <dt>Bidding</dt><dd>Maximize Conversions → Target CPA $45.</dd>
+          <dt>Notes</dt><dd>Cruise terms are seasonal (Alaska season, roughly May–Sept). Wine-tour terms lift on weekends.</dd>
+        </dl>
+      </div>
+
+      <div class="camp">
+        <h4>General / brand-category <span class="tag">Phase 3 · $25–40/day</span></h4>
+        <dl>
+          <dt>Goal</dt><dd>The broad head terms. Landing: <code>/</code> or the closest service page by ad group.</dd>
+          <dt>Ad group — Town car / car service</dt><dd><span class="kw">"seattle town car service" · [seattle car service] · "town car service seattle" · "private car service seattle"</span></dd>
+          <dt>Ad group — Chauffeur / black car</dt><dd><span class="kw">"seattle chauffeur service" · "seattle black car service" · "chauffeur service seattle"</span></dd>
+          <dt>Ad group — Limo</dt><dd><span class="kw">"seattle limo service" · "limo service seattle" · [seattle limousine service]</span></dd>
+          <dt>Bidding</dt><dd>Target CPA, informed by the other campaigns' data.</dd>
+          <dt>Notes</dt><dd><strong>Only launch this after Airport has proven a workable cost per booking.</strong> These terms are expensive, mixed-intent (some want a stretch limo / party bus you don't offer — negative those hard), and contested by national aggregators. Bring it on when you can afford to lose a month learning.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="lsa">
+      <h2><span class="n">04</span> Google Local Services Ads</h2>
+      <p>A separate product from search ads, and for a licensed local operator it's often the <strong>best ROI channel</strong>. LSA units sit at the very top of results on mobile, show your rating and "Google Screened" badge, and you pay <strong>per lead</strong> (a call or message), not per click. Disputable leads (wrong number, spam, out of area) can be refunded.</p>
+      <h4>To launch</h4>
+      <ol class="check">
+        <li>Apply under the transportation / limo &amp; car service category.</li>
+        <li>Submit business license (WUTC operating authority) and proof of commercial insurance.</li>
+        <li>Complete the background-check process for the business and any named drivers Google requires.</li>
+        <li>Set the service area to your cities and the services (airport, corporate, events, hourly).</li>
+        <li>Set a weekly budget = target leads × expected cost per lead ($25–55 for transportation locally). Start at ~5–8 leads/week.</li>
+        <li>Turn on the connection to your Google reviews — LSA rank is heavily review-driven, which is why §8 of the SEO plan (2–4 reviews/week) matters here too.</li>
+      </ol>
+      <p>Answer LSA calls fast and every time — Google demotes advertisers with low answer rates. Route them to the 24/7 dispatch line. Mark lead quality in the LSA dashboard so the algorithm learns.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="negatives">
+      <h2><span class="n">05</span> Negative keywords</h2>
+      <p>Build these as <strong>shared negative lists</strong> applied to every search campaign, plus a few campaign-specific ones. This is where most wasted spend is stopped.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>List</th><th>Terms (phrase/broad negatives)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Employment</strong></td><td class="mono">job · jobs · hiring · careers · salary · "chauffeur job" · "driver wanted" · "become a chauffeur" · training · school · "cdl"</td></tr>
+          <tr><td><strong>Price-shoppers / low value</strong></td><td class="mono">cheap · cheapest · free · coupon · promo code · "how much to tip" · "how much does" (review before adding) · budget</td></tr>
+          <tr><td><strong>DIY / research / not-a-buyer</strong></td><td class="mono">how to · diy · "for sale" · buy · rent · rental · lease · own · "start a" · business plan · reddit · wiki</td></tr>
+          <tr><td><strong>Wrong service</strong></td><td class="mono">party bus · school bus · bus rental · charter bus · shuttle bus (review) · uhaul · moving · tow · towing · mechanic · "auto repair" · parts · driving school · pedicab · ambulance · "non-emergency medical" (unless offered) · rideshare app · taxi (review)</td></tr>
+          <tr><td><strong>Wrong geography</strong></td><td class="mono">portland · spokane · "vancouver bc" · "vancouver wa" · bellingham (unless serving) · "san francisco" · "los angeles" · nyc · "new york"</td></tr>
+          <tr><td><strong>General campaign only</strong></td><td class="mono">limousine (if you don't run stretch limos) · "stretch limo" · "hummer limo" · "prom party bus" · nightclub · "bottle service"</td></tr>
+        </tbody>
+      </table></div>
+      <p>Review the <strong>Search Terms report weekly</strong> for the first two months and add negatives as junk appears. This alone typically cuts 20–35% of early waste.</p>
+      <div class="note"><span class="lbl">Competitors</span>
+        <p>Generally <em>don't</em> add competitor brand names as negatives — someone searching a competitor may switch. But if a competitor term shows a bad conversion rate after real data, negative it.</p>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="copy">
+      <h2><span class="n">06</span> Ad copy &amp; extensions</h2>
+      <p>Responsive Search Ads: give Google 12–15 headlines and 4 descriptions per ad group; pin only where you must (e.g. the phone number). Two RSAs per ad group. Every ad reflects the ad group's exact theme.</p>
+
+      <h3>Airport — RSA assets</h3>
+      <div class="assets"><h5>Headlines</h5><ol>
+        <li>Seattle Airport Car Service</li>
+        <li>SEA Transfers From $79</li>
+        <li>Flat Rates, Priced Up Front</li>
+        <li>No Surge. No Meter.</li>
+        <li>We Track Your Flight</li>
+        <li>60 Min Airport Wait Included</li>
+        <li>Dispatch Answers 24/7</li>
+        <li>Licensed &amp; Insured Chauffeurs</li>
+        <li>Meet You at Baggage Claim</li>
+        <li>Book Your SEA Ride in a Minute</li>
+        <li>Sedan, SUV &amp; Sprinter Van</li>
+        <li>Serving All of Puget Sound</li>
+        <li>Bellevue · Kent · Tacoma · Everett</li>
+        <li>See Your Price Before You Book</li>
+        <li>Call (206) 596-5504</li>
+      </ol></div>
+      <div class="assets"><h5>Descriptions</h5><ol>
+        <li>Flat-rate SEA airport transfers across Seattle &amp; the Puget Sound. See your exact price before you book.</li>
+        <li>Flight tracked automatically. 60 minutes of wait included. Meet-and-greet or curbside — your choice.</li>
+        <li>A licensed, insured chauffeur who knows the routes. Dispatch answers 24/7 at (206) 596-5504.</li>
+        <li>Sedan from $79, SUV from $109. No surge pricing, ever. Book online in under a minute.</li>
+      </ol></div>
+
+      <h3>Corporate — RSA assets</h3>
+      <div class="assets"><h5>Headlines</h5><ol>
+        <li>Seattle Corporate Car Service</li>
+        <li>Executive Transportation Accounts</li>
+        <li>One Account. One Invoice.</li>
+        <li>Monthly Billing, Net Terms</li>
+        <li>A Dedicated Dispatch Line</li>
+        <li>Consistent, Vetted Chauffeurs</li>
+        <li>Rates Set Per Contract</li>
+        <li>COI Provided on Request</li>
+        <li>Airport, Client &amp; Roadshow Travel</li>
+        <li>Serving the Eastside &amp; Downtown</li>
+        <li>Set Up an Account This Week</li>
+        <li>Licensed WUTC Carrier</li>
+        <li>Book for Your Whole Team</li>
+        <li>No Setup Fee, No Minimum</li>
+        <li>Call (206) 596-5504</li>
+      </ol></div>
+      <div class="assets"><h5>Descriptions</h5><ol>
+        <li>Corporate transportation accounts for Seattle-area teams: monthly invoicing, a dedicated line, consistent drivers.</li>
+        <li>Tiered rates that grow with your volume, applied automatically. Certificate of insurance on request.</li>
+        <li>Executive airport runs, client travel, roadshows and events — coordinated by one dispatcher.</li>
+        <li>Set up an account with no fee and no minimum. Talk to us at (206) 596-5504.</li>
+      </ol></div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>Other campaigns — lead headlines</th><th>Lead description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Wedding:</strong> Seattle Wedding Transportation · Guest Shuttles &amp; the Couple's Car · A Coordinator Runs the Timeline · Every Car Arrives Together · Woodinville &amp; Puget Sound Venues</td><td>Wedding &amp; event transportation with a dedicated coordinator, a written timeline, and shuttles that keep guests on schedule. Request a quote.</td></tr>
+          <tr><td><strong>Hourly:</strong> Hire a Chauffeur by the Hour · Sedan From $95/hr · Car &amp; Driver On Call All Day · 3-Hour Minimum, Price Up Front · No Per-Mile Charge</td><td>Keep a car and chauffeur on call by the hour across Seattle. Meetings, showings, a night out — priced before you book.</td></tr>
+          <tr><td><strong>Wine tour:</strong> Woodinville Wine Tour Transportation · A Driver Who Waits &amp; Parks · Taste, We'll Drive · Full-Day Wine Country Trips · Booked by the Hour</td><td>Unhurried Woodinville and Washington wine-country tours with a chauffeur. Cooler on board, flexible itinerary.</td></tr>
+          <tr><td><strong>General:</strong> Seattle Town Car Service · Airport, Corporate &amp; Hourly · Flat, Transparent Pricing · Dispatch Answers 24/7 · Licensed &amp; Insured</td><td>Professional town car and chauffeur service across Seattle and the Puget Sound. Priced before you book. Call (206) 596-5504.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Extensions (account &amp; campaign level)</h3>
+      <ul>
+        <li><strong>Call:</strong> (206) 596-5504 with a Google forwarding number so calls are tracked as conversions.</li>
+        <li><strong>Sitelinks:</strong> See All SEA Rates · Corporate Accounts · Our Fleet · Get a Quote · How It Works · Service Areas.</li>
+        <li><strong>Callouts:</strong> 24/7 Dispatch · Flights Tracked · Licensed &amp; Insured · No Surge Pricing · Meet &amp; Greet · Flat Rates.</li>
+        <li><strong>Structured snippets:</strong> Service catalog — Airport transfers, Corporate travel, Weddings, Hourly, Cruise transfers, Wine tours.</li>
+        <li><strong>Price:</strong> SEA → Seattle $89 · SEA → Bellevue $89 · SEA → Kent $79 · SEA → Tacoma $99 · Hourly from $95/hr.</li>
+        <li><strong>Location:</strong> linked to the Google Business Profile.</li>
+        <li><strong>Image:</strong> real vehicle photos.</li>
+        <li><strong>No promotion extension</strong> — the strategy is not to compete on discounts.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="landing">
+      <h2><span class="n">07</span> Landing pages</h2>
+      <p>Use the service pages from step 7 — they already have the flat-rate proof, trust signals, a fast load, and the funnel CTA. Don't build separate thin landing pages.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Campaign</th><th>Landing page</th></tr></thead>
+        <tbody>
+          <tr><td>Airport</td><td><code>/airport-transportation</code></td></tr>
+          <tr><td>Corporate</td><td><code>/corporate-transportation</code></td></tr>
+          <tr><td>Wedding &amp; event</td><td><code>/wedding-transportation</code></td></tr>
+          <tr><td>Hourly</td><td><code>/hourly-chauffeur</code></td></tr>
+          <tr><td>Wine tour / cruise</td><td><code>/cruise-wine-tours</code></td></tr>
+          <tr><td>General — by ad group</td><td><code>/</code>, or the closest service page</td></tr>
+          <tr><td>Branded</td><td><code>/</code></td></tr>
+        </tbody>
+      </table></div>
+      <h4>Two things to add for paid traffic</h4>
+      <ul>
+        <li><strong>Capture the <code>gclid</code>.</strong> On page load, read <code>gclid</code> from the URL and store it (cookie + hidden field) so it rides along in the funnel <code>payload</code> to the CRM. This is what makes offline conversion import (§8) possible. Small change to the funnel and to <code>intake.js</code>'s source parser.</li>
+        <li><strong>Match the message.</strong> A click on a "SEA from $79" ad should land on the rate table, not the top of the page — deep-link paid traffic to <code>/airport-transportation#rates</code>. Keep the sticky call button and the Book CTA above the fold on mobile.</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section id="tracking">
+      <h2><span class="n">08</span> Conversion tracking — the gate</h2>
+      <p>Nothing in §3 runs until this chain is built and a test booking has flowed all the way through.</p>
+      <div class="flow"><b>ad click (gclid)</b> <span class="ar">→</span> <b>landing page</b> <span class="ar">→</span> <b>funnel event</b> <span class="ar">→</span> <b>CRM lead (gclid stored)</b> <span class="ar">→</span> <b>booked / completed</b> <span class="ar">→</span> <b>offline conversion + value back to Google Ads</b></div>
+      <ol class="check">
+        <li><strong>GA4 + GTM</strong> live on the site. The funnel already emits <code>quote_start</code>, <code>quote_complete</code>, <code>booking_reserved</code>, <code>quote_request</code>, <code>phone_click</code> — wire these as GA4 events.</li>
+        <li><strong>Mark conversions</strong> in GA4: <code>quote_complete</code> and <code>booking_reserved</code> as primary; <code>quote_request</code> and <code>phone_click</code> as secondary. Import them into Google Ads (or use Google Ads tags directly).</li>
+        <li><strong>Enhanced conversions for web</strong> — pass hashed email/phone from the funnel's confirmation step so conversions survive cookie loss.</li>
+        <li><strong>Call tracking</strong> — Google forwarding numbers on call assets and call-only ads (counts calls over 60s as conversions). Add CallRail (or similar) with dynamic number insertion for the website number so organic vs. paid calls are separated.</li>
+        <li><strong>Store the gclid</strong> — funnel captures it from the URL, includes it in <code>payload</code>; <code>intake.js</code> writes it to a <code>GCLID</code> field on the Lead.</li>
+        <li><strong>Offline conversion import</strong> — when a CRM lead reaches <em>Booked</em> (and again at <em>Completed</em> with the fare as the value), upload the conversion against its gclid to Google Ads via a Make/Zapier step or the API. Now Smart Bidding optimizes toward booked revenue, not form fills.</li>
+        <li><strong>Verify end to end</strong> — click your own ad, complete a booking, confirm it lands in GA4, in the CRM with the gclid, and (after the import runs) in Google Ads as a conversion with a value.</li>
+      </ol>
+      <div class="note"><span class="lbl">Why offline import matters here</span>
+        <p>Airport quote-completions and corporate form fills vary wildly in value — a $79 Kent run vs. a 40-trip-a-month account. Feeding the actual booked value back lets the algorithm bid up for the searches that produce real money and down for the ones that produce tire-kickers. Without it you're optimizing for lead volume, which is how paid budgets get wasted.</p>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="microsoft">
+      <h2><span class="n">09</span> Microsoft Ads (Bing)</h2>
+      <ul>
+        <li><strong>Import</strong> the Google campaigns once they're stable (~week 4), then let it auto-sync weekly.</li>
+        <li><strong>Bid −10 to −20%</strong> versus Google to start; adjust off performance.</li>
+        <li><strong>Budget</strong> ~20–30% of the Google spend.</li>
+        <li><strong>Bing's audience skews older, higher-income, more desktop, and more corporate/government</strong> — the <strong>Corporate</strong> campaign often returns a better cost per account here than on Google. Give it a proportionally larger share of the Microsoft budget.</li>
+        <li>Re-import the negative lists; set up UET tag + conversion tracking mirroring GA4.</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section id="budget">
+      <h2><span class="n">10</span> Budget &amp; phasing</h2>
+      <p>All figures are monthly and <strong>contingent on §8 being live and the first 30 days showing a workable cost per booked ride</strong>. Local transportation CPCs run roughly $4–10 (airport), $8–18 (corporate/limo), higher for the broad "limo service" head terms — validate in Keyword Planner.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tier</th><th>~ Monthly</th><th>Running</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Lean / test</strong></td><td>$1,000–1,500</td><td>Airport + Branded search, + Local Services Ads. One channel to prove the funnel.</td></tr>
+          <tr><td><strong>Standard</strong></td><td>$2,500–3,500</td><td>+ Corporate + Wedding (in season) + Hourly/wine + Microsoft import.</td></tr>
+          <tr><td><strong>Growth</strong></td><td>$5,000–7,000</td><td>+ General / brand-category, broader match with Smart Bidding, expanded LSA budget, bigger Microsoft share.</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Scaling rules</h4>
+      <ul>
+        <li>Raise a campaign's budget by ≤ 20% at a time, no more than weekly — bigger jumps reset Smart Bidding's learning.</li>
+        <li>Only scale a campaign whose cost per booked ride (from the offline import) is at or below target and stable for 2+ weeks.</li>
+        <li>Move budget <em>toward</em> the campaigns and ad groups with the best cost per booking, not evenly.</li>
+        <li>Pause any ad group with spend &gt; 3× target CPA and zero conversions after 30 days; diagnose before relaunching.</li>
+      </ul>
+    </section>
+
+    <!-- 11 -->
+    <section id="corporate">
+      <h2><span class="n">11</span> Corporate growth</h2>
+      <p>One corporate account can be worth more than a month of airport ads. Ads capture the corporate searchers who are already looking; this motion creates demand among the ones who aren't.</p>
+
+      <h3>Who to target</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tier</th><th>Segment</th><th>Why · who to reach</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>Eastside tech (Bellevue, Redmond, Kirkland)</td><td>High volume of exec + visiting-client airport travel. Reach: Executive Assistants, Office Managers, "Workplace / Employee Experience" leads.</td></tr>
+          <tr><td><strong>B</strong></td><td>Downtown law, finance, consulting, accounting</td><td>Client entertainment, partner travel, roadshows. Reach: EAs to partners, Firm Administrators, Travel Managers.</td></tr>
+          <tr><td><strong>C</strong></td><td>Event &amp; conference planners, DMCs, production companies</td><td>Project-based, high-volume bursts. Reach: owners, logistics leads.</td></tr>
+          <tr><td><strong>D</strong></td><td>Hotels &amp; venues (referral partners, not accounts)</td><td>Concierge and event teams send guests your way. Reach: Concierge, Director of Sales, Events Manager.</td></tr>
+          <tr><td><strong>E</strong></td><td>Sports/entertainment, universities, film &amp; TV, wineries</td><td>Episodic but large. Reach: operations / guest services.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>The motion</h3>
+      <p>Mirror the CRM's corporate pipeline: <span class="mono">Prospect → Contacted → Qualified → Proposal → Negotiation → Account Created → Active</span>.</p>
+      <ol>
+        <li><strong>Partnership-first (fastest volume).</strong> Pitch hotel concierge desks, wedding/event venues, and Alaska-cruise travel agencies to be their recommended transportation. Warm referrals convert far better than cold outreach and need no ad spend.</li>
+        <li><strong>Direct outreach.</strong> Build a list of 100 Tier A/B companies. LinkedIn connect + a value-first message to the EA / Office Manager, then a short email sequence. Templates in <code>outreach-templates.md</code>.</li>
+        <li><strong>In person.</strong> Join and show up at the Bellevue and Seattle Metro chambers, and a local Executive Assistant / IAAP chapter. Sponsor one event a quarter.</li>
+        <li><strong>Referral program.</strong> Existing corporate clients get an account credit for any referred company that activates an account.</li>
+      </ol>
+
+      <h3>The offer</h3>
+      <ul>
+        <li>No setup fee, no minimum volume to start.</li>
+        <li>A one-month pilot at the <strong>Preferred tier (10% off)</strong> so they can test the service on real trips.</li>
+        <li>Certificate of insurance and WUTC operating authority provided up front.</li>
+        <li>A named contact and the dedicated dispatch line from day one.</li>
+        <li>Monthly consolidated invoice, Net 15.</li>
+      </ul>
+
+      <h3>Cadence &amp; targets</h3>
+      <div class="flow"><b>40 new contacts / wk</b> <span class="ar">→</span> <b>~15% reply</b> <span class="ar">→</span> <b>~4 meetings / wk</b> <span class="ar">→</span> <b>~1 proposal / wk</b> <span class="ar">→</span> <b>~1 account / 2–3 wks</b></div>
+      <p>A 5-touch sequence over ~3 weeks: LinkedIn connect → LinkedIn message (day 2) → email 1 (day 4) → email 2 (day 9) → break-up email (day 18). Stop the moment they reply or book. Everyone who doesn't convert goes to a quarterly re-touch.</p>
+      <p>Track in the CRM: contacts, replies, meetings, proposals sent, accounts activated, and <strong>monthly recurring revenue added</strong> — that last number is the goal.</p>
+    </section>
+
+    <!-- 12 -->
+    <section id="plan">
+      <h2><span class="n">12</span> Measurement &amp; 90-day plan</h2>
+
+      <h4>Combined monthly scorecard</h4>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Metric</th><th>Channel</th></tr></thead>
+        <tbody>
+          <tr><td>Spend · impressions · clicks · CTR</td><td>Google Ads, Microsoft, LSA</td></tr>
+          <tr><td>Cost per lead · cost per booked ride · ROAS</td><td>Ads + CRM offline import</td></tr>
+          <tr><td>Leads by campaign &amp; landing page → booking rate</td><td>CRM (<code>source = cpc</code>)</td></tr>
+          <tr><td>LSA: leads · answer rate · lead-quality mix · disputes</td><td>LSA dashboard</td></tr>
+          <tr><td>Search-terms waste added to negatives</td><td>Google Ads</td></tr>
+          <tr><td>Corporate: contacts · replies · meetings · proposals · accounts · MRR added</td><td>CRM corporate pipeline</td></tr>
+          <tr><td>Partnership referrals received</td><td>CRM (<code>source = referral</code>)</td></tr>
+          <tr><td>Blended cost per new customer, paid vs. organic vs. corporate</td><td>all</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="phase">
+        <h3>Days 1–30 <span class="wk">tracking &amp; test</span></h3>
+        <p class="goal">Get measurable, launch one campaign, start the corporate list.</p>
+        <ul>
+          <li>Conversion tracking §8 fully built and verified with a live test booking.</li>
+          <li>Start LSA verification (license + insurance + background checks).</li>
+          <li>Launch <strong>Airport</strong> + <strong>Branded</strong> search. Maximize Conversions. $35–50/day combined.</li>
+          <li>Add <code>gclid</code> capture to the funnel + <code>intake.js</code>.</li>
+          <li>Build the 100-company corporate list; draft the outreach templates; pitch 10 hotels/venues.</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h3>Days 31–60 <span class="wk">expand what works</span></h3>
+        <p class="goal">Add campaigns if the airport numbers hold; run outreach batch one.</p>
+        <ul>
+          <li>Review airport cost per booked ride. If in range: launch <strong>Corporate</strong> + <strong>Wedding</strong> (if in season) + <strong>Hourly/wine</strong>.</li>
+          <li>LSA live once verified; start at 5–8 leads/week.</li>
+          <li>Import to Microsoft Ads.</li>
+          <li>Corporate outreach batch one (40 contacts/week); first pilot proposals; follow up on partnership pitches.</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h3>Days 61–90 <span class="wk">optimize &amp; decide</span></h3>
+        <p class="goal">First real read on blended acquisition cost; set the next quarter's budget.</p>
+        <ul>
+          <li>First full combined scorecard. Compare paid vs. organic vs. corporate cost per new customer.</li>
+          <li>Shift budget toward the best-performing campaigns; pause the worst ad groups.</li>
+          <li>Launch <strong>General / brand-category</strong> only if airport CPA is proven and there's budget to learn.</li>
+          <li>Corporate: first accounts activated; launch the referral program to them.</li>
+          <li>Decide the ongoing monthly budget tier (§10) from the data, not a guess.</li>
+        </ul>
+      </div>
+
+      <p class="foot">Ads &amp; corporate growth plan v1 · Northwest Town Car Service · 2026-09-02. CPCs, lead costs, and budget tiers are directional — validate in Google Keyword Planner and against the first 30 days of real data. Requires a Google Ads account, GBP, GA4/GTM, and call tracking; Local Services Ads additionally require license and insurance verification.</p>
+    </section>
+  </main>
+</div>
+<script>
+  (function(){var K='nwtc-growth-theme',r=document.documentElement,b=document.getElementById('themeToggle');
+   try{var s=localStorage.getItem(K);if(s)r.setAttribute('data-theme',s);}catch(e){}
+   function l(){var x=r.getAttribute('data-theme');b.textContent=x==='dark'?'Light':x==='light'?'Dark':'Theme';}l();
+   b.addEventListener('click',function(){var c=r.getAttribute('data-theme');
+    var p=matchMedia('(prefers-color-scheme:dark)').matches;var n=c?(c==='dark'?'light':'dark'):(p?'light':'dark');
+    r.setAttribute('data-theme',n);try{localStorage.setItem(K,n);}catch(e){}l();});})();
+</script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<title>NWTC SEO Growth Plan</title>
+<meta name="description" content="A 12-month local-SEO plan for Northwest Town Car Service: keyword clusters mapped to pages, per-page briefs, an internal-link model, a content calendar, Google Business Profile and citation strategy, a lead-and-booking measurement funnel, and a 90-day rollout.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5; --surface:#FBF8F1; --surface-2:#EFEADC;
+    --ink:#16261F; --muted:#5B6A5F;
+    --brass:#9A6E28; --brass-ink:#7C5A1E;
+    --sage:#3E7A52; --amber:#A9741F; --risk:#A8443A;
+    --line:rgba(22,38,31,0.14); --line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 8px 24px -12px rgba(22,38,31,0.18);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.01em;margin:0;text-wrap:balance;}
+  a{color:var(--brass-ink);}
+  code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.85em;}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+  p{margin:0 0 1rem;} strong{font-weight:600;}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 120px;}
+  @media (min-width:1060px){.page{display:grid;grid-template-columns:222px minmax(0,1fr);gap:52px;padding-right:36px;}
+    .toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:40px 0;}}
+  .toc{display:none;font-size:13.5px;}
+  @media (min-width:1060px){.toc{display:block;}}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .toc li{counter-increment:toc;}
+  .toc a{display:block;padding:5px 0 5px 14px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;}
+  .toc a:hover{color:var(--ink);border-left-color:var(--brass);}
+  .toc a::before{content:counter(toc) ".  ";color:var(--brass);}
+  .toc .tt{font-family:'Fraunces',serif;font-size:15px;color:var(--ink);margin:0 0 12px 14px;}
+
+  main{min-width:0;padding-top:40px;}
+  header.hero{padding:28px 0 40px;border-bottom:1px solid var(--line);margin-bottom:44px;}
+  .kicker{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--brass-ink);}
+  header.hero h1{font-size:clamp(2rem,4.2vw,2.9rem);margin:12px 0 0;max-width:20ch;}
+  header.hero p{font-size:1.12rem;color:var(--muted);margin:16px 0 0;max-width:62ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-size:12.5px;color:var(--muted);font-family:ui-monospace,monospace;}
+
+  .theme-toggle{position:fixed;top:16px;right:16px;z-index:40;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;box-shadow:var(--shadow);}
+  .theme-toggle:hover{border-color:var(--brass);}
+
+  section{margin:0 0 56px;scroll-margin-top:20px;}
+  section>h2{font-size:clamp(1.45rem,2.6vw,1.9rem);padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:baseline;}
+  section>h2 .n{font-family:ui-monospace,monospace;font-size:0.55em;color:var(--brass);}
+  section>h3{font-size:1.15rem;margin:30px 0 6px;}
+  section>h4{font-size:0.98rem;margin:22px 0 6px;font-family:'Work Sans',sans-serif;font-weight:700;letter-spacing:0.01em;}
+  section p,section ul,section ol{max-width:72ch;}
+  section ul,section ol{padding-left:1.2rem;} section li{margin:0 0 .35rem;}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:16px 0;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface);}
+  th,td{text-align:left;padding:9px 13px;border-top:1px solid var(--line-soft);vertical-align:top;}
+  thead th{background:var(--surface-2);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);border-top:none;}
+  td .mono{color:var(--muted);}
+  td:first-child{white-space:nowrap;}
+
+  .brief{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0;box-shadow:var(--shadow);}
+  .brief h4{font-family:'Fraunces',serif;font-weight:500;font-size:1.08rem;margin:0 0 4px;}
+  .brief .url{font-family:ui-monospace,monospace;font-size:12px;color:var(--brass-ink);}
+  .brief dl{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;margin:12px 0 0;font-size:13.5px;}
+  .brief dt{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .brief dd{margin:0;}
+  .brief dd ul{margin:2px 0 0;padding-left:1.1rem;}
+
+  .pill{display:inline-block;font-family:ui-monospace,monospace;font-size:10.5px;padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--muted);}
+  .pill.tx{color:var(--sage);border-color:color-mix(in srgb,var(--sage) 40%,transparent);}
+  .pill.co{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent);}
+  .pill.inf{color:var(--brass-ink);border-color:color-mix(in srgb,var(--brass) 40%,transparent);}
+
+  .note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:14px 16px;margin:18px 0;font-size:0.95rem;box-shadow:var(--shadow);}
+  .note .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--brass-ink);display:block;margin-bottom:6px;}
+  .note p:last-child{margin-bottom:0;}
+
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:ui-monospace,monospace;font-size:12.5px;margin:14px 0;color:var(--muted);}
+  .flow b{color:var(--ink);} .flow .ar{color:var(--brass);}
+
+  ol.check{counter-reset:c;list-style:none;padding:0;}
+  ol.check li{counter-increment:c;position:relative;padding:8px 0 8px 34px;border-top:1px solid var(--line-soft);max-width:74ch;}
+  ol.check li:first-child{border-top:none;}
+  ol.check li::before{content:counter(c);position:absolute;left:0;top:7px;width:22px;height:22px;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;font-family:ui-monospace,monospace;font-size:12px;color:var(--brass);}
+
+  .phase{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:var(--surface);box-shadow:var(--shadow);}
+  .phase h3{margin:0 0 4px;display:flex;gap:12px;align-items:baseline;}
+  .phase h3 .wk{font-family:ui-monospace,monospace;font-size:0.68rem;color:var(--brass);}
+  .phase .goal{color:var(--muted);font-size:0.93rem;margin:0 0 12px;}
+
+  .foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;}
+</style>
+<button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <div class="tt">SEO plan</div>
+    <ol>
+      <li><a href="#strategy">Strategy</a></li>
+      <li><a href="#clusters">Keyword clusters</a></li>
+      <li><a href="#urlmap">URL &amp; intent map</a></li>
+      <li><a href="#briefs">Page briefs</a></li>
+      <li><a href="#locations">Location pages</a></li>
+      <li><a href="#links">Internal-link model</a></li>
+      <li><a href="#content">Content calendar</a></li>
+      <li><a href="#local">Local SEO &amp; GBP</a></li>
+      <li><a href="#authority">Citations &amp; links</a></li>
+      <li><a href="#technical">Technical checklist</a></li>
+      <li><a href="#measure">Measurement</a></li>
+      <li><a href="#rollout">90-day &amp; 12-month plan</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="kicker">Northwest Town Car Service</span>
+      <h1>SEO growth plan</h1>
+      <p>Step 9. A local-first plan built for <strong>qualified bookings, not raw traffic</strong> — every target keyword is commercial, mapped to a page that can convert it, and measured through to a lead and a fare. The site architecture from step 7 is the foundation; this is how it earns rankings and how you'll know it's working.</p>
+      <div class="meta"><span>v1 · 2026-09-02</span><span>Market: Seattle + Puget Sound</span><span>Site: northwesttowncarservice.com (WordPress)</span></div>
+    </header>
+
+    <!-- 1 -->
+    <section id="strategy">
+      <h2><span class="n">01</span> Strategy</h2>
+      <p>Three commitments shape everything below.</p>
+      <h3>Commercial intent over traffic</h3>
+      <p>A first page for "how to tip a chauffeur" is worthless; page three for "Bellevue airport car service" prints money. Every target term is one a person searches when they're close to booking a ride. Informational content exists only to support those commercial pages and to build topical authority — never as a traffic goal in itself.</p>
+      <h3>Local before national</h3>
+      <p>"Seattle limo service" is contested by national aggregators with huge budgets. "Redmond car service", "SEA to Woodinville wine tour", and the map pack for "airport car service near me" are winnable with a real local operator, a complete Google Business Profile, and genuinely useful city pages. Win those first; the broad head terms follow from the authority they build.</p>
+      <h3>Measured to revenue</h3>
+      <p>Rankings are a leading indicator, not the goal. The scorecard in §11 tracks the full chain: <span class="mono">impressions → clicks → leads → quotes → bookings → revenue</span>, by landing page and by query. A page that ranks but doesn't produce leads gets fixed or cut.</p>
+      <div class="note"><span class="lbl">What we will not do</span>
+        <p>No doorway pages (near-identical city pages with the name swapped), no keyword stuffing, no fabricated location signals (addresses or "offices" that don't exist), no purchased links, no fake reviews. Google's local algorithm punishes all of these and they're reputational risks for a licensed carrier.</p>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="clusters">
+      <h2><span class="n">02</span> Keyword clusters</h2>
+      <p>Six clusters, each anchored by one page. <span class="pill tx">transactional</span> = ready to book · <span class="pill co">commercial</span> = comparing providers · <span class="pill inf">informational</span> = researching.</p>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>Cluster</th><th>Primary term</th><th>Secondary terms</th><th>Intent</th><th>Anchor page</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Airport</strong></td><td>Seattle airport car service</td><td>SEA airport transportation · SeaTac car service · Seattle airport limo · airport chauffeur Seattle · Sea-Tac town car · airport transportation Seattle</td><td><span class="pill co">commercial</span></td><td><span class="mono">/airport-transportation</span></td></tr>
+          <tr><td><strong>Corporate</strong></td><td>Seattle corporate car service</td><td>Seattle executive transportation · Seattle corporate chauffeur · Seattle business transportation · executive car service Seattle</td><td><span class="pill co">commercial</span></td><td><span class="mono">/corporate-transportation</span></td></tr>
+          <tr><td><strong>General / brand-category</strong></td><td>Seattle town car service</td><td>Seattle car service · Seattle chauffeur service · Seattle limo service · Seattle black car service · private car service Seattle</td><td><span class="pill co">commercial</span></td><td><span class="mono">/</span> (homepage)</td></tr>
+          <tr><td><strong>Wedding / event</strong></td><td>Seattle wedding transportation</td><td>Seattle wedding limo · Seattle event transportation · wedding shuttle Seattle · wedding car service Seattle</td><td><span class="pill co">commercial</span></td><td><span class="mono">/wedding-transportation</span></td></tr>
+          <tr><td><strong>Hourly</strong></td><td>Seattle hourly chauffeur</td><td>Seattle private chauffeur · hire a chauffeur Seattle · chauffeur for a day Seattle · as-directed car service Seattle</td><td><span class="pill co">commercial</span></td><td><span class="mono">/hourly-chauffeur</span></td></tr>
+          <tr><td><strong>Cruise &amp; wine</strong></td><td>Seattle cruise terminal transportation</td><td>Pier 91 cruise transfer · Pier 66 transportation · SEA to cruise port · Woodinville wine tour transportation · Seattle wine tour car service</td><td><span class="pill tx">transactional</span></td><td><span class="mono">/cruise-wine-tours</span></td></tr>
+          <tr><td><strong>Location</strong> (per city)</td><td>&lt;City&gt; car service</td><td>&lt;City&gt; airport transportation · &lt;City&gt; chauffeur service · &lt;City&gt; to SEA car service · town car &lt;City&gt;</td><td><span class="pill tx">transactional</span></td><td><span class="mono">/service-area/&lt;city&gt;</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note"><span class="lbl">Near-me &amp; the map pack</span>
+        <p>"airport car service near me", "town car service near me", "chauffeur near me" are high-intent and answered by the <strong>Google Business Profile</strong>, not a web page. §8 covers ranking there. The city pages reinforce the geographic relevance the GBP needs.</p>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="urlmap">
+      <h2><span class="n">03</span> URL &amp; intent map</h2>
+      <p>The full site. Service pages exist (step 7); location and blog pages are the build.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>URL</th><th>Primary keyword</th><th>Intent</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="mono">/</span></td><td>Seattle town car service</td><td><span class="pill co">com</span></td><td>live — optimize</td></tr>
+          <tr><td><span class="mono">/airport-transportation</span></td><td>Seattle airport car service</td><td><span class="pill co">com</span></td><td>live — optimize</td></tr>
+          <tr><td><span class="mono">/corporate-transportation</span></td><td>Seattle corporate car service</td><td><span class="pill co">com</span></td><td>live — optimize</td></tr>
+          <tr><td><span class="mono">/wedding-transportation</span></td><td>Seattle wedding transportation</td><td><span class="pill co">com</span></td><td>live — optimize</td></tr>
+          <tr><td><span class="mono">/hourly-chauffeur</span></td><td>Seattle hourly chauffeur</td><td><span class="pill co">com</span></td><td>live — optimize</td></tr>
+          <tr><td><span class="mono">/point-to-point</span></td><td>Seattle black car service</td><td><span class="pill co">com</span></td><td>live — optimize</td></tr>
+          <tr><td><span class="mono">/cruise-wine-tours</span></td><td>Seattle cruise terminal transportation</td><td><span class="pill tx">tx</span></td><td>live — split later (see note)</td></tr>
+          <tr><td><span class="mono">/service-area/seattle</span></td><td>Seattle car service (neighborhood-level)</td><td><span class="pill tx">tx</span></td><td>build</td></tr>
+          <tr><td><span class="mono">/service-area/bellevue</span></td><td>Bellevue car service</td><td><span class="pill tx">tx</span></td><td>build — priority</td></tr>
+          <tr><td><span class="mono">/service-area/redmond</span></td><td>Redmond car service</td><td><span class="pill tx">tx</span></td><td>build — priority</td></tr>
+          <tr><td><span class="mono">/service-area/kirkland</span></td><td>Kirkland car service</td><td><span class="pill tx">tx</span></td><td>build — priority</td></tr>
+          <tr><td><span class="mono">/service-area/tacoma</span></td><td>Tacoma car service</td><td><span class="pill tx">tx</span></td><td>build — priority</td></tr>
+          <tr><td><span class="mono">/service-area/renton</span></td><td>Renton car service</td><td><span class="pill tx">tx</span></td><td>build</td></tr>
+          <tr><td><span class="mono">/service-area/kent</span></td><td>Kent car service</td><td><span class="pill tx">tx</span></td><td>build (home base — strong page)</td></tr>
+          <tr><td><span class="mono">/service-area/everett</span></td><td>Everett car service</td><td><span class="pill tx">tx</span></td><td>build</td></tr>
+          <tr><td><span class="mono">/service-area/federal-way</span> · <span class="mono">/auburn</span> · <span class="mono">/puyallup</span> · <span class="mono">/lynnwood</span> · <span class="mono">/edmonds</span> · <span class="mono">/gig-harbor</span></td><td>&lt;City&gt; car service</td><td><span class="pill tx">tx</span></td><td>build only with unique local content (§5)</td></tr>
+          <tr><td><span class="mono">/blog/&lt;slug&gt;</span> ×12</td><td>informational — see §7</td><td><span class="pill inf">inf</span></td><td>build over 12 months</td></tr>
+          <tr><td><span class="mono">/fleet</span> · <span class="mono">/rates</span> · <span class="mono">/about</span> · <span class="mono">/faq</span> · <span class="mono">/contact</span> · <span class="mono">/reviews</span></td><td>brand + supporting</td><td>—</td><td>keep / tidy</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><span class="lbl">Cruise + wine on one page</span>
+        <p>They ship together now for speed, but they target different searchers. Once the page has traffic data, split into <span class="mono">/cruise-transportation</span> and <span class="mono">/wine-tours</span> so each can rank for its own cluster without diluting the other. Redirect the combined URL to whichever gets more demand.</p>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="briefs">
+      <h2><span class="n">04</span> Page briefs</h2>
+      <p>Full briefs for the pages that carry the most commercial weight. The service pages already exist — these say what to verify or adjust. Every brief follows the same shape: URL, primary + secondary keywords, intent, title, meta, H1, H2s, internal links out, CTA, schema, content requirements.</p>
+
+      <div class="brief">
+        <h4>Homepage</h4>
+        <div class="url">/</div>
+        <dl>
+          <dt>Primary</dt><dd>Seattle town car service</dd>
+          <dt>Secondary</dt><dd>Seattle car service · Seattle chauffeur service · Puget Sound car service</dd>
+          <dt>Intent</dt><dd><span class="pill co">commercial</span> — comparing providers for a first booking</dd>
+          <dt>Title</dt><dd>Seattle Town Car Service | Airport, Corporate &amp; Hourly | NWTC <span class="mono">(≤60 char)</span></dd>
+          <dt>Meta</dt><dd>Flat-rate airport transfers from $79, corporate accounts, weddings, and hourly chauffeur service across Seattle &amp; the Puget Sound. Priced before you book. Dispatch 24/7 — (206) 596-5504.</dd>
+          <dt>H1</dt><dd>Every route, handled. <span class="mono">(brand line; the keyword lives in the H2 and intro)</span></dd>
+          <dt>H2s</dt><dd><ul><li>Seattle &amp; Puget Sound car service — six ways people ride with us</li><li>Reliable is the whole product</li><li>SEA airport transfers, priced before you book</li><li>A car for the trip, not just any car</li><li>If it's in the Puget Sound, we've driven it</li><li>Corporate accounts</li><li>Questions we hear a lot</li></ul></dd>
+          <dt>Links out</dt><dd>all 6 service pages, the 4 priority city pages, /rates, /about</dd>
+          <dt>CTA</dt><dd>Book a ride · Get a quote · Call (206) 596-5504 (sticky)</dd>
+          <dt>Schema</dt><dd><span class="mono">LimousineService</span> with areaServed (all cities), openingHours 24/7, telephone, priceRange, and one <span class="mono">Offer</span> anchoring "from $79"</dd>
+          <dt>Content</dt><dd>Add one keyword-bearing sentence to the intro ("Northwest Town Car Service is a Seattle-area town car and chauffeur service…"). Everything else is built. ~700 visible words is enough for a homepage.</dd>
+        </dl>
+      </div>
+
+      <div class="brief">
+        <h4>Airport transportation</h4>
+        <div class="url">/airport-transportation</div>
+        <dl>
+          <dt>Primary</dt><dd>Seattle airport car service</dd>
+          <dt>Secondary</dt><dd>SEA airport transportation · SeaTac car service · Seattle airport limo · airport chauffeur Seattle · Sea-Tac town car service</dd>
+          <dt>Intent</dt><dd><span class="pill co">commercial</span></dd>
+          <dt>Title</dt><dd>Seattle Airport Car Service | Flat SEA Rates from $79 | NWTC</dd>
+          <dt>Meta</dt><dd>Flat-rate car service to and from Sea-Tac (SEA). Sedan from $79, SUV from $109 — full rate table, priced before you book. Flight tracking and 60 minutes' wait included. (206) 596-5504.</dd>
+          <dt>H1</dt><dd>SEA airport transfers, priced before you book</dd>
+          <dt>H2s</dt><dd><ul><li>What's included on every airport trip</li><li>Flat rates between SEA and the Puget Sound <span class="mono">(the rate table — this ranks for "&lt;city&gt; to SEA")</span></li><li>Arrivals: we're there when you land</li><li>Departures: time to the terminal, buffered</li><li>Other airports on request (Paine Field / PAE, Boeing Field)</li><li>Vehicles for airport trips</li><li>Airport FAQ</li></ul></dd>
+          <dt>Links out</dt><dd>homepage, /corporate-transportation, /cruise-wine-tours, priority city pages, the "how early to book SeaTac" blog post</dd>
+          <dt>CTA</dt><dd>Book your airport ride · Call</dd>
+          <dt>Schema</dt><dd><span class="mono">Service</span> (serviceType "Airport shuttle service") + <span class="mono">FAQPage</span> from the on-page FAQ + <span class="mono">Offer</span> price $79</dd>
+          <dt>Content</dt><dd>The rate table is the SEO asset — it naturally targets "bellevue to sea-tac cost", "kent to airport car service", etc. Keep every city row. Add 2–3 sentences on PAE and BFI for the "regional airport" long tail.</dd>
+        </dl>
+      </div>
+
+      <div class="brief">
+        <h4>Corporate transportation</h4>
+        <div class="url">/corporate-transportation</div>
+        <dl>
+          <dt>Primary</dt><dd>Seattle corporate car service</dd>
+          <dt>Secondary</dt><dd>Seattle executive transportation · corporate chauffeur Seattle · business car service Seattle · Bellevue corporate transportation</dd>
+          <dt>Intent</dt><dd><span class="pill co">commercial</span> — a travel manager or EA evaluating vendors</dd>
+          <dt>Title</dt><dd>Corporate Car Service Seattle | Executive Accounts &amp; Invoicing</dd>
+          <dt>Meta</dt><dd>Corporate transportation accounts for Seattle-area teams: monthly invoicing, a dedicated dispatch line, consistent chauffeurs, and tiered rates set per contract. Set up an account — (206) 596-5504.</dd>
+          <dt>H1</dt><dd>Corporate travel your assistants will actually like</dd>
+          <dt>H2s</dt><dd><ul><li>What a corporate account gives you</li><li>Priced per contract, not per ride</li><li>Who it's for (executive teams, EAs, roadshows, crew)</li><li>Running in three steps</li><li>Corporate FAQ (billing, multiple bookers, COI)</li></ul></dd>
+          <dt>Links out</dt><dd>homepage, /airport-transportation, /hourly-chauffeur, Bellevue + Redmond city pages, the "corporate account vs rideshare" blog post</dd>
+          <dt>CTA</dt><dd>Set up an account · Call</dd>
+          <dt>Schema</dt><dd><span class="mono">Service</span> (serviceType "Corporate transportation service")</dd>
+          <dt>Content</dt><dd>Add a short "serving the Eastside tech corridor and downtown Seattle" paragraph — this is where the corporate demand concentrates. Mention certificate-of-insurance availability explicitly; procurement searches for it.</dd>
+        </dl>
+      </div>
+
+      <div class="brief">
+        <h4>Wedding &amp; event transportation</h4>
+        <div class="url">/wedding-transportation</div>
+        <dl>
+          <dt>Primary</dt><dd>Seattle wedding transportation</dd>
+          <dt>Secondary</dt><dd>Seattle wedding limo · wedding shuttle Seattle · Seattle event transportation · wedding car service Woodinville</dd>
+          <dt>Intent</dt><dd><span class="pill co">commercial</span> — couple or planner, 2–6 months out</dd>
+          <dt>Title</dt><dd>Seattle Wedding Transportation | Shuttles, Couple's Car &amp; Coordinator</dd>
+          <dt>Meta</dt><dd>Wedding and event transportation across Seattle and the Puget Sound: the couple's car, guest shuttles, and a coordinator who runs the timeline. Quoted around your run-of-show. (206) 596-5504.</dd>
+          <dt>H1</dt><dd>Every car arrives within a minute of the last</dd>
+          <dt>H2s</dt><dd><ul><li>A coordinator, not just a car</li><li>Beyond the wedding day (rehearsal dinners, galas, proms, memorials)</li><li>From timeline to send-off, in three steps</li><li>Vehicles for the day</li><li>Wedding FAQ</li></ul></dd>
+          <dt>Links out</dt><dd>homepage, /hourly-chauffeur, /airport-transportation (guest arrivals), Woodinville-adjacent city pages, wedding-timeline blog post</dd>
+          <dt>CTA</dt><dd>Request a wedding quote · Call</dd>
+          <dt>Schema</dt><dd><span class="mono">Service</span> (serviceType "Wedding transportation")</dd>
+          <dt>Content</dt><dd>Name real venue regions (Woodinville, the San Juans by arrangement, Snohomish barns, downtown hotels). Venue names in the copy earn the "&lt;venue&gt; wedding transportation" long tail and support outreach to those venues (§9).</dd>
+        </dl>
+      </div>
+
+      <div class="brief">
+        <h4>Hourly chauffeur</h4>
+        <div class="url">/hourly-chauffeur</div>
+        <dl>
+          <dt>Primary</dt><dd>Seattle hourly chauffeur</dd>
+          <dt>Secondary</dt><dd>Seattle private chauffeur · hire a chauffeur Seattle · chauffeur for a day · as-directed car service Seattle</dd>
+          <dt>Intent</dt><dd><span class="pill co">commercial</span></dd>
+          <dt>Title</dt><dd>Hourly Chauffeur Service Seattle | Car &amp; Driver by the Hour from $95</dd>
+          <dt>Meta</dt><dd>Hire a car and chauffeur by the hour across Seattle and the Puget Sound. Sedan $95/hr, SUV $125/hr, Sprinter $225/hr — three-hour minimum, priced before you book. (206) 596-5504.</dd>
+          <dt>H1</dt><dd>A car and driver, by the hour</dd>
+          <dt>H2s</dt><dd><ul><li>The hour covers more than the drive</li><li>When hourly beats a one-way</li><li>Billed by the hour, from pickup</li><li>Longer trips, same idea (Chelan, Leavenworth, the Peninsula)</li><li>Vehicles for hourly hire</li><li>Hourly FAQ</li></ul></dd>
+          <dt>Links out</dt><dd>homepage, /point-to-point, /cruise-wine-tours (wine tours), /wedding-transportation, drive-times blog post</dd>
+          <dt>CTA</dt><dd>See your hourly price · Call</dd>
+          <dt>Schema</dt><dd><span class="mono">Service</span> with per-vehicle <span class="mono">Offer</span>/<span class="mono">UnitPriceSpecification</span> (already in place)</dd>
+          <dt>Content</dt><dd>The published hourly rates are the differentiator — most competitors hide them. Keep them visible; it wins the "seattle chauffeur rates" and "how much to hire a chauffeur seattle" searches.</dd>
+        </dl>
+      </div>
+
+      <div class="brief">
+        <h4>City page — template (example: Bellevue)</h4>
+        <div class="url">/service-area/bellevue</div>
+        <dl>
+          <dt>Primary</dt><dd>Bellevue car service</dd>
+          <dt>Secondary</dt><dd>Bellevue airport transportation · Bellevue to SEA car service · Bellevue chauffeur service · town car Bellevue</dd>
+          <dt>Intent</dt><dd><span class="pill tx">transactional</span> — booking a ride from a specific city</dd>
+          <dt>Title</dt><dd>Bellevue Car Service | SEA Airport, Corporate &amp; Hourly | NWTC</dd>
+          <dt>Meta</dt><dd>Town car and chauffeur service in Bellevue: flat $89 sedan / $119 SUV airport transfers to SEA, corporate accounts, and hourly service. Dispatch answers 24/7 — (206) 596-5504.</dd>
+          <dt>H1</dt><dd>Bellevue car service — to SEA, downtown, or anywhere the day goes</dd>
+          <dt>H2s</dt><dd><ul><li>Bellevue ↔ Sea-Tac: the flat rate ($89 sedan / $119 SUV)</li><li>Corporate travel for the Eastside</li><li>Where we pick up in Bellevue (downtown, Bel-Red, Crossroads, Factoria, Newport)</li><li>Drive time to SEA, honestly (typical + rush-hour)</li><li>Book a Bellevue ride</li></ul></dd>
+          <dt>Links out</dt><dd>homepage, /airport-transportation, /corporate-transportation, /hourly-chauffeur, neighboring city pages (Redmond, Kirkland)</dd>
+          <dt>CTA</dt><dd>Book · Call</dd>
+          <dt>Schema</dt><dd><span class="mono">Service</span> with <span class="mono">areaServed</span> = Bellevue, WA + <span class="mono">Offer</span> price 89</dd>
+          <dt>Content</dt><dd><strong>300–500 words of genuinely Bellevue-specific detail:</strong> the actual SEA drive time and the two route options, named pickup areas and what's tricky about each, the flat rate, one line on Bellevue corporate demand, a real note about I-405 / I-90. <strong>No paragraph should survive a find-and-replace to "Redmond".</strong> If you can't write that, don't publish the page.</dd>
+        </dl>
+      </div>
+
+      <h3>Blog post briefs (flagship four)</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>URL</th><th>Primary keyword / question</th><th>Supports</th><th>Key H2s · internal link · CTA</th></tr></thead>
+        <tbody>
+          <tr><td><span class="mono">/blog/how-early-book-seatac-pickup</span></td><td>how early to book a SeaTac airport pickup / how early to leave for Sea-Tac</td><td>Airport cluster</td><td>By departure time · by arrival type · holiday weekends · the dispatcher's rule of thumb → links /airport-transportation → CTA "See your SEA flat rate"</td></tr>
+          <tr><td><span class="mono">/blog/corporate-car-account-vs-rideshare</span></td><td>corporate car service vs Uber for business / is a car service worth it</td><td>Corporate cluster</td><td>Cost at volume · reliability &amp; no-shows · expense reporting · duty of care → links /corporate-transportation → CTA "Set up an account"</td></tr>
+          <tr><td><span class="mono">/blog/sea-to-cruise-terminal-guide</span></td><td>how to get from SeaTac to the cruise terminal / Pier 91 from airport</td><td>Cruise cluster</td><td>Which pier for your line · SEA→Pier 91 vs Pier 66 · timing to boarding · the return · luggage → links /cruise-wine-tours → CTA "Book a cruise transfer"</td></tr>
+          <tr><td><span class="mono">/blog/woodinville-wine-tour-itinerary</span></td><td>Woodinville wine tour itinerary / half day Woodinville wineries</td><td>Wine cluster</td><td>The four districts · a relaxed half-day route · reservation vs walk-in · how long from Seattle → links /cruise-wine-tours → CTA "Plan a wine tour"</td></tr>
+        </tbody>
+      </table></div>
+      <p>Each post: 900–1,400 words, one primary question answered in the first 100 words, an H2 structure that mirrors "People also ask", one internal link to its anchor page in the first screen and one in the conclusion, <span class="mono">Article</span> + (where it fits) <span class="mono">FAQPage</span> schema, and a CTA block matching the cluster.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="locations">
+      <h2><span class="n">05</span> Location pages — the discipline</h2>
+      <p>Location pages are the highest-ROI build and the easiest to get wrong. The line between a ranking asset and a Google penalty is whether the page says something true and specific that only applies to that city.</p>
+      <h4>Build in this order</h4>
+      <ol>
+        <li><strong>Kent</strong> — home base. The strongest page: this is where the business is, real local knowledge, the $79 rate.</li>
+        <li><strong>Bellevue, Redmond, Kirkland</strong> — Eastside, highest corporate + airport value, real drive-time and route detail to write.</li>
+        <li><strong>Tacoma, Renton, Everett</strong> — distinct South/North Sound markets with their own airport rate and route story.</li>
+        <li><strong>The rest (Auburn, Federal Way, Puyallup, Lynnwood, Edmonds, Gig Harbor)</strong> — only when someone can write 300+ words of real local content. Until then they live as rows in the homepage coverage grid, which is enough to rank for the long tail without a thin page.</li>
+      </ol>
+      <div class="note"><span class="lbl">The find-and-replace test</span>
+        <p>Copy the draft, replace every instance of the city name with a different city, and read it again. If it still makes sense, it's a doorway page — rewrite it with real specifics (routes, neighborhoods, landmarks, drive times, local demand) or don't ship it. Ten strong city pages beat forty weak ones.</p>
+      </div>
+      <h4>Every city page must have</h4>
+      <ul>
+        <li>The city's actual SEA flat rate (sedan + SUV), pulled from the pricing table</li>
+        <li>Real drive time to SEA — typical and rush-hour — and the route(s)</li>
+        <li>Named pickup areas / neighborhoods and any local quirk (one-way streets, hotel loading zones, HOA gates)</li>
+        <li>One line on what that city's demand skews toward (corporate, airport, events)</li>
+        <li><span class="mono">Service</span> schema with <span class="mono">areaServed</span> = that city</li>
+        <li>Links to the 3 main service pages and 1–2 neighboring city pages</li>
+      </ul>
+    </section>
+
+    <!-- 6 -->
+    <section id="links">
+      <h2><span class="n">06</span> Internal-link model</h2>
+      <p>Hub and spoke. Link equity flows from the homepage to the service pages (the hubs), and between service pages, city pages, and the blog posts that support them.</p>
+      <div class="flow"><b>Homepage</b> <span class="ar">→</span> all 6 service pages + 4 priority city pages</div>
+      <div class="flow"><b>Service page</b> <span class="ar">→</span> 2–3 sibling service pages · its supporting blog posts · 2–4 relevant city pages</div>
+      <div class="flow"><b>City page</b> <span class="ar">→</span> the 3 core service pages · 1–2 neighboring city pages · homepage</div>
+      <div class="flow"><b>Blog post</b> <span class="ar">→</span> its anchor service page (twice: intro + conclusion) · 1 related post · homepage</div>
+      <h4>Rules</h4>
+      <ul>
+        <li>Descriptive anchor text, never "click here" — "flat SEA airport rates", "set up a corporate account", "Bellevue car service".</li>
+        <li>Every new page gets at least one link from an existing indexed page within a week of publishing, or it won't get crawled promptly.</li>
+        <li>The footer links every service page and the priority city pages site-wide — that's the safety net.</li>
+        <li>No page more than 3 clicks from the homepage.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="content">
+      <h2><span class="n">07</span> Content calendar</h2>
+      <p>Twelve posts over twelve months — one a month is sustainable for a small operator and enough to build authority. Front-load the ones that support the highest-value clusters.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Mo.</th><th>Post</th><th>Cluster</th><th>Search intent</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>How early to book a SeaTac airport pickup, by time of day</td><td>Airport</td><td>planning a specific trip</td></tr>
+          <tr><td>2</td><td>Corporate car account vs. rideshare for business travel</td><td>Corporate</td><td>evaluating the switch</td></tr>
+          <tr><td>3</td><td>Getting from SEA to the Seattle cruise terminals (Pier 66 &amp; 91)</td><td>Cruise</td><td>trip logistics</td></tr>
+          <tr><td>4</td><td>A Woodinville wine tour itinerary for a relaxed half day</td><td>Wine</td><td>planning an outing</td></tr>
+          <tr><td>5</td><td>Bellevue to Sea-Tac: how long it really takes, by hour</td><td>Airport + Bellevue</td><td>route research → booking</td></tr>
+          <tr><td>6</td><td>Seattle wedding transportation timeline: a planner's checklist</td><td>Wedding</td><td>planning, 3+ months out</td></tr>
+          <tr><td>7</td><td>Meet-and-greet vs. curbside vs. the cell phone lot at SEA</td><td>Airport</td><td>choosing a pickup type</td></tr>
+          <tr><td>8</td><td>What a chauffeur actually does (and what to expect on your first ride)</td><td>General</td><td>first-time rider</td></tr>
+          <tr><td>9</td><td>Kent, Renton &amp; the South Sound: your SEA airport options</td><td>Airport + local</td><td>local trip research</td></tr>
+          <tr><td>10</td><td>Booking transportation for a Seattle conference or roadshow</td><td>Corporate + event</td><td>event planning</td></tr>
+          <tr><td>11</td><td>Snow, wind &amp; SEA: how weather changes an airport pickup plan</td><td>Airport</td><td>seasonal / reassurance</td></tr>
+          <tr><td>12</td><td>Prom &amp; homecoming transportation in the Seattle area, done right</td><td>Event</td><td>parents, seasonal</td></tr>
+        </tbody>
+      </table></div>
+      <p>Refresh, don't just add: revisit posts 1–4 at month 9–12 with fresh detail and updated internal links. An updated post that already ranks beats a new one starting from zero.</p>
+    </section>
+
+    <!-- 8 -->
+    <section id="local">
+      <h2><span class="n">08</span> Local SEO &amp; Google Business Profile</h2>
+      <p>For a car service, the GBP is the single highest-leverage asset — it owns the map pack and every "near me" search. Treat it like a second homepage.</p>
+      <h4>Profile setup</h4>
+      <ul>
+        <li><strong>Primary category:</strong> "Limousine service" or "Car service" — test which the map pack favors for your target terms. <strong>Secondary:</strong> Airport shuttle service, Chauffeur service, Transportation service.</li>
+        <li><strong>Service area business</strong> (no storefront) — set the service area to the cities in §3, not a radius. Hide the street address if it's residential.</li>
+        <li><strong>Services</strong> — add each of the 6 with a 1–2 sentence description echoing the page (airport transfers, corporate accounts, weddings, hourly, point-to-point, cruise &amp; wine tours).</li>
+        <li><strong>Attributes</strong> — 24/7, wheelchair-accessible if true, LGBTQ-friendly, veteran/family-owned if applicable.</li>
+        <li><strong>Photos</strong> — real vehicles (exterior + interior), a chauffeur, the SEA arrivals area. Add a few every month; freshness is a ranking factor.</li>
+        <li><strong>Q&amp;A</strong> — seed 6–8 of your own questions and answers (rates, wait time, flight tracking, service area), then monitor for new ones.</li>
+      </ul>
+      <h4>Reviews — the compounding asset</h4>
+      <ul>
+        <li>Target: <strong>2–4 new reviews a week</strong>. The trip-completion automation (CRM §5) sends the request; 4–5★ riders get a direct Google link.</li>
+        <li>Respond to <strong>every</strong> review within 48 hours — thank the positives by name and trip type ("glad the 5 a.m. SEA run went smoothly"), address the negatives calmly and offline.</li>
+        <li>Reviews that mention a city or service ("great Bellevue airport pickup") reinforce that keyword — the follow-up message can gently prompt for specifics.</li>
+      </ul>
+      <h4>NAP consistency</h4>
+      <p>One exact name, phone, and city string everywhere: <span class="mono">Northwest Town Car Service · (206) 596-5504 · Kent, WA</span>. Audit and fix every existing listing before building new ones — inconsistency is the most common local-ranking drag.</p>
+      <h4>Weekly GBP posts</h4>
+      <p>One post a week — a service highlight, a seasonal note ("holiday travel books up early"), a new blog post, a review screenshot. Keeps the profile active and gives the map listing more surface area.</p>
+    </section>
+
+    <!-- 9 -->
+    <section id="authority">
+      <h2><span class="n">09</span> Citations, links &amp; digital PR</h2>
+      <p>For a local service business, a handful of relevant, real links beats a large volume of generic ones. Everything here is earned or genuinely reciprocal.</p>
+      <h4>Core citations (do first)</h4>
+      <p>Consistent NAP on: Google Business Profile, Bing Places, Apple Business Connect, Yelp, Facebook, Nextdoor, the Better Business Bureau, and the WA UTC carrier directory. Then the transportation-relevant ones: Groundlink / affiliate networks, GroundWidgets, limo directories that vet operators.</p>
+      <h4>Local partnerships (the real link source)</h4>
+      <ul>
+        <li><strong>Hotels &amp; venues</strong> — Seattle and Bellevue hotels, Woodinville wineries, wedding venues, event spaces. Offer to be their recommended transportation; ask for a link on their "getting here" or "preferred vendors" page. The wedding and city pages naming venues make this an easy ask.</li>
+        <li><strong>Corporate travel &amp; EA networks</strong> — local executive-assistant associations, coworking spaces, the chambers of commerce (Seattle, Bellevue, Kent, Tacoma). Sponsor or present; get the member-directory link.</li>
+        <li><strong>Wedding vendors</strong> — planners, photographers, florists. Vendor cross-referral pages are common and links flow both ways.</li>
+        <li><strong>Cruise &amp; travel</strong> — travel agencies that book Alaska cruises out of Seattle.</li>
+      </ul>
+      <h4>Digital PR (opportunistic, not a program)</h4>
+      <ul>
+        <li>Respond to journalist requests (Connectively / Qwoted / HARO) on Seattle travel, SEA airport, holiday travel, and small-business topics — you're a quotable local operator.</li>
+        <li>Seasonal local-news angles: SEA holiday-travel crush, cruise-season logistics, prom safety. Pitch the local outlets and neighborhood blogs.</li>
+        <li>A genuinely useful free resource — an "SEA pickup timing" guide or a printable cruise-terminal cheat sheet — earns links on its own.</li>
+      </ul>
+      <div class="note"><span class="lbl">Avoid</span>
+        <p>Paid link packages, "guest post" farms, directory blasts, link exchanges with unrelated sites, and anything offering "100 backlinks". These carry real penalty risk and waste budget.</p>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="technical">
+      <h2><span class="n">10</span> Technical checklist</h2>
+      <ol class="check">
+        <li><strong>Google Search Console</strong> — verify the domain property, submit the sitemap, and set up email alerts. This is the source of truth for the scorecard.</li>
+        <li><strong>XML sitemap</strong> — auto-generated (Yoast / Rank Math on WordPress), all live pages, no noindex URLs, resubmitted when pages are added.</li>
+        <li><strong>robots.txt</strong> — allow crawling, disallow <span class="mono">/book</span> thank-you/confirmation URLs and any admin paths, link the sitemap.</li>
+        <li><strong>Canonical tags</strong> — self-referencing on every page; make sure WordPress isn't generating duplicate URLs (with/without trailing slash, <span class="mono">?replytocom</span>, tag/date archives).</li>
+        <li><strong>Titles &amp; meta descriptions</strong> — unique per page, from the briefs in §4. No page left on the WordPress default.</li>
+        <li><strong>Schema</strong> — LimousineService on the homepage, Service (+ FAQPage where there's an on-page FAQ) on every service and city page. Validate each with the Rich Results Test.</li>
+        <li><strong>Core Web Vitals</strong> — the new pages are near-static and should pass; check the live WordPress build for render-blocking scripts, unoptimized hero images, and layout shift. Serve images as WebP, lazy-load below the fold.</li>
+        <li><strong>Mobile</strong> — the pages are mobile-first; confirm tap targets, the sticky call button, and that the rate tables scroll rather than overflow.</li>
+        <li><strong>Redirects</strong> — 301 every old URL (the current homepage, any legacy service or contact pages) to its new equivalent. No chains, no 404s from external links.</li>
+        <li><strong>Internal search &amp; thin pages</strong> — noindex WordPress tag pages, author archives, and the internal search results; they dilute crawl budget and can look like doorway pages.</li>
+        <li><strong>HTTPS + HSTS</strong>, one canonical host (<span class="mono">https://northwesttowncarservice.com</span>, www redirecting), and a clean 404 page that links back to the services.</li>
+      </ol>
+    </section>
+
+    <!-- 11 -->
+    <section id="measure">
+      <h2><span class="n">11</span> Measurement</h2>
+      <p>The plan is judged on leads and fares, so the tracking has to connect a search to a booking.</p>
+      <div class="flow"><b>impression</b> <span class="ar">→</span> <b>click</b> <span class="ar">→</span> <b>lead</b> <span class="ar">→</span> <b>quote</b> <span class="ar">→</span> <b>booking</b> <span class="ar">→</span> <b>completed fare</b></div>
+      <h4>Instrumentation</h4>
+      <ul>
+        <li><strong>GA4 events</strong> (via GTM): <span class="mono">phone_click</span>, <span class="mono">quote_start</span>, <span class="mono">quote_complete</span>, <span class="mono">booking_reserved</span>, <span class="mono">quote_request</span> — the funnel already emits the data; wire these as the conversions.</li>
+        <li><strong>Search Console</strong> — impressions, clicks, average position, and CTR by <em>query</em> and by <em>page</em>, exported monthly.</li>
+        <li><strong>Call tracking</strong> (CallRail or similar) — a tracking number on the site so phone leads carry a source; SEO calls attributed to organic.</li>
+        <li><strong>CRM</strong> — <span class="mono">intake.js</span> already stamps <span class="mono">source</span>, <span class="mono">medium</span>, and landing page on every lead. Filter the CRM by <span class="mono">source = organic</span> to see SEO leads, their status, and their value.</li>
+      </ul>
+      <h4>Monthly scorecard</h4>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Metric</th><th>Source</th><th>What it tells you</th></tr></thead>
+        <tbody>
+          <tr><td>Impressions / clicks (total + by cluster)</td><td>Search Console</td><td>visibility and demand capture</td></tr>
+          <tr><td>Ranking movement — the ~25 target terms</td><td>a rank tracker</td><td>leading indicator only</td></tr>
+          <tr><td>Organic sessions &amp; landing pages</td><td>GA4</td><td>which pages pull traffic</td></tr>
+          <tr><td>Organic leads (form + call)</td><td>CRM + CallRail</td><td>the real output</td></tr>
+          <tr><td>Lead → booking rate, by landing page</td><td>CRM</td><td>which pages convert, which just get traffic</td></tr>
+          <tr><td>Bookings &amp; revenue from organic</td><td>CRM</td><td>the number that matters</td></tr>
+          <tr><td>New reviews · average rating</td><td>GBP</td><td>local-rank health</td></tr>
+          <tr><td>GBP: searches, calls, direction requests</td><td>GBP Insights</td><td>map-pack performance</td></tr>
+        </tbody>
+      </table></div>
+      <p>Any page with traffic but a lead rate near zero after 60 days gets diagnosed: wrong intent, weak CTA, slow load, or thin content. Fix or fold it.</p>
+    </section>
+
+    <!-- 12 -->
+    <section id="rollout">
+      <h2><span class="n">12</span> 90-day &amp; 12-month plan</h2>
+
+      <div class="phase">
+        <h3>Days 1–30 <span class="wk">foundation</span></h3>
+        <p class="goal">Get measurable, get the GBP right, fix what's leaking.</p>
+        <ul>
+          <li>Search Console + GA4 + GTM + call tracking live; funnel events wired as conversions.</li>
+          <li>Full GBP build (§8): categories, service area, services, photos, 8 seeded Q&amp;As, first weekly posts.</li>
+          <li>NAP audit — fix every existing listing.</li>
+          <li>Technical checklist §10 top to bottom, especially the 301s from the old site and canonical/duplicate cleanup.</li>
+          <li>Apply the §4 titles, metas, and schema to the 6 live service pages.</li>
+          <li>Review-request automation switched on.</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h3>Days 31–60 <span class="wk">the money pages</span></h3>
+        <p class="goal">Build the highest-intent local pages and the first supporting content.</p>
+        <ul>
+          <li>City pages: Kent, Bellevue, Redmond, Kirkland, Tacoma — full §5 treatment, real local content each.</li>
+          <li>Blog posts 1 and 2 (airport timing, corporate vs. rideshare) — the two highest-value clusters.</li>
+          <li>Internal links: wire the new pages into the hub-and-spoke model; footer updated.</li>
+          <li>First partnership outreach: 5 hotels, 5 wedding venues, the local chambers.</li>
+          <li>Submit new pages in Search Console; watch indexation.</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h3>Days 61–90 <span class="wk">expand &amp; read the data</span></h3>
+        <p class="goal">Round out coverage and let the first numbers guide the next quarter.</p>
+        <ul>
+          <li>City pages: Renton, Everett, plus any of the smaller cities with real content ready.</li>
+          <li>Blog posts 3 and 4 (cruise terminal, Woodinville itinerary).</li>
+          <li>First full monthly scorecard; identify the pages ranking on page 2–3 (the closest wins) and strengthen them.</li>
+          <li>Core-citation submissions complete; first partnership links landing.</li>
+          <li>Decide on the cruise/wine page split based on early query data.</li>
+        </ul>
+      </div>
+
+      <h3>Months 4–12</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Quarter</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Q2 (mo. 4–6)</strong></td><td>One blog post a month (calendar §7). Remaining city pages as content allows. Deepen partnerships — aim for 8–12 relevant referring domains. Weekly GBP posts and review velocity held at 2–4/week. First content refresh of the month-1 posts.</td></tr>
+          <tr><td><strong>Q3 (mo. 7–9)</strong></td><td>Split cruise/wine into two pages. Add neighborhood-level depth to the top-performing city pages. Pitch 2–3 seasonal digital-PR angles (holiday SEA travel, cruise season). Target the head terms ("Seattle car service", "Seattle chauffeur service") now that authority supports them — strengthen the homepage and internal links toward it.</td></tr>
+          <tr><td><strong>Q4 (mo. 10–12)</strong></td><td>Prom/event and holiday content. Full refresh pass on all service pages and the first four blog posts. Review the year on the scorecard: cost per organic lead vs. paid, which clusters converted, where the next year's investment goes. Expand into an adjacent city market (e.g. formal Snohomish County coverage) only if the data supports it.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note"><span class="lbl">Realistic timeline</span>
+        <p>Local SEO compounds slowly. Expect GBP and the map pack to move first (weeks), city pages to rank in 2–4 months, and the competitive head terms to take 6–12. The plan is sequenced so leads start arriving from the GBP and long-tail city terms while the bigger terms build.</p>
+      </div>
+
+      <p class="foot">SEO growth plan v1 · Northwest Town Car Service · 2026-09-02. Search volumes and difficulty are directional — validate the ~25 target terms in a keyword tool before finalizing the rank-tracking list. Nothing here requires paid tools beyond a rank tracker and (recommended) call tracking.</p>
+    </section>
+  </main>
+</div>
+<script>
+  (function(){var K='nwtc-seo-theme',r=document.documentElement,b=document.getElementById('themeToggle');
+   try{var s=localStorage.getItem(K);if(s)r.setAttribute('data-theme',s);}catch(e){}
+   function l(){var x=r.getAttribute('data-theme');b.textContent=x==='dark'?'Light':x==='light'?'Dark':'Theme';}l();
+   b.addEventListener('click',function(){var c=r.getAttribute('data-theme');
+    var p=matchMedia('(prefers-color-scheme:dark)').matches;var n=c?(c==='dark'?'light':'dark'):(p?'light':'dark');
+    r.setAttribute('data-theme',n);try{localStorage.setItem(K,n);}catch(e){}l();});})();
+</script>

@@ -1,0 +1,825 @@
+<title>NWTC Pricing Engine</title>
+<meta name="description" content="Reference implementation of the Northwest Town Car Service pricing engine: a live fare calculator, an editable master rate table with change log and rollback, and a 30-scenario test suite that checks the displayed price against a server-style recalculation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F0E5; --surface:#FBF8F1; --surface-2:#EFEADC;
+    --ink:#16261F; --muted:#5B6A5F;
+    --brass:#9A6E28; --brass-ink:#7C5A1E;
+    --sage:#3E7A52; --amber:#A9741F; --risk:#A8443A;
+    --line:rgba(22,38,31,0.14); --line-soft:rgba(22,38,31,0.08);
+    --shadow:0 1px 2px rgba(22,38,31,0.06),0 8px 24px -12px rgba(22,38,31,0.18);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+      --ink:#F1ECE0; --muted:#A9B3A6;
+      --brass:#C09A56; --brass-ink:#D4AC66;
+      --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+      --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+      --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1E19; --surface:#16281F; --surface-2:#1B3026;
+    --ink:#F1ECE0; --muted:#A9B3A6;
+    --brass:#C09A56; --brass-ink:#D4AC66;
+    --sage:#8FB08C; --amber:#D9B36A; --risk:#D98A7C;
+    --line:rgba(241,236,224,0.16); --line-soft:rgba(241,236,224,0.08);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -14px rgba(0,0,0,0.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.01em;margin:0;}
+  .mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;}
+  code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.86em;background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+  a{color:var(--brass-ink);}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px 100px;}
+
+  header.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:20;}
+  header.top .row{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  header.top .brandmark{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-ink);}
+  header.top h1{font-size:1.15rem;}
+  .tabs{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap;}
+  .tabs button{font:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;}
+  .tabs button[aria-selected="true"]{background:var(--brass);border-color:var(--brass);color:#1c1305;}
+  .theme-toggle{font:inherit;font-size:12px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;}
+
+  .intro{color:var(--muted);font-size:0.95rem;margin:22px 0 26px;max-width:70ch;}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow);margin-bottom:20px;}
+  .panel > h2{font-size:1.25rem;margin-bottom:4px;}
+  .panel > .sub{color:var(--muted);font-size:0.88rem;margin-bottom:18px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  @media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr;}}
+  .field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:5px;font-weight:600;}
+  input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px;}
+  input:focus,select:focus{outline:2px solid var(--brass);outline-offset:1px;}
+  input[type=number]{font-variant-numeric:tabular-nums;}
+
+  .calc-layout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:22px;}
+  @media (max-width:720px){.calc-layout{grid-template-columns:1fr;}}
+
+  .quote-box{border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:18px;align-self:start;}
+  .quote-box .method{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:5px;border:1px solid;display:inline-block;margin-bottom:14px;}
+  .method.flat,.method.hourly{color:var(--sage);border-color:color-mix(in srgb,var(--sage) 45%,transparent);}
+  .method.manual-quote{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 45%,transparent);}
+  .li{display:flex;justify-content:space-between;gap:12px;font-family:ui-monospace,monospace;font-size:12.5px;padding:5px 0;color:var(--muted);}
+  .li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .li.neg span:last-child{color:var(--sage);}
+  .li.total{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:15px;color:var(--ink);font-weight:600;}
+  .li.total span:last-child{color:var(--brass-ink);}
+  .quote-note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5;}
+  .verify-row{margin-top:14px;font-family:ui-monospace,monospace;font-size:12px;padding:8px 10px;border-radius:6px;}
+  .verify-row.ok{background:color-mix(in srgb,var(--sage) 14%,transparent);color:var(--sage);}
+  .verify-row.bad{background:color-mix(in srgb,var(--risk) 16%,transparent);color:var(--risk);}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface);}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line-soft);}
+  thead th{background:var(--surface-2);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
+  tbody tr:last-child td{border-bottom:none;}
+  td input{padding:6px 8px;font-size:13px;max-width:110px;}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;}
+
+  .btn{font:inherit;font-size:13px;font-weight:600;padding:9px 16px;border-radius:8px;border:1px solid var(--brass);background:var(--brass);color:#1c1305;cursor:pointer;}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line);}
+  .btn.small{padding:6px 11px;font-size:12px;}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+
+  .note{background:var(--surface-2);border-left:3px solid var(--brass);border-radius:6px;padding:12px 14px;font-size:12.5px;color:var(--muted);margin:14px 0;}
+  .note b{color:var(--ink);}
+
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-family:ui-monospace,monospace;font-size:12px;padding:12px;}
+
+  .summary{font-family:ui-monospace,monospace;font-size:14px;padding:10px 14px;border-radius:8px;margin:14px 0;font-weight:600;}
+  .summary.pass{background:color-mix(in srgb,var(--sage) 16%,transparent);color:var(--sage);}
+  .summary.fail{background:color-mix(in srgb,var(--risk) 18%,transparent);color:var(--risk);}
+  .t-pass{color:var(--sage);font-weight:700;}
+  .t-fail{color:var(--risk);font-weight:700;}
+  .changelog li{font-size:12.5px;margin-bottom:8px;font-family:ui-monospace,monospace;color:var(--muted);}
+  .changelog b{color:var(--ink);}
+  [hidden]{display:none!important;}
+</style>
+<header class="top">
+  <div class="row">
+    <div>
+      <div class="brandmark">Northwest Town Car Service</div>
+      <h1>Pricing engine</h1>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="t-calc" aria-selected="true" aria-controls="tab-calc">Calculator</button>
+      <button role="tab" id="t-admin" aria-selected="false" aria-controls="tab-admin">Rate table</button>
+      <button role="tab" id="t-tests" aria-selected="false" aria-controls="tab-tests">Tests</button>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="intro">One pricing table, one calculation. The calculator shows what a customer would see; the test tab proves the shown price equals a fresh server-style recalculation for 30+ scenarios; the rate table is editable without touching code, with a change log and rollback. Working copy is stored in this browser only — export the JSON to deploy it.</p>
+
+  <!-- ================= CALCULATOR ================= -->
+  <section id="tab-calc" role="tabpanel" aria-labelledby="t-calc">
+    <div class="panel">
+      <h2>Fare calculator</h2>
+      <p class="sub">Customer-facing quote. Account tier and any dispatch override would be injected server-side, not chosen here — they're exposed only to demonstrate the rules.</p>
+      <div class="calc-layout">
+        <form id="calcForm">
+          <div class="grid2">
+            <div class="field">
+              <label for="c-service">Service</label>
+              <select id="c-service">
+                <option value="airport">Airport (SEA)</option>
+                <option value="hourly">Hourly / as-directed</option>
+                <option value="point-to-point">Point-to-point</option>
+                <option value="cruise">Cruise terminal</option>
+                <option value="wedding">Wedding</option>
+                <option value="event">Event</option>
+                <option value="crew">Crew</option>
+              </select>
+            </div>
+            <div class="field" id="c-direction-wrap">
+              <label for="c-direction">Direction</label>
+              <select id="c-direction">
+                <option value="from-airport">SEA → destination</option>
+                <option value="to-airport">Pickup → SEA</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid2" style="margin-top:14px;">
+            <div class="field" id="c-zone-wrap">
+              <label for="c-zone" id="c-zone-label">Service area</label>
+              <input id="c-zone" list="zoneList" placeholder="e.g. Bellevue" value="Bellevue">
+              <datalist id="zoneList"></datalist>
+            </div>
+            <div class="field">
+              <label for="c-vehicle">Vehicle class</label>
+              <select id="c-vehicle"></select>
+            </div>
+          </div>
+
+          <div class="grid3" style="margin-top:14px;">
+            <div class="field" id="c-hours-wrap">
+              <label for="c-hours">Hours</label>
+              <input id="c-hours" type="number" min="1" step="1" value="3">
+            </div>
+            <div class="field">
+              <label for="c-stops">Extra stops</label>
+              <input id="c-stops" type="number" min="0" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="c-seats">Child seats</label>
+              <input id="c-seats" type="number" min="0" step="1" value="0">
+            </div>
+          </div>
+
+          <div class="grid3" style="margin-top:14px;">
+            <div class="field">
+              <label for="c-wait">Expected wait (min)</label>
+              <input id="c-wait" type="number" min="0" step="5" value="0">
+            </div>
+            <div class="field">
+              <label for="c-grat">Gratuity %</label>
+              <input id="c-grat" type="number" min="0" step="1" value="20">
+            </div>
+            <div class="field">
+              <label for="c-tier">Account tier <span class="mono" style="text-transform:none">(server)</span></label>
+              <select id="c-tier"></select>
+            </div>
+          </div>
+
+          <div class="grid3" style="margin-top:14px;">
+            <div class="field">
+              <label for="c-parking">Parking est. $</label>
+              <input id="c-parking" type="number" min="0" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="c-tolls">Tolls est. $</label>
+              <input id="c-tolls" type="number" min="0" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="c-override">Dispatch override $ <span class="mono" style="text-transform:none">(server)</span></label>
+              <input id="c-override" type="number" min="0" step="1" placeholder="none">
+            </div>
+          </div>
+        </form>
+
+        <div class="quote-box" id="quoteBox" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RATE TABLE / ADMIN ================= -->
+  <section id="tab-admin" role="tabpanel" aria-labelledby="t-admin" hidden>
+    <div class="panel">
+      <h2>Master rate table</h2>
+      <p class="sub">Version <span class="mono" id="tblVersion"></span>. Edit any value, then <b>Apply</b> to use it in the calculator and tests. <b>Save version</b> records a change-log entry you can roll back to.</p>
+
+      <h3 style="font-size:1rem;margin-top:8px;">Airport flat rates — SEA ↔ area (one way)</h3>
+      <div class="table-wrap">
+        <table><thead><tr><th>Service area</th><th>Sedan $</th><th>SUV $</th></tr></thead>
+        <tbody id="zoneRows"></tbody></table>
+      </div>
+
+      <h3 style="font-size:1rem;">Hourly rates</h3>
+      <div class="table-wrap">
+        <table><thead><tr><th>Vehicle class</th><th>$/hour</th><th>Min hours</th></tr></thead>
+        <tbody id="hourlyRows"></tbody></table>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <h3 style="font-size:1rem;">Add-ons &amp; waiting</h3>
+          <div class="table-wrap">
+            <table><tbody id="addonRows"></tbody></table>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:1rem;">Fees, tax &amp; gratuity</h3>
+          <div class="table-wrap">
+            <table><tbody id="feeRows"></tbody></table>
+          </div>
+          <p class="note" id="taxNote"></p>
+        </div>
+      </div>
+
+      <h3 style="font-size:1rem;">Corporate tiers</h3>
+      <div class="table-wrap">
+        <table><thead><tr><th>Tier</th><th>Discount %</th></tr></thead><tbody id="tierRows"></tbody></table>
+      </div>
+      <p class="note"><b>Rules enforced by the engine:</b> discounts come only from the account tier (never a client field); discounts never stack; a dispatch override beats a contract rate beats a tier discount; gratuity is calculated on the discounted service subtotal.</p>
+
+      <div class="btnrow">
+        <button class="btn" id="applyBtn" type="button">Apply changes</button>
+        <button class="btn ghost" id="saveVerBtn" type="button">Save version</button>
+        <button class="btn ghost" id="revertBtn" type="button">Discard edits</button>
+        <button class="btn ghost" id="resetBtn" type="button">Reset to shipped defaults</button>
+      </div>
+
+      <div class="grid2" style="margin-top:20px;">
+        <div>
+          <h3 style="font-size:1rem;">Export</h3>
+          <p class="sub">Copy this into <code>pricing-table.json</code> on the server.</p>
+          <textarea id="jsonOut" readonly></textarea>
+          <div class="btnrow"><button class="btn small ghost" id="copyJsonBtn" type="button">Copy JSON</button></div>
+        </div>
+        <div>
+          <h3 style="font-size:1rem;">Change log</h3>
+          <p class="sub">Who changed a rate, when, and back to what.</p>
+          <div class="field" style="margin-bottom:10px;">
+            <label for="editorName">Your name (recorded with the change)</label>
+            <input id="editorName" placeholder="e.g. Birhanu">
+          </div>
+          <ul class="changelog" id="changelog" style="list-style:none;padding:0;margin:0;"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTS ================= -->
+  <section id="tab-tests" role="tabpanel" aria-labelledby="t-tests" hidden>
+    <div class="panel">
+      <h2>Scenario tests</h2>
+      <p class="sub">Each row runs the engine, then re-runs it server-style with <code>verifyQuote()</code> to confirm the customer-facing total equals the recalculated total. Known-value scenarios also assert an exact dollar figure. Runs against the <b>current working table</b>.</p>
+      <div class="btnrow"><button class="btn" id="runTestsBtn" type="button">Run all scenarios</button></div>
+      <div id="testSummary"></div>
+      <div class="table-wrap">
+        <table><thead><tr><th>#</th><th>Scenario</th><th>Method</th><th>Expected</th><th>Shown</th><th>Recalc match</th><th></th></tr></thead>
+        <tbody id="testRows"></tbody></table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ======================================================================
+   INLINED COPY of pricing-table.json (v2026-09-02.1).
+   The JSON file is the source of truth for the server; regenerate this
+   block (or use the Export tab) whenever the table changes.
+   ====================================================================== */
+var NWTC_PRICING_TABLE = {
+  "version":"2026-09-02.1","currency":"USD","updated":"2026-09-02","updatedBy":"initial spec",
+  "vehicleClasses":{
+    "executive-sedan":{"label":"Executive Sedan","capacity":3,"bags":3,"airportTier":"sedan"},
+    "luxury-sedan":{"label":"Luxury Sedan","capacity":3,"bags":3,"airportTier":"sedan"},
+    "premium-suv":{"label":"Premium SUV","capacity":6,"bags":6,"airportTier":"suv"},
+    "luxury-suv":{"label":"Luxury SUV","capacity":6,"bags":6,"airportTier":"suv"},
+    "executive-van":{"label":"Executive Van","capacity":11,"bags":12,"airportTier":null},
+    "sprinter":{"label":"Sprinter","capacity":14,"bags":16,"airportTier":null}
+  },
+  "airportFlatRates":{
+    "airport":"SEA","tiers":["sedan","suv"],
+    "note":"One-way flat rate between SEA and the named area, either direction. Vans/Sprinters to the airport are manual quote.",
+    "zones":{
+      "Seattle":{"sedan":89,"suv":119},"Bellevue":{"sedan":89,"suv":119},"Kirkland":{"sedan":105,"suv":135},
+      "Redmond":{"sedan":109,"suv":139},"Renton":{"sedan":79,"suv":109},"Kent":{"sedan":79,"suv":109},
+      "Federal Way":{"sedan":85,"suv":115},"Auburn":{"sedan":89,"suv":119},"Tacoma":{"sedan":99,"suv":129},
+      "Puyallup":{"sedan":109,"suv":139},"Lynnwood":{"sedan":109,"suv":139},"Edmonds":{"sedan":119,"suv":149},
+      "Everett":{"sedan":139,"suv":169},"Gig Harbor":{"sedan":139,"suv":169}
+    }
+  },
+  "hourly":{"note":"Billed hours = max(requested, class minimum).","rates":{
+    "executive-sedan":{"hourly":95,"minHours":3},"luxury-sedan":{"hourly":105,"minHours":3},
+    "premium-suv":{"hourly":125,"minHours":3},"luxury-suv":{"hourly":140,"minHours":3},
+    "executive-van":{"hourly":175,"minHours":3},"sprinter":{"hourly":225,"minHours":4}
+  }},
+  "addOns":{
+    "additionalStop":{"label":"Additional stop","amount":20,"suggestedRange":[15,25],"per":"stop"},
+    "childSeat":{"label":"Child seat","amount":15,"per":"seat"},
+    "meetAndGreet":{"label":"Airport meet & greet","amount":0,"note":"Included where offered"},
+    "flightMonitoring":{"label":"Flight monitoring","amount":0,"note":"Included on airport trips"}
+  },
+  "waiting":{"extraWaitPerMinute":1.5,"airportFreeMinutes":60,"nonAirportFreeMinutes":15},
+  "passThrough":{"note":"Parking and tolls billed at actual cost after the trip.","items":["Parking","Tolls"]},
+  "fees":{"fuelSurchargePct":0,"bookingFee":0,"note":"Both default to 0. Change only with owner approval; logged."},
+  "tax":{"label":"WA sales tax","pct":0,"note":"Defaults to 0. WA tax treatment of passenger ground transport varies by service and jurisdiction — confirm with the accountant before enabling. Applies to discounted subtotal + fees; not gratuity or pass-through."},
+  "gratuity":{"defaultPct":20,"includedInQuote":true,"editableByCustomer":true,"note":"Own line, on the discounted service subtotal (pre-tax, pre-pass-through). Corporate accounts may fix a policy that overrides the customer's choice."},
+  "corporateTiers":{
+    "standard":{"label":"Standard","discountPct":0},"corporate":{"label":"Corporate","discountPct":5},
+    "preferred":{"label":"Preferred","discountPct":10},"volume":{"label":"Volume","discountPct":12},
+    "contract":{"label":"Contract","discountPct":null,"note":"Rate set per signed agreement, passed in as contractRate; table discount does not apply."}
+  },
+  "manualQuoteServices":["wedding","event","crew","special-event"],
+  "rules":{"flatRateWhenAvailable":true,"noStackedDiscounts":true,"discountSource":"account-only",
+    "overridePrecedence":["adminOverrideAmount","account.contractRate","account.corporateTier"],
+    "roundEachLineToDollar":true,"quoteExpiresHours":72}
+};
+</script>
+
+<script>
+/* ======================================================================
+   INLINED COPY of pricing-engine.js v1 — keep in sync with that file.
+   ====================================================================== */
+(function (global) {
+  'use strict';
+  function round(n){return Math.round(Number(n)||0);}
+  function money(n){return Math.max(0,round(n));}
+  function cap(s){return String(s).charAt(0).toUpperCase()+String(s).slice(1);}
+  function tierFor(table,vc){var v=table.vehicleClasses&&table.vehicleClasses[vc];return v?v.airportTier||null:null;}
+  function flatRate(table,zone,tier){var z=table.airportFlatRates&&table.airportFlatRates.zones[zone];return z&&z[tier]!=null?z[tier]:null;}
+  function describeRoute(req){
+    if(req.service==='hourly')return 'Hourly / as-directed';
+    if(req.service==='airport')return req.direction==='to-airport'?((req.zone||'?')+' → SEA'):('SEA → '+(req.zone||'?'));
+    if(req.pickup||req.dropoff)return (req.pickup||'?')+' → '+(req.dropoff||'?');
+    return cap(req.service||'trip');
+  }
+  function method(req,table){
+    var svc=req.service, manual=table.manualQuoteServices||[];
+    if(manual.indexOf(svc)!==-1)return 'manual-quote';
+    if(svc==='hourly')return table.hourly.rates[req.vehicleClass]?'hourly':'manual-quote';
+    var wantsFlat=svc==='airport'||((svc==='point-to-point'||svc==='cruise')&&req.isAirportLeg);
+    if(wantsFlat){var t=tierFor(table,req.vehicleClass);if(t&&flatRate(table,req.zone,t)!=null)return 'flat';return 'manual-quote';}
+    return 'manual-quote';
+  }
+  function manualReason(req,table){
+    var svc=req.service;
+    if((table.manualQuoteServices||[]).indexOf(svc)!==-1)return cap(svc)+' bookings are priced individually. Dispatch will send a full quote.';
+    if(svc==='airport'||req.isAirportLeg){
+      if(!tierFor(table,req.vehicleClass))return 'Vans and Sprinters to or from the airport are priced by manual quote.';
+      return 'No flat rate is set for "'+(req.zone||'that area')+'". Dispatch will quote it.';
+    }
+    return 'This route does not have a flat rate. Choose hourly service or request a quote.';
+  }
+  function quote(req,table){
+    req=req||{};
+    var m=method(req,table);
+    var out={version:table.version,currency:table.currency||'USD',method:m,
+      vehicleClass:req.vehicleClass||null,
+      vehicleLabel:(table.vehicleClasses[req.vehicleClass]||{}).label||req.vehicleClass||null,
+      route:describeRoute(req),lineItems:[],
+      baseRate:0,addOns:0,waiting:0,discount:0,fees:0,tax:0,gratuity:0,passThrough:0,
+      finalAmount:null,quoteExpiresHours:(table.rules&&table.rules.quoteExpiresHours)||72,
+      needsManualQuote:m==='manual-quote',notes:[]};
+    if(m==='manual-quote'){out.notes.push(manualReason(req,table));return out;}
+    var isAirport=req.service==='airport'||!!req.isAirportLeg;
+    var acct=req.account||null;
+    var hasOverride=req.adminOverrideAmount!=null;
+    var hasContract=!!(acct&&acct.contractRate!=null);
+    var base=0,baseLabel='';
+    if(hasOverride){base=money(req.adminOverrideAmount);baseLabel='Agreed rate (dispatch)';
+      out.notes.push('Administrator special quote applied — corporate discounts do not stack on top.');}
+    else if(hasContract){base=money(acct.contractRate);baseLabel='Contract rate';}
+    else if(m==='flat'){var tier=tierFor(table,req.vehicleClass);base=flatRate(table,req.zone,tier);
+      baseLabel=out.route+' — flat '+tier+' rate';}
+    else{var hr=table.hourly.rates[req.vehicleClass];var asked=Number(req.hours)||hr.minHours;
+      var billed=Math.max(asked,hr.minHours);base=billed*hr.hourly;
+      baseLabel=out.vehicleLabel+' — '+billed+' hrs @ $'+hr.hourly+'/hr'+(billed>asked?(' ('+hr.minHours+'-hr minimum)'):'');}
+    base=money(base);out.baseRate=base;
+    out.lineItems.push({code:'base',label:baseLabel,amount:base});
+    var addOns=0;
+    var stops=Math.max(0,parseInt(req.stops||0,10));
+    if(stops>0){var each=table.addOns.additionalStop.amount;var c=money(stops*each);addOns+=c;
+      out.lineItems.push({code:'stops',label:stops+' additional stop'+(stops>1?'s':'')+' @ $'+each,amount:c});}
+    var seats=Math.max(0,parseInt(req.childSeats||0,10));
+    if(seats>0){var se=table.addOns.childSeat.amount;var cs=money(seats*se);addOns+=cs;
+      out.lineItems.push({code:'child-seat',label:seats+' child seat'+(seats>1?'s':'')+' @ $'+se,amount:cs});}
+    out.addOns=addOns;
+    var wait=0;var wm=Math.max(0,parseInt(req.waitMinutes||0,10));
+    if(wm>0){var free=isAirport?table.waiting.airportFreeMinutes:table.waiting.nonAirportFreeMinutes;
+      var billable=Math.max(0,wm-free);
+      if(billable>0){wait=money(billable*table.waiting.extraWaitPerMinute);
+        out.lineItems.push({code:'waiting',label:billable+' min extra wait @ $'+Number(table.waiting.extraWaitPerMinute).toFixed(2)+'/min ('+free+' min included)',amount:wait});}}
+    out.waiting=wait;
+    var serviceSubtotal=base+addOns+wait;
+    var discount=0;
+    if(!hasOverride&&!hasContract&&acct&&acct.corporateTier){
+      var tc=table.corporateTiers[acct.corporateTier];
+      if(tc&&tc.discountPct){discount=-money(serviceSubtotal*tc.discountPct/100);
+        out.lineItems.push({code:'discount',label:tc.label+' account — '+tc.discountPct+'% off',amount:discount});}}
+    out.discount=discount;
+    var discounted=serviceSubtotal+discount;
+    var fees=0;var fuelPct=(table.fees&&table.fees.fuelSurchargePct)||0;
+    if(fuelPct){var fs=money(discounted*fuelPct/100);fees+=fs;out.lineItems.push({code:'fuel',label:'Fuel surcharge '+fuelPct+'%',amount:fs});}
+    var bf=(table.fees&&table.fees.bookingFee)||0;
+    if(bf){bf=money(bf);fees+=bf;out.lineItems.push({code:'booking-fee',label:'Booking fee',amount:bf});}
+    out.fees=fees;
+    var tax=0;var taxPct=(table.tax&&table.tax.pct)||0;
+    if(taxPct){tax=money((discounted+fees)*taxPct/100);
+      out.lineItems.push({code:'tax',label:(table.tax.label||'Tax')+' '+taxPct+'%',amount:tax});}
+    out.tax=tax;
+    var gPct=table.gratuity.defaultPct;
+    if(acct&&acct.fixedGratuityPct!=null)gPct=acct.fixedGratuityPct;
+    else if(table.gratuity.editableByCustomer&&req.gratuityPct!=null)gPct=Number(req.gratuityPct);
+    gPct=Math.max(0,Number(gPct)||0);
+    var gratuity=money(discounted*gPct/100);
+    if(gratuity>0||table.gratuity.includedInQuote)out.lineItems.push({code:'gratuity',label:'Gratuity '+gPct+'%',amount:gratuity});
+    out.gratuity=gratuity;
+    var pt=0;
+    if(req.passThroughEstimate){Object.keys(req.passThroughEstimate).forEach(function(k){
+      var v=money(req.passThroughEstimate[k]);
+      if(v>0){pt+=v;out.lineItems.push({code:'passthrough',label:cap(k)+' (estimate — billed at cost)',amount:v});}});}
+    out.passThrough=pt;
+    out.finalAmount=base+addOns+wait+discount+fees+tax+gratuity+pt;
+    return out;
+  }
+  function verifyQuote(clientFinalAmount,req,table,tolerance){
+    tolerance=tolerance==null?0.01:tolerance;
+    var server=quote(req,table);var client=Number(clientFinalAmount);
+    var valid=server.finalAmount!=null&&Math.abs(server.finalAmount-client)<=tolerance;
+    return{valid:valid,method:server.method,serverAmount:server.finalAmount,clientAmount:client,
+      delta:server.finalAmount==null?null:+(server.finalAmount-client).toFixed(2),breakdown:server};
+  }
+  function airportMatrix(table){var z=table.airportFlatRates.zones;
+    return Object.keys(z).map(function(n){return{zone:n,sedan:z[n].sedan,suv:z[n].suv};});}
+  global.NWTCPricing={quote:quote,verifyQuote:verifyQuote,airportMatrix:airportMatrix,_round:round};
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script>
+
+<script>
+/* ================= UI ================= */
+(function () {
+  'use strict';
+  var TABLE_KEY = 'nwtc_pricing_table', VER_KEY = 'nwtc_pricing_versions', THEME_KEY = 'nwtc_pricing_theme';
+  var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
+  var $ = function (id) { return document.getElementById(id); };
+  var DEFAULT = clone(NWTC_PRICING_TABLE);
+
+  var state = { table: null, edits: null };
+  try { state.table = JSON.parse(localStorage.getItem(TABLE_KEY)) || clone(DEFAULT); }
+  catch (e) { state.table = clone(DEFAULT); }
+
+  /* ---------- theme ---------- */
+  (function () {
+    var root = document.documentElement, btn = $('themeToggle');
+    try { var s = localStorage.getItem(THEME_KEY); if (s) root.setAttribute('data-theme', s); } catch (e) {}
+    function lbl() { var x = root.getAttribute('data-theme'); btn.textContent = x === 'dark' ? 'Light' : x === 'light' ? 'Dark' : 'Theme'; }
+    lbl();
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme');
+      var prefDark = matchMedia('(prefers-color-scheme:dark)').matches;
+      var next = cur ? (cur === 'dark' ? 'light' : 'dark') : (prefDark ? 'light' : 'dark');
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+      lbl();
+    });
+  })();
+
+  /* ---------- tabs ---------- */
+  var tabs = [['t-calc', 'tab-calc'], ['t-admin', 'tab-admin'], ['t-tests', 'tab-tests']];
+  tabs.forEach(function (pair) {
+    $(pair[0]).addEventListener('click', function () {
+      tabs.forEach(function (p) {
+        var sel = p[0] === pair[0];
+        $(p[0]).setAttribute('aria-selected', sel ? 'true' : 'false');
+        $(p[1]).hidden = !sel;
+      });
+      if (pair[0] === 't-admin') renderAdmin();
+    });
+  });
+
+  /* ---------- calculator ---------- */
+  var vehSelects = [$('c-vehicle'), $('c-tier')];
+  function fillSelectors() {
+    var v = $('c-vehicle'); v.innerHTML = '';
+    Object.keys(state.table.vehicleClasses).forEach(function (k) {
+      var o = document.createElement('option'); o.value = k; o.textContent = state.table.vehicleClasses[k].label; v.appendChild(o);
+    });
+    var t = $('c-tier'); t.innerHTML = '<option value="">— none —</option>';
+    Object.keys(state.table.corporateTiers).forEach(function (k) {
+      var o = document.createElement('option'); o.value = k;
+      var c = state.table.corporateTiers[k];
+      o.textContent = c.label + (c.discountPct ? ' (' + c.discountPct + '%)' : k === 'contract' ? ' (contract)' : '');
+      t.appendChild(o);
+    });
+    var dl = $('zoneList'); dl.innerHTML = '';
+    Object.keys(state.table.airportFlatRates.zones).forEach(function (z) {
+      var o = document.createElement('option'); o.value = z; dl.appendChild(o);
+    });
+  }
+
+  function readCalc() {
+    var svc = $('c-service').value;
+    var tier = $('c-tier').value;
+    var override = $('c-override').value;
+    var contract = null;
+    var acct = null;
+    if (tier === 'contract') { acct = { corporateTier: 'contract', contractRate: 999 /* demo placeholder */ }; }
+    else if (tier) acct = { corporateTier: tier };
+    var req = {
+      service: svc,
+      direction: $('c-direction').value,
+      zone: $('c-zone').value.trim(),
+      isAirportLeg: svc === 'cruise' ? !!$('c-zone').value.trim() : false,
+      vehicleClass: $('c-vehicle').value,
+      hours: +$('c-hours').value || 0,
+      stops: +$('c-stops').value || 0,
+      childSeats: +$('c-seats').value || 0,
+      waitMinutes: +$('c-wait').value || 0,
+      gratuityPct: $('c-grat').value === '' ? null : +$('c-grat').value,
+      passThroughEstimate: { parking: +$('c-parking').value || 0, tolls: +$('c-tolls').value || 0 },
+      account: acct
+    };
+    if (override !== '' && +override >= 0) req.adminOverrideAmount = +override;
+    return req;
+  }
+
+  function fmt(n) { return (n < 0 ? '-$' : '$') + Math.abs(n).toLocaleString('en-US'); }
+
+  function renderQuote() {
+    var req = readCalc();
+    var q = NWTCPricing.quote(req, state.table);
+    var box = $('quoteBox');
+    var html = '<span class="method ' + q.method + '">' + q.method.replace('-', ' ') + '</span>';
+    html += '<div style="font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);margin-bottom:10px;">' + q.route + (q.vehicleLabel ? ' · ' + q.vehicleLabel : '') + '</div>';
+    if (q.needsManualQuote) {
+      html += '<p class="quote-note">' + q.notes.join(' ') + '</p>';
+      box.innerHTML = html;
+      return;
+    }
+    q.lineItems.forEach(function (li) {
+      html += '<div class="li' + (li.amount < 0 ? ' neg' : '') + '"><span>' + li.label + '</span><span>' + fmt(li.amount) + '</span></div>';
+    });
+    html += '<div class="li total"><span>Total' + (q.passThrough ? ' (incl. estimates)' : '') + '</span><span>' + fmt(q.finalAmount) + '</span></div>';
+    html += '<p class="quote-note">Quote holds ' + q.quoteExpiresHours + " hours. Parking and tolls are billed at actual cost. Final fare is confirmed by dispatch.</p>";
+    if (q.notes.length) html += '<p class="quote-note">' + q.notes.join(' ') + '</p>';
+
+    // server-side verification demo
+    var v = NWTCPricing.verifyQuote(q.finalAmount, req, state.table);
+    html += '<div class="verify-row ' + (v.valid ? 'ok' : 'bad') + '">'
+      + (v.valid ? '✓ server recalculation matches: ' + fmt(v.serverAmount) : '✗ mismatch — client ' + fmt(v.clientAmount) + ' vs server ' + fmt(v.serverAmount))
+      + '</div>';
+    box.innerHTML = html;
+  }
+
+  function syncCalcVisibility() {
+    var svc = $('c-service').value;
+    var airportish = svc === 'airport';
+    var zoneish = svc === 'airport' || svc === 'cruise';
+    $('c-direction-wrap').hidden = !airportish;
+    $('c-zone-wrap').hidden = !zoneish;
+    $('c-zone-label').textContent = svc === 'cruise' ? 'Seattle-area endpoint' : 'Service area';
+    $('c-hours-wrap').hidden = svc !== 'hourly';
+  }
+
+  $('calcForm').addEventListener('input', function () { syncCalcVisibility(); renderQuote(); });
+  $('calcForm').addEventListener('change', function () { syncCalcVisibility(); renderQuote(); });
+
+  /* ---------- admin ---------- */
+  function renderAdmin() {
+    state.edits = state.edits || clone(state.table);
+    var t = state.edits;
+    $('tblVersion').textContent = t.version;
+
+    var zr = $('zoneRows'); zr.innerHTML = '';
+    Object.keys(t.airportFlatRates.zones).forEach(function (z) {
+      var row = t.airportFlatRates.zones[z];
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + z + '</td>'
+        + '<td><input type="number" min="0" data-path="airportFlatRates.zones.' + z + '.sedan" value="' + row.sedan + '"></td>'
+        + '<td><input type="number" min="0" data-path="airportFlatRates.zones.' + z + '.suv" value="' + row.suv + '"></td>';
+      zr.appendChild(tr);
+    });
+
+    var hr = $('hourlyRows'); hr.innerHTML = '';
+    Object.keys(t.hourly.rates).forEach(function (k) {
+      var r = t.hourly.rates[k];
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + t.vehicleClasses[k].label + '</td>'
+        + '<td><input type="number" min="0" data-path="hourly.rates.' + k + '.hourly" value="' + r.hourly + '"></td>'
+        + '<td><input type="number" min="1" data-path="hourly.rates.' + k + '.minHours" value="' + r.minHours + '"></td>';
+      hr.appendChild(tr);
+    });
+
+    var ar = $('addonRows'); ar.innerHTML = '';
+    ar.innerHTML =
+      row2('Additional stop $', 'addOns.additionalStop.amount', t.addOns.additionalStop.amount) +
+      row2('Child seat $', 'addOns.childSeat.amount', t.addOns.childSeat.amount) +
+      row2('Extra wait $/min', 'waiting.extraWaitPerMinute', t.waiting.extraWaitPerMinute, 0.25) +
+      row2('Airport free wait (min)', 'waiting.airportFreeMinutes', t.waiting.airportFreeMinutes) +
+      row2('Non-airport free wait (min)', 'waiting.nonAirportFreeMinutes', t.waiting.nonAirportFreeMinutes);
+
+    var fr = $('feeRows'); fr.innerHTML =
+      row2('Fuel surcharge %', 'fees.fuelSurchargePct', t.fees.fuelSurchargePct, 0.5) +
+      row2('Booking fee $', 'fees.bookingFee', t.fees.bookingFee) +
+      row2('Sales tax %', 'tax.pct', t.tax.pct, 0.1) +
+      row2('Default gratuity %', 'gratuity.defaultPct', t.gratuity.defaultPct);
+    $('taxNote').innerHTML = '<b>Tax:</b> ' + t.tax.note;
+
+    var trr = $('tierRows'); trr.innerHTML = '';
+    Object.keys(t.corporateTiers).forEach(function (k) {
+      var c = t.corporateTiers[k];
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + c.label + '</td>'
+        + '<td>' + (c.discountPct == null
+          ? '<span class="mono" style="color:var(--muted)">per contract</span>'
+          : '<input type="number" min="0" max="50" data-path="corporateTiers.' + k + '.discountPct" value="' + c.discountPct + '">') + '</td>';
+      trr.appendChild(tr);
+    });
+
+    updateJsonOut();
+    renderChangelog();
+  }
+  function row2(label, path, val, step) {
+    return '<tr><td>' + label + '</td><td class="num"><input type="number" min="0" step="' + (step || 1) + '" data-path="' + path + '" value="' + val + '"></td></tr>';
+  }
+  function setPath(obj, path, value) {
+    var parts = path.split('.'), o = obj;
+    for (var i = 0; i < parts.length - 1; i++) o = o[parts[i]];
+    o[parts[parts.length - 1]] = value;
+  }
+  function collectEdits() {
+    document.querySelectorAll('#tab-admin input[data-path]').forEach(function (inp) {
+      var v = inp.value === '' ? 0 : parseFloat(inp.value);
+      if (isNaN(v)) v = 0;
+      setPath(state.edits, inp.getAttribute('data-path'), v);
+    });
+  }
+  function updateJsonOut() { $('jsonOut').value = JSON.stringify(state.edits, null, 2); }
+
+  $('applyBtn').addEventListener('click', function () {
+    collectEdits();
+    state.table = clone(state.edits);
+    try { localStorage.setItem(TABLE_KEY, JSON.stringify(state.table)); } catch (e) {}
+    fillSelectors(); renderQuote(); updateJsonOut();
+    flash($('applyBtn'), 'Applied ✓');
+  });
+  $('saveVerBtn').addEventListener('click', function () {
+    collectEdits();
+    var editor = ($('editorName').value || '').trim() || 'unnamed';
+    var prev = clone(state.table);
+    var stamp = new Date().toISOString();
+    var newVer = stamp.slice(0, 10) + '.' + (Math.floor(Math.random() * 900) + 100);
+    state.edits.version = newVer;
+    state.edits.updated = stamp.slice(0, 10);
+    state.edits.updatedBy = editor;
+    var diffs = diff(prev, state.edits);
+    var versions = loadVersions();
+    versions.unshift({ version: newVer, savedAt: stamp, editor: editor, changes: diffs, snapshot: clone(prev) });
+    try { localStorage.setItem(VER_KEY, JSON.stringify(versions.slice(0, 30))); } catch (e) {}
+    state.table = clone(state.edits);
+    try { localStorage.setItem(TABLE_KEY, JSON.stringify(state.table)); } catch (e) {}
+    fillSelectors(); renderQuote(); renderAdmin();
+    flash($('saveVerBtn'), 'Saved ' + newVer);
+  });
+  $('revertBtn').addEventListener('click', function () { state.edits = clone(state.table); renderAdmin(); });
+  $('resetBtn').addEventListener('click', function () {
+    if (!confirm('Reset the working table to the shipped defaults? Saved versions are kept.')) return;
+    state.table = clone(DEFAULT); state.edits = clone(DEFAULT);
+    try { localStorage.setItem(TABLE_KEY, JSON.stringify(state.table)); } catch (e) {}
+    fillSelectors(); renderQuote(); renderAdmin();
+  });
+  $('copyJsonBtn').addEventListener('click', function () {
+    navigator.clipboard.writeText($('jsonOut').value).then(function () { flash($('copyJsonBtn'), 'Copied ✓'); },
+      function () { $('jsonOut').select(); });
+  });
+
+  function loadVersions() { try { return JSON.parse(localStorage.getItem(VER_KEY)) || []; } catch (e) { return []; } }
+  function renderChangelog() {
+    var v = loadVersions(), ul = $('changelog');
+    if (!v.length) { ul.innerHTML = '<li>No saved versions yet.</li>'; return; }
+    ul.innerHTML = v.map(function (e, i) {
+      return '<li><b>' + e.version + '</b> · ' + e.savedAt.slice(0, 16).replace('T', ' ') + ' · ' + e.editor + '<br>'
+        + (e.changes.length ? e.changes.join('; ') : 'no field changes')
+        + ' &nbsp;<button class="btn small ghost" data-rollback="' + i + '">Roll back</button></li>';
+    }).join('');
+    ul.querySelectorAll('[data-rollback]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var e = loadVersions()[+b.getAttribute('data-rollback')];
+        if (!e || !confirm('Roll the working table back to the state before version ' + e.version + '?')) return;
+        state.table = clone(e.snapshot); state.edits = clone(e.snapshot);
+        try { localStorage.setItem(TABLE_KEY, JSON.stringify(state.table)); } catch (x) {}
+        fillSelectors(); renderQuote(); renderAdmin();
+      });
+    });
+  }
+  function diff(a, b, prefix) {
+    prefix = prefix || ''; var out = [];
+    Object.keys(b).forEach(function (k) {
+      var pa = prefix + k;
+      if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k])) {
+        if (a[k]) out = out.concat(diff(a[k], b[k], pa + '.'));
+      } else if (a[k] !== b[k] && k !== 'version' && k !== 'updated' && k !== 'updatedBy') {
+        out.push(pa + ': ' + a[k] + ' → ' + b[k]);
+      }
+    });
+    return out;
+  }
+  function flash(btn, msg) {
+    var o = btn.textContent; btn.textContent = msg; btn.disabled = true;
+    setTimeout(function () { btn.textContent = o; btn.disabled = false; }, 1400);
+  }
+
+  /* ---------- tests ---------- */
+  var G = 20; // default gratuity for expectations
+  var SCENARIOS = [
+    { n: 'SEA → Seattle · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Seattle', vehicleClass: 'executive-sedan' }, method: 'flat', total: 107 },
+    { n: 'SEA → Bellevue · Luxury Sedan (sedan tier)', r: { service: 'airport', direction: 'from-airport', zone: 'Bellevue', vehicleClass: 'luxury-sedan' }, method: 'flat', total: 107 },
+    { n: 'SEA → Kirkland · Premium SUV', r: { service: 'airport', direction: 'from-airport', zone: 'Kirkland', vehicleClass: 'premium-suv' }, method: 'flat', total: 162 },
+    { n: 'SEA → Redmond · Luxury SUV', r: { service: 'airport', direction: 'from-airport', zone: 'Redmond', vehicleClass: 'luxury-suv' }, method: 'flat', total: 167 },
+    { n: 'SEA → Renton · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Renton', vehicleClass: 'executive-sedan' }, method: 'flat', total: 95 },
+    { n: 'SEA → Kent · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Kent', vehicleClass: 'executive-sedan' }, method: 'flat', total: 95 },
+    { n: 'SEA → Federal Way · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Federal Way', vehicleClass: 'executive-sedan' }, method: 'flat', total: 102 },
+    { n: 'SEA → Auburn · Premium SUV', r: { service: 'airport', direction: 'from-airport', zone: 'Auburn', vehicleClass: 'premium-suv' }, method: 'flat', total: 143 },
+    { n: 'SEA → Tacoma · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Tacoma', vehicleClass: 'executive-sedan' }, method: 'flat', total: 119 },
+    { n: 'SEA → Puyallup · Luxury SUV', r: { service: 'airport', direction: 'from-airport', zone: 'Puyallup', vehicleClass: 'luxury-suv' }, method: 'flat', total: 167 },
+    { n: 'SEA → Lynnwood · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Lynnwood', vehicleClass: 'executive-sedan' }, method: 'flat', total: 131 },
+    { n: 'SEA → Edmonds · Premium SUV', r: { service: 'airport', direction: 'from-airport', zone: 'Edmonds', vehicleClass: 'premium-suv' }, method: 'flat', total: 179 },
+    { n: 'SEA → Everett · Executive Sedan', r: { service: 'airport', direction: 'from-airport', zone: 'Everett', vehicleClass: 'executive-sedan' }, method: 'flat', total: 167 },
+    { n: 'SEA → Gig Harbor · Luxury SUV', r: { service: 'airport', direction: 'from-airport', zone: 'Gig Harbor', vehicleClass: 'luxury-suv' }, method: 'flat', total: 203 },
+    { n: 'To-airport direction prices the same', r: { service: 'airport', direction: 'to-airport', zone: 'Bellevue', vehicleClass: 'executive-sedan' }, method: 'flat', total: 107 },
+    { n: 'Gratuity 0% → no tip line', r: { service: 'airport', direction: 'from-airport', zone: 'Bellevue', vehicleClass: 'executive-sedan', gratuityPct: 0 }, method: 'flat', total: 89 },
+    { n: '1 additional stop (+$20)', r: { service: 'airport', direction: 'from-airport', zone: 'Bellevue', vehicleClass: 'executive-sedan', stops: 1 }, method: 'flat', total: 131 },
+    { n: '2 child seats (+$30)', r: { service: 'airport', direction: 'from-airport', zone: 'Bellevue', vehicleClass: 'executive-sedan', childSeats: 2 }, method: 'flat', total: 143 },
+    { n: 'Airport wait 90 min (30 billable @ $1.50)', r: { service: 'airport', direction: 'from-airport', zone: 'Kent', vehicleClass: 'executive-sedan', waitMinutes: 90 }, method: 'flat', total: 149 },
+    { n: 'Airport wait 45 min → within 60 free', r: { service: 'airport', direction: 'from-airport', zone: 'Kent', vehicleClass: 'executive-sedan', waitMinutes: 45 }, method: 'flat', total: 95 },
+    { n: 'Corporate 5% account', r: { service: 'airport', direction: 'from-airport', zone: 'Seattle', vehicleClass: 'executive-sedan', account: { corporateTier: 'corporate' } }, method: 'flat', total: 102 },
+    { n: 'Preferred 10% account', r: { service: 'airport', direction: 'from-airport', zone: 'Redmond', vehicleClass: 'luxury-suv', account: { corporateTier: 'preferred' } }, method: 'flat', total: 150 },
+    { n: 'Volume 12% account', r: { service: 'airport', direction: 'from-airport', zone: 'Tacoma', vehicleClass: 'premium-suv', account: { corporateTier: 'volume' } }, method: 'flat', total: 137 },
+    { n: 'Dispatch override beats account discount', r: { service: 'airport', direction: 'from-airport', zone: 'Bellevue', vehicleClass: 'executive-sedan', account: { corporateTier: 'preferred' }, adminOverrideAmount: 150 }, method: 'flat', total: 180 },
+    { n: 'Contract rate replaces the flat rate', r: { service: 'airport', direction: 'from-airport', zone: 'Bellevue', vehicleClass: 'executive-sedan', account: { corporateTier: 'contract', contractRate: 70 } }, method: 'flat', total: 84 },
+    { n: 'Hourly · Executive Sedan · 3 hrs', r: { service: 'hourly', vehicleClass: 'executive-sedan', hours: 3 }, method: 'hourly', total: 342 },
+    { n: 'Hourly · Luxury Sedan · 5 hrs', r: { service: 'hourly', vehicleClass: 'luxury-sedan', hours: 5 }, method: 'hourly', total: 630 },
+    { n: 'Hourly · Premium SUV · 2 hrs → 3-hr min', r: { service: 'hourly', vehicleClass: 'premium-suv', hours: 2 }, method: 'hourly', total: 450 },
+    { n: 'Hourly · Luxury SUV · 4 hrs', r: { service: 'hourly', vehicleClass: 'luxury-suv', hours: 4 }, method: 'hourly', total: 672 },
+    { n: 'Hourly · Executive Van · 3 hrs', r: { service: 'hourly', vehicleClass: 'executive-van', hours: 3 }, method: 'hourly', total: 630 },
+    { n: 'Hourly · Sprinter · 3 hrs → 4-hr min', r: { service: 'hourly', vehicleClass: 'sprinter', hours: 3 }, method: 'hourly', total: 1080 },
+    { n: 'Hourly · Sprinter · 6 hrs', r: { service: 'hourly', vehicleClass: 'sprinter', hours: 6 }, method: 'hourly', total: 1620 },
+    { n: 'Hourly + stop + 5% + 18% gratuity', r: { service: 'hourly', vehicleClass: 'executive-sedan', hours: 4, stops: 1, account: { corporateTier: 'corporate' }, gratuityPct: 18 }, method: 'hourly', total: 448 },
+    { n: 'Sprinter to airport → manual quote', r: { service: 'airport', direction: 'from-airport', zone: 'Seattle', vehicleClass: 'sprinter' }, method: 'manual-quote', total: null },
+    { n: 'Wedding → manual quote', r: { service: 'wedding', vehicleClass: 'luxury-suv' }, method: 'manual-quote', total: null },
+    { n: 'Non-airport point-to-point → manual quote', r: { service: 'point-to-point', vehicleClass: 'luxury-sedan', pickup: 'Kirkland', dropoff: 'Redmond' }, method: 'manual-quote', total: null },
+    { n: 'Unknown service area → manual quote', r: { service: 'airport', direction: 'from-airport', zone: 'Olympia', vehicleClass: 'executive-sedan' }, method: 'manual-quote', total: null },
+    { n: 'Cruise with SEA leg → Seattle flat SUV', r: { service: 'cruise', vehicleClass: 'premium-suv', zone: 'Seattle', isAirportLeg: true }, method: 'flat', total: 143 },
+    { n: 'Everett + 3 seats + 2 stops', r: { service: 'airport', direction: 'from-airport', zone: 'Everett', vehicleClass: 'executive-sedan', childSeats: 3, stops: 2 }, method: 'flat', total: 269 }
+  ];
+
+  $('runTestsBtn').addEventListener('click', function () {
+    var rows = $('testRows'); rows.innerHTML = '';
+    var pass = 0, fail = 0;
+    SCENARIOS.forEach(function (sc, i) {
+      var q = NWTCPricing.quote(sc.r, state.table);
+      var v = NWTCPricing.verifyQuote(q.finalAmount == null ? 0 : q.finalAmount, sc.r, state.table);
+      var methodOK = q.method === sc.method;
+      var totalOK = sc.total == null ? q.finalAmount == null : q.finalAmount === sc.total;
+      var recalcOK = q.method === 'manual-quote' ? true : v.valid;
+      var ok = methodOK && totalOK && recalcOK;
+      ok ? pass++ : fail++;
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td class="num">' + (i + 1) + '</td><td>' + sc.n + '</td>'
+        + '<td class="mono">' + q.method + (methodOK ? '' : ' <span class="t-fail">≠' + sc.method + '</span>') + '</td>'
+        + '<td class="num">' + (sc.total == null ? '—' : '$' + sc.total) + '</td>'
+        + '<td class="num">' + (q.finalAmount == null ? '—' : '$' + q.finalAmount) + '</td>'
+        + '<td class="mono">' + (q.method === 'manual-quote' ? 'n/a' : (v.valid ? '<span class="t-pass">✓ ' + '$' + v.serverAmount + '</span>' : '<span class="t-fail">✗ Δ' + v.delta + '</span>')) + '</td>'
+        + '<td>' + (ok ? '<span class="t-pass">PASS</span>' : '<span class="t-fail">FAIL</span>') + '</td>';
+      rows.appendChild(tr);
+    });
+    var s = $('testSummary');
+    s.className = 'summary ' + (fail === 0 ? 'pass' : 'fail');
+    s.textContent = pass + ' / ' + (pass + fail) + ' scenarios passed'
+      + (fail === 0 ? ' — every shown price equals its server-side recalculation.' : ' — ' + fail + ' failing.');
+  });
+
+  /* ---------- boot ---------- */
+  fillSelectors();
+  syncCalcVisibility();
+  renderQuote();
+})();
+</script>

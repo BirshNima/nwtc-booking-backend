@@ -1,0 +1,780 @@
+<title>NWTC Journal</title>
+<meta name="description" content="The Northwest Town Car Service journal — 12 practical guides on Seattle airport travel, corporate transportation, weddings, cruises, and wine tours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--forest:#0F1E19;--forest-2:#16281F;--forest-3:#0b1712;--cream:#F1ECE0;--cream-dim:#A9B3A6;--cream-soft:#dcd7c8;--brass:#C09A56;--brass-lit:#D9B87A;--sage:#7E9583;--line:rgba(241,236,224,0.12);--line-2:rgba(241,236,224,0.22);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+  body{background:var(--forest);color:var(--cream);font-family:'Work Sans',system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:400;line-height:1.15;letter-spacing:-0.015em;text-wrap:balance;}
+  h1 em,h2 em{font-style:italic;color:var(--brass-lit);}
+  a{color:var(--brass-lit);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+  .eyebrow{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-lit);}
+  header.site{position:sticky;top:0;z-index:50;background:rgba(15,30,25,0.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  header.site .wrap{display:flex;align-items:center;gap:20px;height:62px;max-width:1080px;}
+  .wordmark{font-family:'Fraunces',serif;font-size:16px;letter-spacing:0.02em;color:var(--cream);}
+  .wordmark em{font-style:normal;color:var(--brass-lit);}
+  header nav{display:none;margin-left:24px;gap:24px;font-size:14px;}
+  @media(min-width:900px){header nav{display:flex;}}
+  header nav a{color:var(--cream-dim);} header nav a:hover{color:var(--cream);text-decoration:none;}
+  .head-right{margin-left:auto;display:flex;align-items:center;gap:14px;}
+  .head-phone{font-family:ui-monospace,monospace;font-size:13px;color:var(--cream-dim);}
+  @media(max-width:560px){.head-phone{display:none;}}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:11px 20px;border-radius:999px;border:1px solid transparent;white-space:nowrap;transition:background .15s,border-color .15s;text-decoration:none;}
+  .btn-solid{background:var(--brass);color:#1c1305;}
+  .btn-solid:hover{background:var(--brass-lit);}
+  .btn-line{border-color:var(--line-2);color:var(--cream);}
+  .btn-line:hover{border-color:var(--brass);color:var(--brass-lit);}
+  .crumbs{max-width:720px;margin:0 auto;padding:20px 28px 0;font-family:ui-monospace,monospace;font-size:11px;color:var(--cream-dim);}
+  .crumbs a{color:var(--cream-dim);} .crumbs a:hover{color:var(--brass-lit);}
+  article{padding:32px 0 40px;}
+  article h1{font-size:clamp(30px,4.6vw,42px);font-weight:300;}
+  .dek{font-size:19px;color:var(--cream-dim);margin-top:16px;}
+  .byline{font-family:ui-monospace,monospace;font-size:12px;color:var(--cream-dim);margin-top:18px;padding-top:14px;border-top:1px solid var(--line);}
+  .body{margin-top:28px;}
+  .body p{margin:0 0 1.2rem;color:var(--cream-soft);}
+  .body h2{font-size:clamp(21px,3vw,27px);margin:38px 0 14px;color:var(--cream);}
+  .body h3{font-size:18px;margin:26px 0 8px;color:var(--cream);}
+  .body strong{color:var(--cream);}
+  .body ul{margin:0 0 1.2rem;padding-left:1.3rem;color:var(--cream-soft);}
+  .body li{margin:.4rem 0;}
+  .lede{font-size:19px;color:var(--cream);border-left:3px solid var(--brass);padding-left:18px;margin:0 0 1.6rem;}
+  .tbl{width:100%;border-collapse:collapse;font-size:14px;margin:18px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-family:ui-monospace,monospace;}
+  .tbl th,.tbl td{text-align:left;padding:9px 13px;border-top:1px solid var(--line);}
+  .tbl thead th{background:var(--forest-2);border-top:none;font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--cream-dim);}
+  .tbl td:last-child{color:var(--brass-lit);}
+  .callout{border-left:3px solid var(--brass);background:var(--forest-2);border-radius:8px;padding:16px 18px;margin:24px 0;font-size:15px;color:var(--cream-soft);}
+  .callout b{color:var(--cream);}
+  .cta-block{border:1px solid var(--line);border-radius:14px;background:var(--forest-2);padding:26px;margin:32px 0;text-align:center;}
+  .cta-block h3{font-size:21px;color:var(--cream);}
+  .cta-block p{color:var(--cream-dim);font-size:14px;margin:8px auto 0;max-width:42ch;}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px;}
+  .faq{margin-top:36px;}
+  .faq h2{font-size:24px;color:var(--cream);margin-bottom:8px;}
+  .faq details{border-top:1px solid var(--line);padding:16px 0;}
+  .faq details:last-child{border-bottom:1px solid var(--line);}
+  .faq summary{font-size:16px;font-weight:600;cursor:pointer;list-style:none;color:var(--cream);display:flex;justify-content:space-between;gap:14px;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:"+";color:var(--brass);font-family:ui-monospace,monospace;}
+  .faq details[open] summary::after{content:"–";}
+  .faq details p{color:var(--cream-soft);font-size:14px;margin-top:10px;}
+  .related{margin-top:32px;font-family:ui-monospace,monospace;font-size:13px;color:var(--cream-dim);}
+  footer.site{background:var(--forest-3);border-top:1px solid var(--line);padding:40px 0 28px;margin-top:32px;}
+  footer.site .wrap{max-width:1080px;}
+  .foot-links{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13px;color:var(--cream-dim);margin-bottom:16px;}
+  .foot-links a{color:var(--cream-dim);} .foot-links a:hover{color:var(--brass-lit);}
+  .foot-bar{padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:ui-monospace,monospace;font-size:11px;color:var(--cream-dim);}
+
+  /* ---- mobile nav (<=899px) ---- */
+  .m-nav-btn,.m-nav-cta,.m-nav-tel{display:none;}
+  @media (max-width:899px){
+    header.site .wrap{height:auto;min-height:62px;gap:12px;}
+    .wordmark{font-size:14px;letter-spacing:0.01em;}
+    .head-right{display:none;}
+    .m-nav-btn{order:2;margin-left:auto;flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;background:transparent;border:1px solid var(--line-2);border-radius:9px;color:var(--cream);cursor:pointer;}
+    .m-nav-btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+    .m-nav-icon{position:relative;display:block;width:17px;height:2px;background:currentColor;}
+    .m-nav-icon::before,.m-nav-icon::after{content:"";position:absolute;left:0;width:17px;height:2px;background:currentColor;transition:transform .2s ease;}
+    .m-nav-icon::before{top:-6px;} .m-nav-icon::after{top:6px;}
+    .m-nav-btn[aria-expanded="true"] .m-nav-icon{background:transparent;}
+    .m-nav-btn[aria-expanded="true"] .m-nav-icon::before{transform:translateY(6px) rotate(45deg);}
+    .m-nav-btn[aria-expanded="true"] .m-nav-icon::after{transform:translateY(-6px) rotate(-45deg);}
+    header.site nav{position:absolute;left:0;right:0;top:100%;display:flex;flex-direction:column;gap:0;margin:0;font-size:15px;background:var(--forest-2);border-bottom:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(0,0,0,.6);max-height:0;overflow:hidden;visibility:hidden;transition:max-height .24s ease,visibility .24s;}
+    header.site nav.m-open{max-height:82vh;overflow-y:auto;visibility:visible;}
+    header.site nav a{padding:14px 28px;border-top:1px solid var(--line);color:var(--cream);}
+    header.site nav a:first-child{border-top:none;}
+    .m-nav-cta,.m-nav-tel{display:block;margin:10px 20px;padding:12px;text-align:center;font-weight:600;border-radius:999px;border-top:none!important;}
+    .m-nav-cta{background:var(--brass);color:#1c1305;}
+    .m-nav-tel{margin-top:0;border:1px solid var(--line-2)!important;color:var(--cream);font-family:ui-monospace,monospace;font-size:13px;}
+  }
+</style>
+
+<style>
+  .tabbar{position:sticky;top:62px;z-index:40;background:var(--forest-2);border-bottom:1px solid var(--line);}
+  .tabbar .wrap{max-width:1080px;display:flex;gap:4px;overflow-x:auto;padding:8px 28px;-webkit-overflow-scrolling:touch;}
+  .tabbar button{font:inherit;font-size:12.5px;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--cream-dim);cursor:pointer;white-space:nowrap;}
+  .tabbar button[aria-current="true"]{background:var(--brass);border-color:var(--brass);color:#1c1305;}
+  .previewnote{max-width:720px;margin:0 auto;padding:14px 28px 0;font-family:ui-monospace,monospace;font-size:11px;color:var(--cream-dim);}
+</style>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">NORTHWEST TOWN CAR <em>SERVICE</em></a>
+    <button class="m-nav-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="m-nav-icon"></span></button>
+    <nav id="site-nav">
+      <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#services">Services</a>
+      <a href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">Airport</a>
+      <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#fleet">Fleet</a>
+      <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#areas">Service area</a>
+      <a href="https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae">Corporate</a>
+      <a class="m-nav-cta" href="https://claude.ai/code/artifact/2350cbd7-c9ee-4077-b660-298c559785bf">Book a ride</a>
+      <a class="m-nav-tel" href="tel:+12065965504">Call (206) 596-5504</a>
+    </nav>
+    <div class="head-right">
+      <a class="head-phone" href="tel:+12065965504">(206) 596-5504</a>
+      <a class="btn btn-solid" href="https://claude.ai/code/artifact/2350cbd7-c9ee-4077-b660-298c559785bf">Book a ride</a>
+    </div>
+  </div>
+</header>
+<div class="tabbar"><div class="wrap"><button data-tab="seatac" aria-current="true">Booking a SeaTac pickup</button><button data-tab="bellevue-drive">Bellevue → SEA, by hour</button><button data-tab="meetgreet">Meet-and-greet vs. curbside</button><button data-tab="weather">Weather & a SEA pickup</button><button data-tab="southsound">Kent, Renton & the South Sound</button><button data-tab="corporate">Account vs. rideshare</button><button data-tab="roadshow">Conference & roadshow travel</button><button data-tab="firstride">What a chauffeur does</button><button data-tab="wedding">Wedding timeline</button><button data-tab="prom">Prom & homecoming</button><button data-tab="cruise">SEA to the cruise piers</button><button data-tab="woodinville">Woodinville wine tour</button></div></div>
+<p class="previewnote">Preview — all 12 journal posts. Each deploys at /blog/&lt;slug&gt;.</p>
+<div class="post-route" data-post="seatac">
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / SeaTac pickup timing</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Airport travel</span>
+    <h1>How early to book a SeaTac airport pickup, by time of day</h1>
+    <p class="dek">The honest answer, from the people who dispatch these runs every morning: it depends on your departure time and where you're starting — but here's how to get it right.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 6 min read</p>
+
+    <div class="body">
+      <p class="lede">For a domestic flight out of Sea-Tac, plan to <strong>leave home about 2.5 hours before departure</strong> — roughly 90 minutes at the airport plus your drive. Add 30–45 minutes for an international flight, a holiday weekend, or a starting point more than 30 minutes from SEA. A good chauffeur builds that math into your pickup time so you don't have to.</p>
+
+      <p>The mistake people make is planning backward from "boarding" instead of "the moment security stops being predictable." SEA's TSA lines are usually fine — and occasionally 45 minutes. You want a buffer that absorbs the bad day without leaving you sitting at the gate for two hours on the good one. Here's how we set it.</p>
+
+      <h2>The rule of thumb</h2>
+      <p>Work back from your departure time in three pieces:</p>
+      <ul>
+        <li><strong>At the airport:</strong> 90 minutes for a domestic flight with a checked bag, 2 hours for international. If you're carry-on only and have TSA PreCheck or Clear, you can shave 20–30 minutes off the domestic number — but only if you're not also trying to grab breakfast.</li>
+        <li><strong>The drive:</strong> your realistic door-to-curb time <em>at that hour</em>, not the Google estimate for an empty freeway. From most of the close-in cities that's 15–35 minutes off-peak and 30–55 in rush.</li>
+        <li><strong>A cushion:</strong> 15 minutes. Traffic incidents, a slow elevator, a bag you forgot to zip.</li>
+      </ul>
+      <p>Add those up and that's your pickup time. On our end, we also add a few minutes so the car is <em>waiting</em> when you walk out, not pulling up as you're locking the door.</p>
+
+      <h2>By your departure time</h2>
+      <h3>Early morning (before 8 a.m.)</h3>
+      <p>The freeways are clear and TSA opens light, so the drive is fast — but this is also when checkpoint staffing is thinnest and a single delayed line has nowhere to spill. For a 6 a.m. flight, we typically set pickup around 4:15–4:30 from the Eastside and the South Sound, a bit later from Kent and the close-in cities. Yes, it's early. It's also the flight people miss most.</p>
+      <h3>Midday (10 a.m.–2 p.m.)</h3>
+      <p>The sweet spot. Traffic is moderate, TSA is fully staffed, and the math is straightforward: departure minus 2.5 hours, minus your drive. A midday flight from Bellevue with a checked bag is usually a pickup about 3 hours ahead.</p>
+      <h3>Afternoon &amp; evening (3 p.m.–8 p.m.)</h3>
+      <p>The drive is the wild card. Southbound I‑5 and I‑405 are unpredictable from about 3:30 to 6:30, and an evening event downtown or at Lumen Field can add 20 minutes to any route that touches the city. We pad the drive estimate hard for these and, when it's ugly, route around the freeway.</p>
+      <h3>Red-eye &amp; late night (after 9 p.m.)</h3>
+      <p>Roads are empty and lines are short, so a red-eye needs the least lead time of any flight — often 90 minutes door to gate is plenty. The thing to confirm is that your <em>airline's</em> counter is still staffed if you have a bag to check; some close earlier than you'd expect.</p>
+
+      <h2>By where you're starting</h2>
+      <p>Drive time is the biggest variable, and it's very local. Rough door-to-curb times, off-peak and in weekday rush:</p>
+      <table class="tbl">
+        <thead><tr><th>Starting from</th><th>Off-peak</th><th>Weekday rush</th></tr></thead>
+        <tbody>
+          <tr><td>Kent</td><td>12–18 min</td><td>20–30 min</td></tr>
+          <tr><td>Renton</td><td>15–20 min</td><td>25–35 min</td></tr>
+          <tr><td>Seattle (downtown)</td><td>20–30 min</td><td>30–45 min</td></tr>
+          <tr><td>Bellevue</td><td>25–35 min</td><td>40–55 min</td></tr>
+          <tr><td>Kirkland</td><td>30–40 min</td><td>45–60 min</td></tr>
+          <tr><td>Tacoma</td><td>30–40 min</td><td>45–70 min</td></tr>
+          <tr><td>Redmond</td><td>35–45 min</td><td>50–65 min</td></tr>
+          <tr><td>Everett</td><td>45–55 min</td><td>60–80 min</td></tr>
+        </tbody>
+      </table>
+      <p>Our city pages — <a href="https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#bellevue">Bellevue</a>, <a href="https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#kirkland">Kirkland</a>, <a href="https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#tacoma">Tacoma</a>, <a href="https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#redmond">Redmond</a> — spell out the specific routes and the local chokepoints for each.</p>
+
+      <h2>International flights</h2>
+      <p>Add a full hour over the domestic plan. International check-in and document verification take longer, the security and customs pre-clear process for some destinations is slower, and the international gates (the S concourse) are a train ride from the main terminal. For a 1 p.m. flight to Asia or Europe from the Eastside, a pickup around 9:30 a.m. is right.</p>
+
+      <h2>Holiday weekends &amp; event days</h2>
+      <p>The week around Thanksgiving, the days before Christmas, and spring-break Fridays turn SEA into a different airport — the garage fills, the curb is chaos, and security lines run 45–60 minutes. Add 45 minutes to your normal buffer, and consider a meet-and-greet so your driver handles the bags while you go straight in. The same goes for any day with a major event that snarls the freeways between you and the airport.</p>
+
+      <div class="callout"><b>Arrivals are the easy direction.</b> When we're picking you up <em>from</em> a flight, we track it and adjust — you don't set a time, you just tell us the flight number. Our airport rate includes 60 minutes of wait after landing, which covers a normal customs-and-bags experience with room to spare.</div>
+
+      <h2>What flight tracking changes</h2>
+      <p>For departures, it doesn't help much — you still have to be there on time regardless of whether the plane is. For arrivals, it changes everything: your pickup time moves automatically with the flight, earlier or later, and there's no charge for the wait on a delayed arrival. It's the single best reason to book a car instead of standing at the rideshare pillar refreshing the app.</p>
+    </div>
+
+    <div class="cta-block">
+      <h3>See your flat SEA rate</h3>
+      <p>Pick your area, pick a time, and the price is set before you book — no surge, no meter. We build the buffer in.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">SEA airport rates</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How early should I leave for a 6 a.m. flight from Sea-Tac?</summary><p>For a domestic 6 a.m. departure, leave home around 4:15–4:30 from the Eastside or South Sound, a little later from Kent and the close-in cities. Roads are clear that early, but TSA staffing is thin, so the buffer is for the checkpoint, not the drive.</p></details>
+      <details><summary>Is 2 hours enough for a domestic flight at SEA?</summary><p>Usually, for the airport portion — 90 minutes to 2 hours covers check-in and security on a normal day. Your total lead time is that plus your drive plus a 15-minute cushion. A good chauffeur calculates the pickup so you don't have to.</p></details>
+      <details><summary>Do I need to give extra time for an international flight?</summary><p>Yes — add a full hour over your domestic plan. Check-in is slower, and the international S gates are a terminal train ride from the main concourse.</p></details>
+      <details><summary>What happens if my incoming flight is delayed?</summary><p>Nothing on your end. We track the flight and move the pickup automatically, and there's no charge for the wait on a delayed arrival.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#corporate">Corporate car account vs. rideshare</a> &middot; <a href="#cruise">SEA to the Seattle cruise terminals</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="bellevue-drive" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Airport travel</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Airport travel</span>
+    <h1>Bellevue to Sea-Tac: how long it <em>really</em> takes, by hour</h1>
+    <p class="dek">Not the empty-freeway estimate — the times a dispatcher actually plans around, and why the answer changes by 25 minutes across the day.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 5 min read</p>
+
+    <div class="body">
+      <p class="lede">Bellevue to Sea-Tac is <strong>25–35 minutes off-peak and 40–55 in weekday rush</strong>, and which of the two routes wins — I‑405 south to I‑5, or I‑90 west to I‑5 — depends entirely on the hour. For a morning flight, leaving Bellevue about 2.5 hours before departure is right most days; make it 3 for an early international flight or a Monday.</p>
+      <h2>The two routes, and when each one wins</h2>
+<p>Almost every Bellevue airport trip uses one of two paths:</p><ul><li><strong>I‑405 south to I‑5 through Tukwila.</strong> The direct line. Its weak point is the Renton S‑curves, where 405 narrows and merges — a reliable slowdown from roughly 3:30 to 6:30 on weekdays, and unpredictable at other times.</li><li><strong>I‑90 west to I‑5 south.</strong> A few miles longer but avoids the S‑curves. Its weak point is I‑90 westbound across Lake Washington, which backs up in the afternoon as the city empties out.</li></ul><p>The practical rule: <strong>405 in the morning, I‑90 in the late afternoon</strong>, and your driver checks both live before pickup regardless. From downtown Bellevue we get onto 405 via Bellevue Way and 112th rather than fighting the ramp at Main Street.</p>
+<h2>By time of day</h2>
+<p><strong>Before 7 a.m.</strong> — 22–28 minutes, either route. This is the fast window. A 6 a.m. flight is a pickup around 3:30.</p><p><strong>7–9 a.m.</strong> — 35–50 minutes. Southbound 405 and I‑5 both carry commute traffic. Leave with the full buffer.</p><p><strong>9 a.m.–3 p.m.</strong> — 25–35 minutes. The reliable midday window; departure minus 2.5 hours minus the drive.</p><p><strong>3:30–6:30 p.m.</strong> — 40–55 minutes, sometimes worse. The S‑curves and I‑90 westbound are both slow. An afternoon flight needs the same lead time as a morning one.</p><p><strong>After 7 p.m.</strong> — back to 25–30 minutes.</p>
+<h2>What makes a normal day abnormal</h2>
+<p>Three things blow up the estimate: a collision anywhere on 405 or I‑5 between Bellevue and the airport (there's no good detour), an evening event at Lumen Field or Climate Pledge Arena that floods I‑5 and the SoDo surface streets, and the week around a major holiday. When any of those is in play we add 20–30 minutes and, if it's bad, route off the freeway entirely.</p>
+<h2>How we set your pickup</h2>
+<p>We work backward from your flight: 90 minutes at the airport for a domestic flight (2 hours international), plus the realistic drive for that hour, plus a 15‑minute cushion. Then we add a few minutes so the car is waiting when you walk out rather than pulling up as you lock the door. On a Bellevue airport account, the booker doesn't do this math — it's baked into the confirmed pickup time. The <a href='https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#bellevue'>Bellevue service-area page</a> has the flat rate ($89 sedan, $119 SUV) and the neighborhood pickup details.</p>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>See your Bellevue airport rate</h3>
+      <p>Flat $89 sedan / $119 SUV to SEA, priced before you book, with the drive-time buffer built in.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">Airport Transfers</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How long does it take to drive from Bellevue to Sea-Tac?</summary><p>25–35 minutes off-peak and 40–55 in weekday rush, via I‑405 to I‑5 or I‑90 to I‑5. The driver checks both routes before pickup and takes whichever is moving.</p></details><details><summary>How early should I leave Bellevue for a morning flight?</summary><p>About 2.5 hours before departure most days, or 3 hours for an early international flight, a Monday, or a holiday week.</p></details><details><summary>Which route is faster, I‑405 or I‑90?</summary><p>I‑405 in the morning, I‑90 in the late afternoon — the 405 Renton S‑curves are the PM bottleneck, and I‑90 westbound backs up as the city empties out.</p></details><details><summary>Does the flat rate change if traffic is bad?</summary><p>No. Bellevue to SEA is a flat $89 sedan / $119 SUV, either direction, regardless of the drive time.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="#meetgreet">Meet-and-greet vs. curbside at SEA</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="meetgreet" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Airport travel</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Airport travel</span>
+    <h1>SEA pickup: meet-and-greet, curbside, or <em>the cell phone lot</em></h1>
+    <p class="dek">Three ways to be picked up at Sea-Tac, what each one feels like on the ground, and when it's worth paying for the sign at baggage claim.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 4 min read</p>
+
+    <div class="body">
+      <p class="lede">For most trips, <strong>curbside on the arrivals drive is fastest</strong> — you clear the terminal, we're at the door. <strong>Meet-and-greet</strong> — a chauffeur waiting at baggage claim with your name on a sign — is worth it for international arrivals, first-time visitors, anyone travelling with a lot of luggage or kids, and any trip where a client is being received. The <strong>cell phone lot</strong> is a rideshare and private-car staging area, not really a car-service thing.</p>
+      <h2>Curbside on the arrivals drive</h2>
+<p>How it works: when you're off the plane and near baggage claim, you text the driver (or we're already tracking the flight). You take the escalator or elevator down to the arrivals level — the lower roadway — and walk out to the third lane, the one for pickups. We pull up, load the bags, and go. From "I'm walking out" to "in the car" is usually 3–6 minutes.</p><p>Best for: domestic arrivals, carry-on or one checked bag, someone who's flown into SEA before. It's the default, and it's included in the airport rate.</p>
+<h2>Meet-and-greet at baggage claim</h2>
+<p>How it works: your chauffeur parks, walks into the terminal, and stands at your assigned baggage carousel holding a sign with your name (or your company's). They help with the bags and walk you to the car. You don't have to navigate anything or text anyone.</p><p>Best for: international arrivals (you're tired and the customs exit is disorienting), first-time visitors, anyone with kids or a wheelchair or a golf bag, and — importantly — any trip where you're <em>receiving</em> someone. A client walking out to a person holding their name is a different arrival than a client thumbing through an app at the rideshare pillar. On our airport service, meet-and-greet is included, not an upcharge.</p>
+<h2>The cell phone lot</h2>
+<p>SEA's cell phone lot is a free waiting area off Air Cargo Road where drivers stage until their passenger calls. It exists so people aren't circling the terminal. For a car service it's mostly irrelevant — your chauffeur is either already curbside on your text or inside for a meet-and-greet. If you're being picked up by a friend or family member, though, the cell phone lot is where they should wait rather than looping the drives.</p>
+<h2>How the choice affects timing</h2>
+<p>Curbside adds nothing — the driver times their approach to your text. Meet-and-greet means the driver needs to park and walk in <em>before</em> you reach baggage claim, so we watch the flight and head in as it lands. Either way, our airport rate includes 60 minutes of wait after landing, which covers a normal customs-and-bags experience with margin. If a bag is genuinely lost or customs is a mess, the driver waits and we sort the details later.</p>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>Book a SEA airport pickup</h3>
+      <p>Choose meet-and-greet or curbside when you book. Flight tracked, 60 minutes of wait included, flat rate.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">Airport Transfers</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>Is meet-and-greet at Sea-Tac an extra charge?</summary><p>Not on our airport service — it's included. Choose it when you book and your chauffeur waits at baggage claim with a name sign.</p></details><details><summary>Where do I meet the car for a curbside pickup at SEA?</summary><p>The arrivals level (lower roadway), third lane out — the one signed for pickups. Text the driver when you're walking out; from there it's usually 3–6 minutes to being in the car.</p></details><details><summary>Should I use the cell phone lot?</summary><p>Only if a friend or family member is picking you up. For a car service, the driver is already curbside on your text or inside for a meet-and-greet.</p></details><details><summary>How long will the driver wait if my bag is delayed?</summary><p>Our airport rate includes 60 minutes of wait after landing. If a bag is genuinely lost or customs is slow, the driver waits and we handle it.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="#weather">Snow, wind & SEA: how weather changes the plan</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="weather" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Airport travel</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Airport travel</span>
+    <h1>Snow, wind &amp; SEA: <em>how weather changes an airport pickup plan</em></h1>
+    <p class="dek">The Puget Sound doesn't get much snow, but when it does, the region stops. Here's how a car service handles the days rideshare surges and disappears.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 4 min read</p>
+
+    <div class="body">
+      <p class="lede">On a bad-weather day, a car service does three things an app can't: it <strong>leaves earlier</strong> because the pickup is scheduled, it <strong>holds the price</strong> while rideshare surges 2× or more, and it <strong>stays committed</strong> to your trip instead of the driver cancelling for a better fare. For a flight you can't miss, the storm day is exactly when the reservation earns its keep.</p>
+      <h2>Snow and ice: the region's weak spot</h2>
+<p>Seattle gets snow a few times a winter, and because it's rare, the hills and the untreated side streets become the problem — not the freeways, which get plowed. A chauffeur who knows the area routes around the steep neighborhood streets, allows double or triple the normal drive time, and on a genuine ice event will suggest an earlier pickup or, for a non-urgent trip, a different day. We'd rather move your 6 a.m. pickup to 3:30 than have you sitting on I‑5 behind a spun-out car.</p>
+<h2>Wind: the flight problem, not the drive problem</h2>
+<p>Windstorms rarely slow the drive to SEA much, but they delay and cancel flights, and they knock out power — which can mean traffic signals down on the arterials between you and the airport. For arrivals, flight tracking handles the delay automatically. For departures, we watch your flight status and keep in touch, because a two-hour delay changes when you actually want to leave.</p>
+<h2>Fog: mostly an arrivals story</h2>
+<p>Fog at SEA causes ground stops and diversions — occasionally a flight lands in Portland or Spokane instead. If that happens on an arrival we're handling, we track it and either wait, adjust to the new landing time, or arrange the onward leg. You're not stranded figuring it out alone.</p>
+<h2>Why the flat rate matters most on these days</h2>
+<p>The 5 a.m. of the season's one snow day is precisely when rideshare is 2–3× and cars are scarce. A flat car-service rate is <strong>the same $89 from Bellevue it always is</strong>, and the driver is committed to your trip. The value of a fixed price isn't the average day — it's the day everything else breaks.</p>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>Book an airport ride that holds up</h3>
+      <p>Flat rate, flight tracked, a chauffeur committed to your trip — including the days the region shuts down.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">Airport Transfers</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>Does a car service still run in Seattle snow?</summary><p>Yes. We adjust pickup times — often much earlier — route around the untreated hill streets, and for a non-urgent trip may suggest a different day. The reservation means the car is committed to your trip.</p></details><details><summary>Will the price go up on a bad-weather day?</summary><p>No. The flat airport rate is the same in a snowstorm as on a clear Tuesday — no surge, ever. That's the main reason the reservation matters on those days.</p></details><details><summary>What happens if my flight is diverted to another city because of fog?</summary><p>We track it and either wait for the rebooked flight, adjust to the new landing time, or arrange the onward leg. You won't be sorting it out alone at the curb.</p></details><details><summary>Should I book earlier than usual when snow is forecast?</summary><p>Yes — tell us, and we'll set an earlier pickup. It's far better to wait a bit at the gate than to miss the flight behind a stuck car on I‑5.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="#meetgreet">Meet-and-greet vs. curbside at SEA</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="southsound" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Airport travel</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Airport travel</span>
+    <h1>Kent, Renton &amp; the South Sound: <em>your SEA airport options</em></h1>
+    <p class="dek">The South King County cities are the closest thing to Sea-Tac in the whole region. Here's how each one connects, and what a car service adds over driving yourself.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 5 min read</p>
+
+    <div class="body">
+      <p class="lede">From <strong>Kent, Renton, Federal Way, and Auburn</strong>, Sea-Tac is a <strong>12–30 minute drive</strong> and a flat car-service rate of <strong>$79–$89 for a sedan</strong>. Because these cities are so close, the value of a chauffeur isn't a long comfortable ride — it's not paying $30+ a day to leave a car in the SEA garage, not driving home exhausted after a red-eye, and a firm pickup time for the 5 a.m. flight.</p>
+      <h2>Kent — the shortest run</h2>
+<p>12–18 minutes off-peak, 20–30 in rush. From West Hill and downtown, Kent–Des Moines Road (SR‑516) to SR‑509 is often faster than the freeway; from East Hill it's 104th to SR‑516 to I‑5. Flat rate: $79 sedan, $109 SUV. We're based in Kent, so a car is usually close for same-day trips. <a href='https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#kent'>Kent car service →</a></p>
+<h2>Renton — I‑405 and the S‑curves</h2>
+<p>15–20 minutes off-peak, 25–35 in rush. I‑405 south to SR‑518, or Rainier Avenue and SR‑509 when the freeway is jammed. The catch is that the I‑405 Renton S‑curves — the regional bottleneck — start right here, so from the Highlands we drop onto 405 further south. Flat rate: $79 sedan, $109 SUV. <a href='https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#renton'>Renton car service →</a></p>
+<h2>Federal Way — north on I‑5, ahead of the crowd</h2>
+<p>20–25 minutes off-peak, 30–45 on a weekday morning when the northbound I‑5 stretch through Kent slows. SR‑99 (Pacific Highway South) is the stoplight-heavy alternative. Flat rate: $85 sedan, $115 SUV. <a href='https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#federal-way'>Federal Way car service →</a></p>
+<h2>Auburn — the valley routes</h2>
+<p>25–30 minutes off-peak, 35–50 in rush. SR‑18 west to I‑5 north, or A Street to SR‑167 to I‑405 and SR‑518. The SR‑18/I‑5 interchange near Federal Way is the usual slow point. Flat rate: $89 sedan, $119 SUV. Auburn also has a heavy warehouse-district corporate base — <a href='https://claude.ai/code/artifact/c99b51b8-e950-4411-85e0-61fa187d490f#auburn'>Auburn car service →</a></p>
+<h2>The case for a car from this close</h2>
+<p>When the drive is 20 minutes, people assume it's not worth booking a service. But the math still works: SEA parking runs $30–45 a day, so a week-long trip is $200+ before you've factored in the walk from the garage with bags. A one-way car at $79–89 each direction is comparable and drops you at the door. Add a 5 a.m. flight, a red-eye return, or a group with luggage, and it's not close. For frequent flyers, a <a href='https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae'>corporate or personal account</a> makes it routine.</p>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>See your South Sound airport rate</h3>
+      <p>Flat $79–$89 sedan to SEA from Kent, Renton, Federal Way, and Auburn — priced before you book.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">Airport Transfers</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How far is Kent from Sea-Tac Airport?</summary><p>12–18 minutes off-peak and 20–30 in rush hour — one of the shortest airport runs in the region. The flat rate is $79 sedan, $109 SUV.</p></details><details><summary>Is a car service worth it from this close to the airport?</summary><p>Often yes — SEA parking is $30–45 a day, so a week-long trip costs more to park than a one-way car each direction, and you're dropped at the door. It's clearly worth it for early flights, red-eyes, and groups with luggage.</p></details><details><summary>What's the flat rate from Renton or Federal Way to SEA?</summary><p>$79 sedan / $109 SUV from Renton, and $85 / $115 from Federal Way — one flat rate each direction, regardless of traffic.</p></details><details><summary>Can you do same-day airport runs from the South Sound?</summary><p>Usually — being based in Kent means a car is often nearby. Call dispatch at (206) 596-5504.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="#bellevue-drive">Bellevue to Sea-Tac, by hour</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="corporate" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Corporate account vs. rideshare</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">For business</span>
+    <h1>Corporate car account vs. rideshare for business travel</h1>
+    <p class="dek">The honest comparison — where an account genuinely wins, and where a rideshare app is still the right call.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 5 min read</p>
+
+    <div class="body">
+      <p class="lede">For a company doing <strong>more than a handful of car trips a month</strong> — airport runs, client pickups, roadshows — a corporate account with a car service usually costs about the same per trip as rideshare once you account for surge, and it removes the two things that actually cost you: no-shows at the worst possible moment, and a month of receipts to reconcile.</p>
+
+      <p>Rideshare is excellent for what it's for: a spontaneous ride, one person, low stakes. Business travel is often none of those things. When a partner has a 6 a.m. flight, when a client is landing and expects to be met, when the CFO is doing four cities in three days — the failure modes of an app (no cars, surge, a driver who cancels, a car that's "3 minutes away" for fifteen minutes) go from annoying to expensive. Here's the real breakdown.</p>
+
+      <h2>Cost, honestly</h2>
+      <p>On a calm Tuesday afternoon, a rideshare to Sea-Tac from downtown Seattle might run $35–45 and a black-car flat rate is $89. That gap is real, and for a single low-stakes trip, the app wins.</p>
+      <p>But business travel doesn't happen only on calm Tuesdays. It clusters around early mornings, Friday afternoons, weather events, and conference weeks — exactly when rideshare surges 1.5–2.5×. That same downtown-to-SEA trip is $70–110 on a surging morning, with no cap and no warning until you're standing at the curb. A flat corporate rate is <strong>$89 at 4 a.m. on the Friday before Thanksgiving</strong>, same as always. Over a month of business travel, the flat rate and the blended rideshare cost land close — and the flat rate is predictable, which finance departments value more than a few dollars saved.</p>
+      <table class="tbl">
+        <thead><tr><th></th><th>Rideshare</th><th>Corporate account</th></tr></thead>
+        <tbody>
+          <tr><td>Off-peak single trip</td><td>Cheaper</td><td>Flat rate</td></tr>
+          <tr><td>Peak / weather / holiday</td><td>1.5–2.5× surge, uncapped</td><td>Same flat rate</td></tr>
+          <tr><td>Predictability for budgeting</td><td>Low</td><td>High — a rate sheet</td></tr>
+          <tr><td>Volume discount</td><td>None</td><td>Tiered, grows with volume</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Reliability and the no-show problem</h2>
+      <p>The scenario that justifies an account on its own: a driver accepts your executive's 5:15 a.m. pickup, then cancels at 5:10 because a better fare appeared, and now there are no cars in the neighborhood. Your partner misses the flight. That trip didn't cost $40 — it cost a rebooked itinerary and a missed meeting.</p>
+      <p>A car service account is a scheduled commitment. The pickup is assigned to a specific driver the day before, the driver confirms, and dispatch has a backup if something goes wrong. For a ride where being on time is the entire point, that structure is the product.</p>
+
+      <div class="callout"><b>The arrivals case is even clearer.</b> When a client lands at SEA expecting a car, "your driver will be 8 minutes" is not an acceptable answer. A car service tracks the flight, has a driver staged, and — with meet-and-greet — has someone at baggage claim with the client's name on a sign. That's a relationship investment an app can't make.</div>
+
+      <h2>Expense reporting</h2>
+      <p>Every rideshare trip is a separate transaction, a separate receipt, a separate line for someone to categorize and for someone else to approve. Multiply by a travelling team and it's real administrative time each month, plus the inevitable missing receipts and the "was this ride personal?" questions.</p>
+      <p>A corporate account is <strong>one itemized invoice a month</strong>, on net terms, with every trip tied to a booker and — if you use them — a cost code or department. Finance gets a single document to review and pay. For companies with expense-policy scrutiny, that alone can justify the switch.</p>
+
+      <h2>Duty of care</h2>
+      <p>If your company sends employees on the road, you carry some responsibility for how they get around. A licensed carrier — commercial insurance, permitted and vetted drivers, a real business you can call — is a defensible answer to that. A gig driver in a personal car with rideshare's insurance is a grayer one. For international visitors, junior employees travelling alone, or late-night trips, many companies decide the professional service is the responsible default.</p>
+
+      <h2>When rideshare is still the right call</h2>
+      <p>Be honest about this: for a single employee grabbing a quick, off-peak, low-stakes ride across town, the app is faster to summon and cheaper. A good corporate travel policy uses both — the account for airport transfers, client-facing trips, executive travel, roadshows, and anything early-morning or weather-sensitive; the app for the incidental daytime hop. The account doesn't have to replace rideshare to pay for itself; it just has to cover the trips where failure is expensive.</p>
+    </div>
+
+    <div class="cta-block">
+      <h3>Set up a corporate account</h3>
+      <p>No setup fee, no minimum. Monthly invoicing, a dedicated dispatch line, and a discount tier that grows with your volume.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae">Corporate transportation</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>Is a corporate car service more expensive than Uber?</summary><p>Per trip, on an off-peak day, yes. But rideshare surges 1.5–2.5× during exactly the times business travel clusters — early mornings, Friday afternoons, weather, holidays — and a corporate flat rate doesn't. Over a month, the blended costs land close, and the flat rate is predictable.</p></details>
+      <details><summary>What's the minimum volume for a corporate account?</summary><p>There isn't one with us — no setup fee, no minimum. Accounts make the most sense once you're doing more than a handful of trips a month.</p></details>
+      <details><summary>How does billing work on an account?</summary><p>One itemized invoice a month on net terms, with each trip tied to the person who booked it and, optionally, a cost code.</p></details>
+      <details><summary>Can multiple people book on one account?</summary><p>Yes — you name the authorized bookers and each can reserve and see the account's trips through the dedicated line.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae">Corporate transportation</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="roadshow" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / For business</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">For business</span>
+    <h1>Booking transportation for a Seattle <em>conference or roadshow</em></h1>
+    <p class="dek">Multi-day, multi-vehicle, multiple stakeholders — the kind of ground transportation that goes wrong in small ways unless one person owns it.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 5 min read</p>
+
+    <div class="body">
+      <p class="lede">For a Seattle <strong>conference, investor roadshow, or corporate event</strong>, book through a <strong>single account with one coordinator</strong> rather than assembling rides trip by trip. You give the schedule; they build the vehicle plan, assign consistent drivers, and send one itemized invoice. Start the conversation <strong>three to four weeks out</strong> for anything with more than a couple of vehicles.</p>
+      <h2>Roadshows: the fast, tight version</h2>
+<p>An investor roadshow is a sequence of meetings, often four to six a day, with a principal or two and a banker, moving between offices in downtown Seattle and Bellevue on a schedule that can't slip. What it needs: one executive sedan or SUV held for the full day (or two days), the <em>same</em> chauffeur throughout so they learn the rhythm, and a driver who knows which garage to use at each building and how long the I‑90 or 520 crossing actually takes. Book it as an <a href='https://claude.ai/code/artifact/1166d2e8-25f4-4211-be22-6090fada7f21'>hourly / as-directed</a> engagement so the car stays with the team between stops.</p>
+<h2>Conferences: the volume version</h2>
+<p>A conference brings speakers, VIPs, and staff in and out of SEA over two or three days, plus airport-to-hotel and hotel-to-venue movement. What it needs: a schedule of arrivals and departures matched to flight numbers, a mix of sedans for individuals and Sprinter vans for groups, and a point of contact who can absorb the inevitable changes — a flight that shifts, a speaker who adds a dinner. This is an account, not a series of one-off bookings.</p>
+<h2>One point of contact</h2>
+<p>The thing that makes event transportation work is that your team calls or texts <em>one</em> number — the coordinator who has the whole schedule — rather than a general dispatch line. Changes go to that person, they cascade the adjustments, and nobody on your side is chasing individual drivers.</p>
+<h2>Billing</h2>
+<p>Everything runs on the account and lands as a single itemized invoice — by trip, by passenger, and by cost code if you use them — on net terms. No expense reports from a dozen rideshare receipts, no reconciling whose ride was whose. For a recurring event or a company that runs roadshows regularly, a standing <a href='https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae'>corporate account</a> with a negotiated rate makes it repeatable.</p>
+<h2>The timeline</h2>
+<ul><li><strong>3–4 weeks out:</strong> share the draft schedule and headcounts; get a vehicle plan and quote; hold the vehicles.</li><li><strong>1 week out:</strong> confirm the final schedule, flight numbers, and the on-site contact.</li><li><strong>Day of:</strong> the coordinator runs it; your team texts one number for changes.</li><li><strong>After:</strong> one invoice.</li></ul>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>Plan event transportation</h3>
+      <p>Send the schedule and headcounts; a coordinator builds the vehicle plan and quote.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae">Corporate Transportation</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How far ahead should I book conference or roadshow transportation?</summary><p>Three to four weeks for anything with more than a couple of vehicles, so the plan and the vehicle hold are locked before the schedule firms up.</p></details><details><summary>Can I have the same driver for a two-day roadshow?</summary><p>Yes — that's the standard for roadshows. The same chauffeur stays with the team so they learn the schedule and the buildings.</p></details><details><summary>How does billing work for a corporate event?</summary><p>One itemized invoice on net terms — by trip, passenger, and cost code — instead of a stack of individual receipts.</p></details><details><summary>What if a speaker's flight changes mid-event?</summary><p>You text the coordinator, who adjusts the plan. That single point of contact is the whole reason to book event transportation on an account.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#corporate">Corporate account vs. rideshare</a> &middot; <a href="#wedding">Wedding transportation timeline</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="firstride" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Good to know</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Good to know</span>
+    <h1>What a chauffeur actually does — <em>and what to expect on your first ride</em></h1>
+    <p class="dek">If you've only ever used a taxi or an app, a car service works a little differently. Here's the whole thing, plainly.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 4 min read</p>
+
+    <div class="body">
+      <p class="lede">A <strong>chauffeur is a professional driver assigned to your specific trip in advance</strong>. You book ahead, the price is set before you ride, the same vetted driver is confirmed the day before, and they handle the doors, the bags, the route, and the timing so you don't. It's less like hailing a ride and more like having a driver for the day.</p>
+      <h2>How booking works</h2>
+<p>You reserve the trip — online or by phone — with the pickup, drop-off, date, and time. For airport and hourly trips you see the flat price before you confirm; other trips come back as a quick quote. Dispatch assigns a driver and vehicle, and the day before your trip you get a confirmation with the chauffeur's name and the car. There's no app to watch and no wondering whether a car will accept the ride.</p>
+<h2>What the chauffeur handles</h2>
+<p>Everything about the drive. They arrive early and are waiting when you come out. They open the door, take your bags, and load the trunk. They know the route and the alternatives, and they've already checked traffic before pickup. For an airport run they're tracking your flight. On an hourly booking they stay with you between stops. You get in, and the logistics stop being your problem.</p>
+<h2>What's in the car</h2>
+<p>A clean, well-kept vehicle — inspected and cleaned between trips — with bottled water and Wi-Fi. It's quiet enough to take a call or work. You choose how much conversation you want; a good chauffeur reads that and follows your lead.</p>
+<h2>Gratuity and payment</h2>
+<p>On our service a 20% gratuity is shown as a separate line and included in the price you see before booking, so there's nothing to calculate or hand over on the day — though you can adjust it. Individual trips are charged to a card after dispatch confirms the final quote; corporate accounts are invoiced monthly. You'll get an itemized receipt by email.</p>
+<h2>How it's different from a taxi or rideshare</h2>
+<p>Three things. It's <strong>scheduled</strong> — a specific driver committed to your trip, not the nearest available car. It's <strong>fixed-price</strong> on airport and hourly trips — no meter, no surge, the 4 a.m. holiday rate is the same as the Tuesday rate. And it's a <strong>licensed carrier</strong> — commercial insurance, permitted and vetted drivers, a real business you can call — which is why companies use it for executives and why it's the choice for a trip where being on time is the entire point.</p>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>Book your first ride</h3>
+      <p>Airport, hourly, or point-to-point — priced before you book, with a chauffeur confirmed the day before.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/18382ffc-b392-4839-8bab-41d9ba6837da">Point-To-Point Service</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>Do I need to tip the chauffeur?</summary><p>A 20% gratuity is already shown as a separate line and included in the price you see before booking. You can adjust it, but there's nothing to hand over on the day.</p></details><details><summary>How is a car service different from Uber?</summary><p>It's scheduled to your specific trip with a named driver confirmed in advance, it's fixed-price on airport and hourly trips with no surge, and it's a licensed, insured carrier.</p></details><details><summary>Will the same driver be there for my return trip?</summary><p>For a round trip booked together, we hold the vehicle and, where possible, the same driver. Book both legs at once so the return is reserved.</p></details><details><summary>What if I need to change the pickup time?</summary><p>Call or text dispatch — (206) 596-5504, 24/7 — and we'll move it. That's the point of a scheduled service.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="#corporate">Corporate account vs. rideshare</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="wedding" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Weddings</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Weddings</span>
+    <h1>Seattle wedding transportation timeline: <em>a planner's checklist</em></h1>
+    <p class="dek">What to lock in and when — from the first vehicle count to the send-off — so the transportation is the one vendor nobody worries about on the day.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 6 min read</p>
+
+    <div class="body">
+      <p class="lede">Book your <strong>full wedding transportation two to three months out</strong> for a peak-season Saturday — earlier for summer dates, which fill first. A single couple's car can often be arranged with a few weeks' notice, but shuttles and multi-vehicle plans need lead time. Everything below is the order a coordinator works in.</p>
+      <h2>3–4 months out: the rough plan</h2>
+<p>You don't need every detail yet — you need the shape. Sketch the day: where the couple gets ready, the ceremony site, the reception venue, and where out-of-town guests are staying. Count heads for anything that needs a shuttle. Get a <a href='https://claude.ai/code/artifact/3229fb52-575b-4fc6-8950-9af4408f6803'>preliminary quote</a> based on that shape so you know the budget, and put a deposit down to hold vehicles for a summer Saturday.</p>
+<h2>6–8 weeks out: the run-of-show</h2>
+<p>Now the times firm up. Work backward from the ceremony start:</p><ul><li><strong>Couple &amp; wedding party</strong> — pickup with enough margin for photos and the inevitable delay. A first look changes this.</li><li><strong>Family &amp; VIPs</strong> — parents and grandparents, often a separate car so they're not on the party's schedule.</li><li><strong>Guest shuttles</strong> — hotel-to-venue loops timed to have everyone seated 15 minutes before the ceremony, with a return loop or two after the reception ends.</li><li><strong>The couple's exit</strong> — the getaway car, and where it stages so the send-off works.</li></ul><p>Hand this to your transportation coordinator and they'll turn it into a written timeline with every pickup, staging point, and buffer.</p>
+<h2>2–3 weeks out: confirm and adjust</h2>
+<p>Final guest count, final vehicle mix, final timeline. This is when you catch the things that shift a plan: a venue that only allows drop-offs at a specific gate, a photo location added between the ceremony and reception, a rehearsal-dinner car for the night before. Confirm the balance payment and any decoration (magnetic signs and ribbon are fine; agree anything adhesive now).</p>
+<h2>The week of: the details that matter day-of</h2>
+<p>Your coordinator confirms every leg and gives you and your planner a single point of contact who's reachable on the day. Share the venue's loading and parking rules, any gate codes, and the name of the person the drivers should check in with. Decide who's responsible for telling the shuttle when the reception is actually wrapping — it's never exactly the printed end time.</p>
+<h2>On the day</h2>
+<p>If the plan is built right, this section is short. Cars arrive early. The couple's driver knows the exit. Shuttles run their loops. Overtime, if the reception genuinely runs long, is added at the vehicle's hourly rate and your coordinator confirms it with you rather than surprising you on the invoice. You dance; we drive.</p>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>Send us your wedding timeline</h3>
+      <p>A coordinator turns your run-of-show into a written vehicle plan and quote, usually within a day.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/3229fb52-575b-4fc6-8950-9af4408f6803">Wedding Transportation</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How far ahead should I book Seattle wedding transportation?</summary><p>Two to three months for a full fleet on a peak-season Saturday, and earlier for summer dates. A single couple's car can often be arranged with a few weeks' notice.</p></details><details><summary>What deposit do you take for a wedding?</summary><p>A deposit against the quoted total holds the vehicles; the balance is due before the event. Exact terms are on your written quote.</p></details><details><summary>Can the getaway car be decorated?</summary><p>Yes — magnetic 'just married' signs and ribbon are fine. Anything adhesive is agreed in advance.</p></details><details><summary>What if the reception runs past the booked time?</summary><p>The plan is built with buffer. Genuine overruns are billed at the vehicle's hourly rate, and your coordinator confirms it with you rather than adding it as a surprise.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#corporate">Corporate account vs. rideshare</a> &middot; <a href="#prom">Prom & homecoming transportation, done right</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="prom" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Events</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Events</span>
+    <h1>Prom &amp; homecoming transportation in the Seattle area, <em>done right</em></h1>
+    <p class="dek">A licensed, insured car and a vetted chauffeur, a sensible plan for the night, and the details parents actually want confirmed.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 4 min read</p>
+
+    <div class="body">
+      <p class="lede">For prom or homecoming, book a <strong>vehicle sized to the group</strong> — a sedan or SUV for a few couples, a Sprinter van for a larger party — with a <strong>vetted, licensed chauffeur</strong> and a <strong>fixed itinerary</strong> agreed in advance. Book <strong>three to four weeks out</strong>; the popular weekends in the spring and fall go early.</p>
+      <h2>The right vehicle</h2>
+<p>Match the vehicle to the party. Two or three couples fit an executive sedan or a premium SUV comfortably, with room for dresses. A group of eight to fourteen wants a Sprinter van — everyone travels together, which is usually the point of the night. We steer families away from stretch limos and party buses for high-schoolers; a clean, professional SUV or van is the better call, and parents tend to agree.</p>
+<h2>The plan for the night</h2>
+<p>Agree the itinerary when you book: pickup points (often several homes), the dinner restaurant, the venue, and the return — one trip or a couple of drop-off loops. Build in buffer for the photo session that always runs long. The chauffeur follows the agreed plan; changes on the night go through the parent who booked, not the students.</p>
+<h2>The driver</h2>
+<p>Every trip is a licensed, permitted, background-checked chauffeur in a commercially insured vehicle — the same standard as our executive work. On a prom booking the driver's job is straightforward: get the group safely between the agreed stops, on time, and keep the parent who booked informed. There's no bar, no light show, and no ambiguity about who's responsible.</p>
+<h2>What parents should confirm</h2>
+<ul><li>The <strong>flat price</strong> and what it covers (our prom bookings are hourly, with the gratuity included in the quote).</li><li>The <strong>itinerary</strong> in writing — every stop and the return.</li><li>Who the driver <strong>contacts</strong> if plans change (you, not the students).</li><li>The <strong>vehicle</strong> and capacity, so the group actually fits.</li><li>That the company is a <strong>licensed WUTC carrier</strong> with a certificate of insurance available.</li></ul>
+
+    </div>
+
+    <div class="cta-block">
+      <h3>Book prom or homecoming transportation</h3>
+      <p>A vetted chauffeur, the right vehicle, and an itinerary agreed in advance. Book three to four weeks out.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/1166d2e8-25f4-4211-be22-6090fada7f21">Hourly Chauffeur Service</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How far ahead should we book prom transportation in Seattle?</summary><p>Three to four weeks. The popular spring and fall weekends fill early, especially for Sprinter vans that fit a whole group.</p></details><details><summary>Do you do stretch limos or party buses for prom?</summary><p>We recommend against them for high-schoolers and offer clean, professional SUVs and Sprinter vans instead — safer, and what most parents prefer.</p></details><details><summary>Who does the driver call if plans change on the night?</summary><p>The parent who made the booking, not the students. The itinerary is agreed in advance and changes go through you.</p></details><details><summary>Is gratuity included in a prom booking?</summary><p>Yes — prom bookings are hourly with the gratuity included in the quoted price.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#wedding">Wedding transportation timeline</a> &middot; <a href="#firstride">What a chauffeur actually does</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="cruise" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / SEA to the cruise terminals</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Cruise travel</span>
+    <h1>Getting from SEA to the Seattle cruise terminals</h1>
+    <p class="dek">Pier 66 or Pier 91, how long the drive really is, when to actually show up, and how the return morning works.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 5 min read</p>
+
+    <div class="body">
+      <p class="lede">Seattle has <strong>two cruise terminals</strong> — Pier 66 (Bell Street, downtown) and Pier 91 (Smith Cove, in Interbay). Your cruise line assigns which one, and it's printed on your boarding documents. From Sea-Tac, both are a <strong>20–40 minute drive</strong> depending on traffic, and the single most important thing is to <strong>arrive within your assigned boarding window</strong> — not before it.</p>
+
+      <h2>Which pier is yours?</h2>
+      <p>Don't guess — <strong>check your cruise documents</strong>. Pier assignments shift from year to year and even between sailings. As a rough guide for recent Alaska seasons:</p>
+      <ul>
+        <li><strong>Pier 91 (Smith Cove Cruise Terminal, ~2001 W Garfield St)</strong> — the larger terminal, generally used by the bigger lines and most of the Alaska fleet.</li>
+        <li><strong>Pier 66 (Bell Street Cruise Terminal, ~2225 Alaskan Way)</strong> — downtown at the foot of Bell Street, generally used by Norwegian and Oceania sailings.</li>
+      </ul>
+      <p>The two piers are about 10 minutes apart, so a mix-up isn't a disaster — but it is 10 minutes you didn't budget on a tight morning.</p>
+
+      <h2>Drive time from SEA</h2>
+      <table class="tbl">
+        <thead><tr><th>To</th><th>Distance</th><th>Typical drive</th></tr></thead>
+        <tbody>
+          <tr><td>Pier 66 (downtown)</td><td>~14 mi</td><td>20–35 min</td></tr>
+          <tr><td>Pier 91 (Interbay)</td><td>~16 mi</td><td>25–40 min</td></tr>
+        </tbody>
+      </table>
+      <p>Both routes run up SR‑99 or I‑5 into downtown; Pier 91 continues north on Elliott and 15th Ave W. The wild card is <strong>turnaround Saturday</strong> in Alaska season (roughly May through late September), when several ships sail the same day and the streets around both piers fill with taxis, buses, and drop-offs from late morning through mid-afternoon. Your driver knows the staging patterns and the least-bad approach, but on a peak Saturday, add 15 minutes to the numbers above.</p>
+
+      <h2>When to arrive</h2>
+      <p>Cruise lines assign <strong>staggered boarding times</strong> — you'll have a window like "12:30–1:30 p.m." on your documents. This exists to prevent everyone showing up at once. If you arrive before your window, you'll wait outside the terminal, often standing, sometimes in the rain. If you arrive after it, you're fine as long as it's before the "all aboard" time, usually 3:00–3:30 p.m. for a 4:00 departure.</p>
+      <p><strong>The move: aim for the start of your window, plus a small buffer.</strong> If your window opens at 12:30 and you're coming from SEA, a pickup around 11:30 lands you there right as it opens, bags dropped and through security before the crowd. We time your pickup to your window, not to the ship's departure.</p>
+
+      <div class="callout"><b>Flying in the same day?</b> It's doable but tight — aim to land by 10 a.m. for an afternoon sailing, and build in margin for a delayed flight and baggage. Many cruisers fly in the night before and stay at a downtown hotel; if that's you, we'll do the hotel-to-pier leg in the morning, which is a 5–15 minute trip.</div>
+
+      <h2>Luggage at the pier</h2>
+      <p>At both terminals, <strong>porters take your checked bags at the curb</strong> — you hand them over, they go to your stateroom, and you carry on only what you need for the afternoon (documents, medications, a change of clothes in case bags are slow). A tip of a few dollars per bag is customary. Your chauffeur helps move everything from the trunk to the porter, so you're not wrestling suitcases across a busy drop-off lane.</p>
+
+      <h2>The return morning</h2>
+      <p>Disembarkation is the mirror image and, honestly, slower. The ship docks around 6:30–7:00 a.m., and you leave in groups by luggage tag color, typically between 7:00 and 9:30, then clear customs. You won't know your exact off-time until the last night aboard, when the crew posts the schedule.</p>
+      <p>Two ways to handle the pickup:</p>
+      <ul>
+        <li><strong>Book a set time</strong> based on your assigned disembarkation group — usually 30–45 minutes after your group is called, to allow for customs.</li>
+        <li><strong>Text us when you're off the ship and through customs</strong>, and we send the car. On a cruise-terminal return we track the ship's actual arrival and stage a driver nearby, so the wait is short either way — and there's no charge for our wait.</li>
+      </ul>
+      <p>From the pier, it's the same 20–40 minutes back to SEA. If your flight home is before noon, give yourself a comfortable margin — a customs delay plus the drive plus check-in adds up fast.</p>
+    </div>
+
+    <div class="cta-block">
+      <h3>Book a cruise transfer</h3>
+      <p>SEA, a hotel, or your home to Pier 66 or Pier 91 — timed to your boarding window, with luggage help at the curb.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/92288df2-4edd-40ac-b290-ff6d0ca5ac6b">Cruise transfers</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How do I know if my cruise leaves from Pier 66 or Pier 91?</summary><p>It's on your boarding documents from the cruise line. Assignments change year to year, so don't rely on a guess — Pier 91 (Smith Cove) is generally the bigger lines, Pier 66 (Bell Street, downtown) is generally Norwegian and Oceania.</p></details>
+      <details><summary>How long is the drive from Sea-Tac to the Seattle cruise terminals?</summary><p>20–35 minutes to Pier 66 and 25–40 to Pier 91 on a normal day. On a peak Alaska-season turnaround Saturday, add about 15 minutes.</p></details>
+      <details><summary>When should I arrive at the pier?</summary><p>At the start of your assigned boarding window, not before it — arriving early means waiting outside. We time your pickup to the window.</p></details>
+      <details><summary>What time will I get off the ship on the return?</summary><p>Usually between 7:00 and 9:30 a.m., in groups by luggage-tag color, with customs after. You'll get the exact schedule the last night aboard. We track the ship's arrival and can send the car when you text that you're through customs.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#seatac">How early to book a SeaTac pickup</a> &middot; <a href="#woodinville">A Woodinville wine tour itinerary</a></p>
+  </div>
+</article>
+
+
+</div><div class="post-route" data-post="woodinville" hidden>
+<div class="crumbs"><a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88">Home</a> / <a href="https://claude.ai/code/artifact/512f79cc-ca9b-4c1e-b2fd-80647f25cd88#journal">Journal</a> / Woodinville wine tour itinerary</div>
+
+<article>
+  <div class="wrap">
+    <span class="eyebrow">Local guide</span>
+    <h1>A Woodinville wine tour itinerary for a <em>relaxed</em> half day</h1>
+    <p class="dek">Four districts, forty-plus tasting rooms, and a strong temptation to over-schedule. Here's a sensible route through three or four rooms with lunch — and the practical details.</p>
+    <p class="byline">Northwest Town Car Service &middot; updated September 2026 &middot; 6 min read</p>
+
+    <div class="body">
+      <p class="lede">Woodinville is <strong>30–40 minutes from Seattle</strong>, 15–20 from the Eastside, and home to more than 40 tasting rooms grouped into four districts. For a good half day, plan on <strong>three to four rooms over four to five hours</strong>, including lunch — not six rooms in a march. The rooms are close together, so the driving is short; the pacing is what makes or breaks it.</p>
+
+      <h2>The four districts</h2>
+      <ul>
+        <li><strong>Hollywood District</strong> — near the Sammamish River, anchored by Chateau Ste. Michelle's château and grounds, Columbia Winery across the street, and DeLille Cellars' winery and restaurant. This is the "estate" end — bigger properties, gardens, more of a destination feel.</li>
+        <li><strong>Warehouse District</strong> — the densest concentration, in an industrial park off Woodinville‑Redmond Road. Dozens of small producers in clustered suites you can walk between. Less polish, more discovery, and the best odds for a walk-in.</li>
+        <li><strong>West Valley</strong> — along the Woodinville‑Redmond Road corridor, a spread of mid-sized rooms and the Hollywood Schoolhouse events venue.</li>
+        <li><strong>Downtown Woodinville (the Schoolhouse District)</strong> — the newer, walkable development around the old schoolhouse, with tasting rooms, restaurants, and a distillery or two mixed in.</li>
+      </ul>
+      <p>You don't need to hit all four. A relaxed day picks <strong>one anchor and one cluster</strong> — say, Chateau Ste. Michelle in Hollywood plus a few rooms in the Warehouse District — with a real lunch in between.</p>
+
+      <h2>A half-day route (roughly noon to 5)</h2>
+      <div class="plan">
+        <h3>The relaxed version</h3>
+        <div class="slot"><span class="t">11:45</span><span>Pickup. It's a short drive, so a late-morning start still gives you a full afternoon.</span></div>
+        <div class="slot"><span class="t">12:15</span><span><strong>Hollywood District anchor</strong> — the château grounds and a tasting at Chateau Ste. Michelle or DeLille. Big, easy first stop; walk the gardens.</span></div>
+        <div class="slot"><span class="t">1:30</span><span><strong>Lunch.</strong> Sit-down at Barking Frog or the Willows Lodge dining room, or something quicker in downtown Woodinville. Eating properly at the midpoint is the whole trick.</span></div>
+        <div class="slot"><span class="t">2:45</span><span><strong>Warehouse District, room one</strong> — a small producer you've been curious about. Book this one ahead.</span></div>
+        <div class="slot"><span class="t">3:45</span><span><strong>Warehouse District, room two</strong> — walk next door; this is where a walk-in usually works.</span></div>
+        <div class="slot"><span class="t">4:45</span><span><strong>Optional third room</strong>, or call it and head home while everyone's still having a good time.</span></div>
+        <div class="slot"><span class="t">5:15</span><span>Departure. Home by 6, which is a much better outcome than closing the place down.</span></div>
+      </div>
+      <p>If you'd rather do the estate end entirely — Chateau Ste. Michelle, Columbia, JM Cellars, DeLille — that's a fine four-stop day too, with less walking and more grounds.</p>
+
+      <h2>Reservations or walk-ins?</h2>
+      <p>The rules have tightened. <strong>Reserve ahead for weekends, for anything in the Hollywood or Downtown districts, and for the well-known names</strong> — many now require it and cap group sizes. The Warehouse District is more forgiving: smaller rooms, more walk-in flexibility, especially on a weekday afternoon. If your group is more than four people, call ahead everywhere. Most rooms are open Thursday through Sunday; weekday hours are thinner, so check before you build a Tuesday around it.</p>
+
+      <div class="callout"><b>Tasting fees</b> run roughly $15–35 a person per room, often waived or credited with a bottle purchase. Budget for it, and budget a little for the bottles you'll want to take home — there's room in the trunk, and your driver will help load.</div>
+
+      <h2>Getting there, and why a driver</h2>
+      <p>From Seattle it's I‑5 or SR‑99 to SR‑520 to the Woodinville exits, about 30–40 minutes. From Bellevue and Redmond it's 15–20 up the Sammamish River valley. From Kent and the South Sound, closer to 45–55.</p>
+      <p>The case for hiring a car is simple: <strong>a wine tour has no designated driver by design</strong>. Everyone tastes, nobody watches the clock or the road, and the day ends when you want it to rather than when someone has to switch to water. We book these <a href="https://claude.ai/code/artifact/1166d2e8-25f4-4211-be22-6090fada7f21">by the hour</a> — the sedan is $95/hr, the SUV $125, the Sprinter van $225 for a bigger group — with a three-hour minimum that a Woodinville half day clears easily. The driver parks, waits, and carries the cases.</p>
+    </div>
+
+    <div class="cta-block">
+      <h3>Plan a Woodinville wine tour</h3>
+      <p>Booked by the hour, with a driver who knows which rooms take walk-ins and which need a reservation.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://claude.ai/code/artifact/92288df2-4edd-40ac-b290-ff6d0ca5ac6b">Wine tours</a>
+        <a class="btn btn-line" href="tel:+12065965504">Call (206) 596-5504</a>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Common questions</h2>
+      <details><summary>How many wineries can you do in a Woodinville half day?</summary><p>Three or four over four to five hours, including a real lunch, is a relaxed pace. The rooms are close together, so the limit is your palate, not the driving.</p></details>
+      <details><summary>Do I need reservations for Woodinville tasting rooms?</summary><p>For weekends, the Hollywood and Downtown districts, and the well-known names — yes, and many cap group size. The Warehouse District is more walk-in friendly, especially on weekday afternoons.</p></details>
+      <details><summary>How long does it take to get to Woodinville from Seattle?</summary><p>About 30–40 minutes from Seattle, 15–20 from Bellevue or Redmond, and 45–55 from Kent and the South Sound.</p></details>
+      <details><summary>How much does a chauffeured wine tour cost?</summary><p>It's booked hourly — $95/hr for a sedan, $125 for an SUV, $225 for a Sprinter van — with a three-hour minimum. A typical Woodinville half day runs four to six hours.</p></details>
+    </div>
+
+    <p class="related">More from the journal: <a href="#cruise">SEA to the Seattle cruise terminals</a> &middot; <a href="https://claude.ai/code/artifact/1166d2e8-25f4-4211-be22-6090fada7f21">Hourly chauffeur service</a></p>
+  </div>
+</article>
+
+
+</div>
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="https://claude.ai/code/artifact/0e97705c-3e13-4d96-86fe-0e55a4cd6381">Airport transfers</a>
+      <a href="https://claude.ai/code/artifact/273bcaa5-56cf-4375-9111-1c41ead44fae">Corporate</a>
+      <a href="https://claude.ai/code/artifact/3229fb52-575b-4fc6-8950-9af4408f6803">Weddings &amp; events</a>
+      <a href="https://claude.ai/code/artifact/1166d2e8-25f4-4211-be22-6090fada7f21">Hourly chauffeur</a>
+      <a href="https://claude.ai/code/artifact/18382ffc-b392-4839-8bab-41d9ba6837da">Point-to-point</a>
+      <a href="https://claude.ai/code/artifact/92288df2-4edd-40ac-b290-ff6d0ca5ac6b">Cruise &amp; wine tours</a>
+    </div>
+    <div class="foot-bar">
+      <span>Northwest Town Car Service &middot; Kent &amp; SeaTac, WA &middot; (206) 596-5504</span>
+      <span>Licensed WUTC carrier &middot; Fully insured</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var routes=[].slice.call(document.querySelectorAll(".post-route"));var tabs=[].slice.call(document.querySelectorAll(".tabbar button"));function show(s){routes.forEach(function(r){r.hidden=r.dataset.post!==s;});tabs.forEach(function(t){var on=t.dataset.tab===s;t.setAttribute("aria-current",on?"true":"false");if(on)t.scrollIntoView({block:"nearest",inline:"center"});});if(location.hash.slice(1)!==s)history.replaceState(null,"","#"+s);window.scrollTo(0,0);}tabs.forEach(function(t){t.addEventListener("click",function(){show(t.dataset.tab);});});document.addEventListener("click",function(e){var a=e.target.closest("a[href^=\"#\"]");if(!a)return;var h=a.getAttribute("href").slice(1);if(routes.some(function(r){return r.dataset.post===h;})){e.preventDefault();show(h);}});var i=location.hash.slice(1);show(routes.some(function(r){return r.dataset.post===i;})?i:"seatac");})();
+</script>
